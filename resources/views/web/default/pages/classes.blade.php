@@ -68,7 +68,7 @@
                                 <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">{{ trans('public.type') }}</h3>
 
                                 <div class="pt-10">
-                                    @foreach(['bundle','webinar','course','text_lesson'] as $typeOption)
+                                    @foreach(['bundle'] as $typeOption)
                                         <div class="d-flex align-items-center justify-content-between mt-20">
                                             <label class="cursor-pointer" for="filterLanguage{{ $typeOption }}">
                                                 @if($typeOption == 'bundle')
