@@ -96,7 +96,7 @@
                                     <span class="badge badge-danger">{{ trans('public.draft') }}</span>
                                     @break
                                     @case(\App\Models\Webinar::$pending)
-                                    <span class="badge badge-warning">{{ trans('public.waiting') }}</span>
+                                    <span class="badge badge-warning">Em revisão</span>
                                     @break
                                     @case(\App\Models\Webinar::$inactive)
                                     <span class="badge badge-danger">{{ trans('public.rejected') }}</span>
@@ -114,7 +114,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <a href="{{ $webinar->getUrl() }}" target="_blank">
                                         <h3 class="font-16 text-dark-blue font-weight-bold">{{ $webinar->title }}
-                                            <span class="badge badge-dark ml-10 status-badge-dark">{{ trans('webinars.'.$webinar->type) }}</span>
+                                           
                                         </h3>
                                     </a>
 
@@ -184,7 +184,7 @@
                                     @if($webinar->isProgressing() and !empty($nextSession))
                                         <div class="d-flex align-items-start flex-column mt-20 mr-15">
                                             <span class="stat-title">{{ trans('webinars.next_session_duration') }}:</span>
-                                            <span class="stat-value">{{ convertMinutesToHourAndMinute($nextSession->duration) }} Hrs</span>
+                                            <span class="stat-value">{{$nextSession->duration }} Hrs</span>
                                         </div>
 
                                         @if($webinar->isWebinar())
@@ -196,7 +196,7 @@
                                     @else
                                         <div class="d-flex align-items-start flex-column mt-20 mr-15">
                                             <span class="stat-title">{{ trans('public.duration') }}:</span>
-                                            <span class="stat-value">{{ $webinar->duration) }} Hrs</span>
+                                            <span class="stat-value">{{ $webinar->duration }}</span>
                                         </div>
 
                                         @if($webinar->isWebinar())

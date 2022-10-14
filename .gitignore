@@ -3,10 +3,14 @@
 /public/build
 /public/hot
 /public/storage
-/storage/*.key
+/storage
 /vendor
 .env
 .env.backup
+.eslintrc.js
+.env.example
+.htaccess
+.styleci.yml
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

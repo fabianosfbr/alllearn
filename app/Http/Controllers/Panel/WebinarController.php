@@ -275,6 +275,8 @@ class WebinarController extends Controller
             abort(404);
         }
 
+        
+
         $userPackage = new UserPackage();
         $userCoursesCountLimited = $userPackage->checkPackageLimit('courses_count');
 
@@ -494,6 +496,8 @@ class WebinarController extends Controller
     public function update(Request $request, $id)
     {
         $user = auth()->user();
+
+        
 
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);

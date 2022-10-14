@@ -37,28 +37,18 @@
                                         <div class="dropdown-menu ">
                                             <?php if($webinar->isWebinar()): ?>
                                                 <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="<?php echo e($webinar->id); ?>" data-type="session" data-chapter="<?php echo e(!empty($chapter) ? $chapter->id :''); ?>">
-                                                    <?php echo e(trans('public.add_session')); ?>
-
+                                                    Nova transmissão ao vivo
                                                 </button>
                                             <?php endif; ?>
 
                                             <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="<?php echo e($webinar->id); ?>" data-type="file" data-chapter="<?php echo e(!empty($chapter) ? $chapter->id :''); ?>">
-                                                <?php echo e(trans('public.add_file')); ?>
-
+                                                Novo conteúdo de arquivo
                                             </button>
-
-                                            <?php if(getFeaturesSettings('new_interactive_file')): ?>
-                                                <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="<?php echo e($webinar->id); ?>" data-type="new_interactive_file" data-chapter="<?php echo e(!empty($chapter) ? $chapter->id :''); ?>">
-                                                    <?php echo e(trans('update.new_interactive_file')); ?>
-
-                                                </button>
-                                            <?php endif; ?>
-
+ 
 
                                             <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="<?php echo e($webinar->id); ?>" data-type="text_lesson" data-chapter="<?php echo e(!empty($chapter) ? $chapter->id :''); ?>">
-                                                <?php echo e(trans('public.add_text_lesson')); ?>
-
-                                            </button>
+                                                Novo conteúdo de texto
+                                            </button>                                       
 
                                             <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="<?php echo e($webinar->id); ?>" data-type="quiz" data-chapter="<?php echo e(!empty($chapter) ? $chapter->id :''); ?>">
                                                 <?php echo e(trans('public.add_quiz')); ?>

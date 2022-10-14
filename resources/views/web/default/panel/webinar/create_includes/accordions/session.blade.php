@@ -48,30 +48,13 @@
                     <div class="col-12 col-lg-6">
 
                         <div class="form-group">
-                            <label class="input-label">{{ trans('webinars.select_session_api') }}</label>
-
+                           
                             <div class="js-session-api">
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][session_api]" id="localApi{{ !empty($session) ? $session->id : '' }}" value="local" @if(empty($session) or $session->session_api == 'local') checked @endif class="js-api-input custom-control-input" {{ (!empty($session) and $session->session_api != 'local') ? 'disabled' :'' }}>
-                                    <label class="custom-control-label" for="localApi{{ !empty($session) ? $session->id : '' }}">{{ trans('webinars.session_local_api') }}</label>
+                                   
                                 </div>
 
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][session_api]" id="bigBlueButton{{ !empty($session) ? $session->id : '' }}" value="big_blue_button" @if(!empty($session) and $session->session_api == 'big_blue_button') checked @endif class="js-api-input custom-control-input" {{ (!empty($session) and $session->session_api != 'local') ? 'disabled' :'' }}>
-                                    <label class="custom-control-label" for="bigBlueButton{{ !empty($session) ? $session->id : '' }}">{{ trans('webinars.session_big_blue_button') }}</label>
-                                </div>
-
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][session_api]" id="zoomApi{{ !empty($session) ? $session->id : '' }}" value="zoom" @if(!empty($session) and $session->session_api == 'zoom') checked @endif class="js-api-input custom-control-input" {{ (!empty($session) and $session->session_api != 'local') ? 'disabled' :'' }}>
-                                    <label class="custom-control-label" for="zoomApi{{ !empty($session) ? $session->id : '' }}">{{ trans('webinars.session_zoom') }}</label>
-                                </div>
-
-                                @if(getFeaturesSettings('agora_live_streaming') and (!empty($webinar->price) or getFeaturesSettings('agora_in_free_courses')))
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][session_api]" id="agoraApi{{ !empty($session) ? $session->id : '' }}" value="agora" @if(!empty($session) and $session->session_api == 'agora') checked @endif class="js-api-input custom-control-input" {{ (!empty($session) and $session->session_api != 'local') ? 'disabled' :'' }}>
-                                        <label class="custom-control-label" for="agoraApi{{ !empty($session) ? $session->id : '' }}">{{ trans('update.agora') }}</label>
-                                    </div>
-                                @endif
                             </div>
 
                             <div class="invalid-feedback"></div>
@@ -101,6 +84,20 @@
                             <input type="hidden" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][locale]" value="{{ $defaultLocale }}">
                         @endif
 
+
+
+                        <div class="form-group">
+                            <label class="input-label">{{ trans('public.title') }}</label>
+                            <input type="text" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][title]" class="js-ajax-title form-control" value="{{ !empty($session) ? $session->title : '' }}" placeholder="{{ trans('forms.maximum_255_characters') }}"/>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="form-group js-local-link {{ (!empty($session) and $session->session_api == 'agora') ? 'd-none' : '' }}">
+                            <label class="input-label">{{ trans('public.link') }}</label>
+                            <input type="text" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][link]" class="js-ajax-link form-control" value="{{ !empty($session) ? $session->getJoinLink() : '' }}" {{ (!empty($session) and $session->session_api != 'local') ? 'disabled' :'' }}/>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
                         <div class="form-group js-api-secret {{ (!empty($session) and ($session->session_api == 'zoom' or $session->session_api == 'agora')) ? 'd-none' :'' }}">
                             <label class="input-label">{{ trans('auth.password') }}</label>
                             <input type="text" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][api_secret]" class="js-ajax-api_secret form-control" value="{{ !empty($session) ? $session->api_secret : '' }}" {{ (!empty($session) and $session->session_api != 'local') ? 'disabled' :'' }}/>
@@ -113,11 +110,9 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="input-label">{{ trans('public.title') }}</label>
-                            <input type="text" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][title]" class="js-ajax-title form-control" value="{{ !empty($session) ? $session->title : '' }}" placeholder="{{ trans('forms.maximum_255_characters') }}"/>
-                            <div class="invalid-feedback"></div>
-                        </div>
+
+
+
 
                         <div class="form-group">
                             <label class="input-label">{{ trans('public.date') }}</label>
@@ -138,11 +133,7 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div class="form-group js-local-link {{ (!empty($session) and $session->session_api == 'agora') ? 'd-none' : '' }}">
-                            <label class="input-label">{{ trans('public.link') }}</label>
-                            <input type="text" name="ajax[{{ !empty($session) ? $session->id : 'new' }}][link]" class="js-ajax-link form-control" value="{{ !empty($session) ? $session->getJoinLink() : '' }}" {{ (!empty($session) and $session->session_api != 'local') ? 'disabled' :'' }}/>
-                            <div class="invalid-feedback"></div>
-                        </div>
+
 
                         <div class="form-group">
                             <label class="input-label">{{ trans('public.description') }}</label>

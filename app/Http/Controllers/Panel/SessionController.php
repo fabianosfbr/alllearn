@@ -27,7 +27,7 @@ class SessionController extends Controller
             'date' => 'required|date',
             'duration' => 'required|numeric',
             'link' => ($data['session_api'] == 'local') ? 'required|url' : 'nullable',
-            'api_secret' => (($data['session_api'] != 'zoom') and ($data['session_api'] != 'agora')) ? 'required' : 'nullable',
+            'api_secret' => (($data['session_api'] != 'zoom') and ($data['session_api'] != 'agora')) ? 'sometimes' : 'nullable',
             'moderator_secret' => ($data['session_api'] == 'big_blue_button') ? 'required' : 'nullable',
         ]);
 

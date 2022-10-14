@@ -35,24 +35,18 @@
                                         <div class="dropdown-menu ">
                                             @if($webinar->isWebinar())
                                                 <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="{{ $webinar->id }}" data-type="session" data-chapter="{{ !empty($chapter) ? $chapter->id :'' }}">
-                                                    {{ trans('public.add_session') }}
+                                                    Nova transmissão ao vivo
                                                 </button>
                                             @endif
 
                                             <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="{{ $webinar->id }}" data-type="file" data-chapter="{{ !empty($chapter) ? $chapter->id :'' }}">
-                                                {{ trans('public.add_file') }}
+                                                Novo conteúdo de arquivo
                                             </button>
-
-                                            @if(getFeaturesSettings('new_interactive_file'))
-                                                <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="{{ $webinar->id }}" data-type="new_interactive_file" data-chapter="{{ !empty($chapter) ? $chapter->id :'' }}">
-                                                    {{ trans('update.new_interactive_file') }}
-                                                </button>
-                                            @endif
-
+ 
 
                                             <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="{{ $webinar->id }}" data-type="text_lesson" data-chapter="{{ !empty($chapter) ? $chapter->id :'' }}">
-                                                {{ trans('public.add_text_lesson') }}
-                                            </button>
+                                                Novo conteúdo de texto
+                                            </button>                                       
 
                                             <button type="button" class="js-add-course-content-btn d-block mb-10 btn-transparent" data-webinar-id="{{ $webinar->id }}" data-type="quiz" data-chapter="{{ !empty($chapter) ? $chapter->id :'' }}">
                                                 {{ trans('public.add_quiz') }}

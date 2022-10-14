@@ -66,7 +66,7 @@
                                 <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue"><?php echo e(trans('public.type')); ?></h3>
 
                                 <div class="pt-10">
-                                    <?php $__currentLoopData = ['bundle','webinar','course','text_lesson']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $typeOption): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php $__currentLoopData = ['bundle']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $typeOption): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="d-flex align-items-center justify-content-between mt-20">
                                             <label class="cursor-pointer" for="filterLanguage<?php echo e($typeOption); ?>">
                                                 <?php if($typeOption == 'bundle'): ?>

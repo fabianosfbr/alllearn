@@ -94,7 +94,7 @@
                                     <span class="badge badge-danger"><?php echo e(trans('public.draft')); ?></span>
                                     <?php break; ?>
                                     <?php case (\App\Models\Webinar::$pending): ?>
-                                    <span class="badge badge-warning"><?php echo e(trans('public.waiting')); ?></span>
+                                    <span class="badge badge-warning">Em revisão</span>
                                     <?php break; ?>
                                     <?php case (\App\Models\Webinar::$inactive): ?>
                                     <span class="badge badge-danger"><?php echo e(trans('public.rejected')); ?></span>
@@ -113,7 +113,7 @@
                                     <a href="<?php echo e($webinar->getUrl()); ?>" target="_blank">
                                         <h3 class="font-16 text-dark-blue font-weight-bold"><?php echo e($webinar->title); ?>
 
-                                            <span class="badge badge-dark ml-10 status-badge-dark"><?php echo e(trans('webinars.'.$webinar->type)); ?></span>
+                                           
                                         </h3>
                                     </a>
 
@@ -183,7 +183,7 @@
                                     <?php if($webinar->isProgressing() and !empty($nextSession)): ?>
                                         <div class="d-flex align-items-start flex-column mt-20 mr-15">
                                             <span class="stat-title"><?php echo e(trans('webinars.next_session_duration')); ?>:</span>
-                                            <span class="stat-value"><?php echo e(convertMinutesToHourAndMinute($nextSession->duration)); ?> Hrs</span>
+                                            <span class="stat-value"><?php echo e($nextSession->duration); ?> Hrs</span>
                                         </div>
 
                                         <?php if($webinar->isWebinar()): ?>
