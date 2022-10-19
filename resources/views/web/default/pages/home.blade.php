@@ -148,6 +148,22 @@
             </div>
         </div>
     </div>
+    
+            <section class="home-sections home-sections-swiper position-relative" style="margin-top: -80px;">
+                <div class="home-video-mask"></div>
+                <div class="container home-video-container d-flex flex-column align-items-center justify-content-center position-relative" style="background-image: url('{{ $boxVideoOrImage['background'] ?? '' }}')">
+                    <h2 class="font-36 font-weight-bold text-dark text-uppercase">Vídeo Institucional</h2>
+                    <div class="container">
+                        <div class="video-container">
+                          <iframe class="responsive-iframe" src="https://www.youtube.com/embed/sw7UiWVDOaY"></iframe>
+                        </div>
+
+                        <div class="caption">
+                          
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 
     @foreach($homeSections as $homeSection)
@@ -767,24 +783,6 @@
                                     <a href="{{ $forumSection['button2']['link'] }}" class="btn btn-outline-primary ml-15">{{ $forumSection['button2']['title'] }}</a>
                                 @endif
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        @endif
-
-        @if($homeSection->name == \App\Models\HomeSection::$video_or_image_section and !empty($boxVideoOrImage))
-            <section class="home-sections home-sections-swiper position-relative">
-                <div class="home-video-mask"></div>
-                <div class="container home-video-container d-flex flex-column align-items-center justify-content-center position-relative" style="background-image: url('{{ $boxVideoOrImage['background'] ?? '' }}')">
-                    <div class="container">
-
-                        <div class="video-container">
-                          <iframe class="responsive-iframe" src="https://www.youtube.com/embed/sw7UiWVDOaY"></iframe>
-                        </div>
-
-                        <div class="caption">
-                          
                         </div>
                     </div>
                 </div>
