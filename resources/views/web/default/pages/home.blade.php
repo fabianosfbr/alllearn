@@ -156,15 +156,34 @@
                     <div class="container">
                         <div class="video-container">
                           <iframe class="responsive-iframe" src="https://www.youtube.com/embed/sw7UiWVDOaY"></iframe>
-                        </div>
-
-                        <div class="caption">
-                          
-                        </div>
+                        </div>                   
                     </div>
                 </div>
             </section>
 
+            <div class="container">
+                <div class="row">
+                  <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                    <p>vídeo de apresentação para IES</p>
+                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/xSUgYW_ySIw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+                  <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                    <p>Vídeo de apresentação para Empresas</p>
+                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/YOBdDFzY7_I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                        <p>Vídeo de apresentação para Alunos</p>
+                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/wuwXTSF9tdk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                        <p>Vídeo de apresentação para Professores</p>
+                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/xSUgYW_ySIw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                  </div>
+            </div> 
 
     @foreach($homeSections as $homeSection)
 
