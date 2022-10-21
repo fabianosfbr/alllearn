@@ -148,7 +148,42 @@
             </div>
         </div>
     </div>
+    
+            <section class="home-sections home-sections-swiper position-relative" style="margin-top: -80px;">
+                <div class="home-video-mask"></div>
+                <div class="container home-video-container d-flex flex-column align-items-center justify-content-center position-relative" style="background-image: url('{{ $boxVideoOrImage['background'] ?? '' }}')">
+                    <h2 class="font-36 font-weight-bold text-dark text-uppercase">Vídeo Institucional</h2>
+                    <div class="container">
+                        <div class="video-container">
+                          <iframe class="responsive-iframe" src="https://www.youtube.com/embed/sw7UiWVDOaY"></iframe>
+                        </div>                   
+                    </div>
+                </div>
+            </section>
 
+            <div class="container">
+                <div class="row">
+                  <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                    <p>vídeo de apresentação para IES</p>
+                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/xSUgYW_ySIw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+                  <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                    <p>Vídeo de apresentação para Empresas</p>
+                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/YOBdDFzY7_I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                        <p>Vídeo de apresentação para Alunos</p>
+                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/wuwXTSF9tdk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                        <p>Vídeo de apresentação para Professores</p>
+                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/xSUgYW_ySIw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                  </div>
+            </div> 
 
     @foreach($homeSections as $homeSection)
 
@@ -767,24 +802,6 @@
                                     <a href="{{ $forumSection['button2']['link'] }}" class="btn btn-outline-primary ml-15">{{ $forumSection['button2']['title'] }}</a>
                                 @endif
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        @endif
-
-        @if($homeSection->name == \App\Models\HomeSection::$video_or_image_section and !empty($boxVideoOrImage))
-            <section class="home-sections home-sections-swiper position-relative">
-                <div class="home-video-mask"></div>
-                <div class="container home-video-container d-flex flex-column align-items-center justify-content-center position-relative" style="background-image: url('{{ $boxVideoOrImage['background'] ?? '' }}')">
-                    <div class="container">
-
-                        <div class="video-container">
-                          <iframe class="responsive-iframe" src="https://www.youtube.com/embed/sw7UiWVDOaY"></iframe>
-                        </div>
-
-                        <div class="caption">
-                          
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class=" footer-subscribe d-block d-md-flex align-items-center justify-content-between">
                     <div class="flex-grow-1">
-                        <strong>{{ trans('footer.join_us_today') }}</strong>
+                        <strong>Empresas e alunos. Juntem-se a nós</strong>
                         <span class="d-block mt-5 text-white">{{ trans('footer.subscribe_content') }}</span>
                     </div>
                     <div class="subscribe-input bg-white p-10 flex-grow-1 mt-30 mt-md-0">
