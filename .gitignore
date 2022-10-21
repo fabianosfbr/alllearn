@@ -4,7 +4,7 @@
 /public/hot
 /public/storage
 /storage/*
-/storage/logs/laravel.log
+/storage/logs/!.gitignore
 /storage/!.gitignore
 .env
 .env.backup
