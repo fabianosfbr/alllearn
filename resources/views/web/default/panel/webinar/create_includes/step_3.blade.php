@@ -33,19 +33,31 @@
 
         <div class="form-group mt-15">
             <label class="input-label">Configuração de pagamento</label>
-                <div class="row">
-                    <div class="col"><p>Permitirá parcelamento em boleto?</p></div>
-                    <div class="col custom-control custom-switch">
+                <div class="row mt-15">
+                    <div class="col col-lg-4"><p class="font-12 font-weight-500">Aceita parcelamento em boleto?</p></div>
+                    <div class="col col-lg-2 custom-control custom-switch">
                         <input type="checkbox" name="boleto" class="custom-control-input" id="doBoleto">
                         <label class="custom-control-label" for="doBoleto"></label>
                     </div>
                 </div>
-                <br>
+
                 <div class="row">
-                    <div class="col"><p>Permitirá parcelamento no cartão de crédito?</p></div>
-                    <div class="col custom-control custom-switch">
+                    <div class="col col-lg-4">
+                        <input type="text" name="parcelaBoleto" id="numParcelaBoleto" class="form-control" placeholder="digite a quantidade de parcelas">
+                    </div>
+                </div>
+
+                <div class="row mt-15">
+                    <div class="col col-sm-5"><p class="font-12 font-weight-500">Aceita parcelamento no cartão de crédito?</p></div>
+                    <div class="col col-lg-4 custom-control custom-switch">
                         <input type="checkbox" name="credCard" class="custom-control-input" id="doCredCard">
                         <label class="custom-control-label" for="doCredCard"></label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-lg-4">
+                        <input type="text" name="parcelaCred" id="numParcelaCred" class="form-control" placeholder="digite a quantidade de parcelas">
                     </div>
                 </div>
          </div>
