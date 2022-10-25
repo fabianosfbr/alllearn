@@ -31,6 +31,40 @@
             <p class="font-12 text-gray mt-10">- Defina o preço do seu curso.</p>
         </div>
 
+        <div class="form-group mt-15">
+            <label class="input-label">Configuração de pagamento do curso</label>
+                <div class="row mt-15">
+                    <div class="col-lg-5"><p class="font-14 font-weight-500">Aceita parcelamento em boleto?</p></div>
+                    <div class="col-lg-2 custom-control custom-switch">
+                        <input type="checkbox" name="boleto" class="custom-control-input" id="doBoleto">
+                        <label class="custom-control-label" for="doBoleto"></label>
+                    </div>
+                </div>
+
+                <div class="row mt-20 d-flex align-items-center">
+                    <div class="col-lg-4"><p class="font-12 font-weight-500">Quantidade máxima de parcela:</p></div>
+                    <div class="col-lg-2 custom-control custom-switch">
+                        <input type="text" name="parcelaBoleto" id="numParcelaBoleto" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row mt-30">
+                    <div class="col-sm-5"><p class="font-14 font-weight-500">Aceita parcelamento no cartão de crédito?</p></div>
+                    <div class="col-lg-4 custom-control custom-switch">
+                        <input type="checkbox" name="credCard" class="custom-control-input" id="doCredCard">
+                        <label class="custom-control-label" for="doCredCard"></label>
+                    </div>
+                </div>
+
+                <div class="row mt-20 d-flex align-items-center">
+                    <div class="col-lg-4"><label class="font-12 font-weight-500">Quantidade máxima de parcela:</label></div>
+                    <div class="col-lg-2 custom-control custom-switch">
+                        <input type="text" name="parcelaCred" id="numParcelaCred" class="form-control">
+                    </div>
+                </div>
+         </div>
+
+
         @if($authUser->isOrganization() and $authUser->id == $webinar->creator_id)
             <div class="form-group mt-15">
                 <label class="input-label">{{ trans('update.organization_price') }}</label>
