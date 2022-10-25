@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-group mt-15">
-            <label class="input-label">Configuração de pagamento</label>
+            <label class="input-label">Configuração de pagamento do curso</label>
                 <div class="row mt-15">
                     <div class="col-lg-5"><p class="font-14 font-weight-500">Aceita parcelamento em boleto?</p></div>
                     <div class="col-lg-2 custom-control custom-switch">
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="row mt-20 d-flex align-items-center">
-                    <div class="col-lg-4"><label class="font-12 font-weight-500">Insira a quantidade de parcelas:</label></div>
+                    <div class="col-lg-4"><p class="font-12 font-weight-500">Quantidade máxima de parcela:</p></div>
                     <div class="col-lg-2 custom-control custom-switch">
                         <input type="text" name="parcelaBoleto" id="numParcelaBoleto" class="form-control">
                     </div>
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="row mt-20 d-flex align-items-center">
-                    <div class="col-lg-4"><label class="font-12 font-weight-500">Insira a quantidade de parcelas:</label></div>
+                    <div class="col-lg-4"><label class="font-12 font-weight-500">Quantidade máxima de parcela:</label></div>
                     <div class="col-lg-2 custom-control custom-switch">
                         <input type="text" name="parcelaCred" id="numParcelaCred" class="form-control">
                     </div>
