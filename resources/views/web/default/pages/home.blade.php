@@ -176,13 +176,12 @@
                 <div class="row">
                     <div class="col-sm mt-30 text-uppercase font-weight-bold">
                         <p>Vídeo de apresentação para Alunos</p>
-                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/wuwXTSF9tdk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/kRmh0TPPecY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-
                     
                     <div class="col-sm mt-30 text-uppercase font-weight-bold">
                         <p>Vídeo de apresentação para Professores</p>
-                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/meQXoltxZXQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="100%" height="300" src="https://www.youtube.com/embed/meQXoltxZXQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                   </div>
             </div> 
