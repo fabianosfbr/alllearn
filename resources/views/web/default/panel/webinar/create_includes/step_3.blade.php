@@ -41,8 +41,8 @@
                     </div>
                 </div>
 
-                <div class="row mt-20 d-flex align-items-center">
-                    <div class="col-lg-4"><p class="font-12 font-weight-500">Quantidade máxima de parcela:</p></div>
+                <div style="display: none;" class="row mt-20 align-items-center" id="parcelasBoleto">
+                    <div class="col-lg-4"><p class="font-12 font-weight-500">Número máximo de parcela:</p></div>
                     <div class="col-lg-2 custom-control custom-switch">
                         <input type="text" name="parcelaBoleto" id="numParcelaBoleto" class="form-control">
                     </div>
@@ -56,8 +56,8 @@
                     </div>
                 </div>
 
-                <div class="row mt-20 d-flex align-items-center">
-                    <div class="col-lg-4"><label class="font-12 font-weight-500">Quantidade máxima de parcela:</label></div>
+                <div style="display: none;" class="row mt-20 align-items-center" id="parcelasCredCard">
+                    <div class="col-lg-4"><label class="font-12 font-weight-500">Número máximo de parcela:</label></div>
                     <div class="col-lg-2 custom-control custom-switch">
                         <input type="text" name="parcelaCred" id="numParcelaCred" class="form-control">
                     </div>
@@ -122,4 +122,5 @@
 @push('scripts_bottom')
     <script src="/assets/default/vendors/daterangepicker/daterangepicker.min.js"></script>
     <script src="/assets/default/vendors/sortable/jquery-ui.min.js"></script>
+    <script src="/assets/default/js/custom.js"></script>
 @endpush
