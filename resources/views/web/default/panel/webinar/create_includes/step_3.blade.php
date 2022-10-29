@@ -133,5 +133,5 @@
 @push('scripts_bottom')
     <script src="/assets/default/vendors/daterangepicker/daterangepicker.min.js"></script>
     <script src="/assets/default/vendors/sortable/jquery-ui.min.js"></script>
-    <script src="/assets/default/js/custom.js"></script>
+    <script src="/assets/default/js/step3.js"></script>
 @endpush
