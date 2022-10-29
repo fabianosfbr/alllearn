@@ -36,30 +36,41 @@
                 <div class="row mt-15">
                     <div class="col-lg-5"><p class="font-14 font-weight-500">Aceita parcelamento em boleto?</p></div>
                     <div class="col-lg-2 custom-control custom-switch">
-                        <input type="checkbox" name="boleto" class="custom-control-input" id="doBoleto">
+                        <input type="checkbox" name="invoice" {{ ((!empty($webinar) && $webinar->invoice) or old('invoice') == 1) ? 'checked' :  '' }} class="custom-control-input" id="doBoleto">
                         <label class="custom-control-label" for="doBoleto"></label>
                     </div>
                 </div>
 
-                <div style="display: none;" class="row mt-20 align-items-center" id="parcelasBoleto">
+                <div class="row mt-20 align-items-center {{ ((!empty($webinar) && $webinar->credit_card) or old('credit_card') == '1') ? '' : 'd-none' }}" id="parcelasBoleto">
                     <div class="col-lg-4"><p class="font-12 font-weight-500">Número máximo de parcela:</p></div>
                     <div class="col-lg-2 custom-control custom-switch">
-                        <input type="text" name="parcelaBoleto" id="numParcelaBoleto" class="form-control">
+                        <input type="text" name="invoice_installment" value="{{ !empty($webinar) ? $webinar->invoice_installment : old('invoice_installment') }}" id="numParcelaBoleto" class="form-control">
+                        @error('invoice_installment')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="row mt-30">
                     <div class="col-sm-5"><p class="font-14 font-weight-500">Aceita parcelamento no cartão de crédito?</p></div>
                     <div class="col-lg-4 custom-control custom-switch">
-                        <input type="checkbox" name="credCard" class="custom-control-input" id="doCredCard">
+
+                        <input type="checkbox" name="credit_card" {{ ((!empty($webinar) && $webinar->credit_card) or old('credit_card') == 1) ? 'checked' :  '' }} class="custom-control-input" id="doCredCard">
                         <label class="custom-control-label" for="doCredCard"></label>
                     </div>
                 </div>
 
-                <div style="display: none;" class="row mt-20 align-items-center" id="parcelasCredCard">
+                <div class="row mt-20 align-items-center {{ ((!empty($webinar) && $webinar->credit_card) or old('credit_card') == '1') ? '' : 'd-none' }}" id="parcelasCredCard">
                     <div class="col-lg-4"><label class="font-12 font-weight-500">Número máximo de parcela:</label></div>
                     <div class="col-lg-2 custom-control custom-switch">
-                        <input type="text" name="parcelaCred" id="numParcelaCred" class="form-control">
+                        <input type="text" name="credit_card_installment" value="{{ !empty($webinar) ? $webinar->credit_card_installment : old('credit_card_installment') }}" id="numParcelaCred" class="form-control">
+                        @error('credit_card_installment')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
          </div>
@@ -122,5 +133,5 @@
 @push('scripts_bottom')
     <script src="/assets/default/vendors/daterangepicker/daterangepicker.min.js"></script>
     <script src="/assets/default/vendors/sortable/jquery-ui.min.js"></script>
-    <script src="/assets/default/js/custom.js"></script>
+    <script src="/assets/default/js/step3.js"></script>
 @endpush
