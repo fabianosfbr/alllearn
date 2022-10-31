@@ -3,18 +3,20 @@ const gatewayPayment = document.getElementById('gatewayPay')
 const choseCredCard = document.getElementById('choseCredCard')
 
 $('input[type=radio]').on('click', function() {
-    $('input[name="gateway"]:checked').not(this).prop('checked', true);
-    $('input[name="alllearn"]:checked').not(this).prop('checked', false);
     $('input[name="boleto"]:checked').not(this).prop('checked', false);
     $('input[name="pix"]:checked').not(this).prop('checked', false);
     $('input[name="credCard"]:checked').not(this).prop('checked', false);
 });
 
 $('body').on('click','input[name="gateway"]',() => {
+  $('input[name="gateway"]:checked').not(this).prop('checked', true);
+  $('input[name="alllearn"]:checked').not(this).prop('checked', false);
   $("#personalInfo").addClass("d-block");
   $("#paymentOptions").addClass("d-block");
 })
 $('body').on("click",'input[name="alllearn"]',() => {
+  $('input[name="gateway"]:checked').not(this).prop('checked', false);
+  $('input[name="alllearn"]:checked').not(this).prop('checked', true);
   $("#personalInfo").addClass("d-block");
   $("#paymentOptions").removeClass("d-block");
   $("#paymentOptions").addClass("d-none");

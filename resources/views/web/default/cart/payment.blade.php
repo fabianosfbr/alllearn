@@ -89,7 +89,7 @@
                         <div class="col-lg-4">
                             <label class="input-label">CPF/CNPJ</label>
                             <input onchange="toggleButton()" id="cpf_cnpj" type="text" name="cpf_cnpj" class="form-control @error('cpf_cnpj')  is-invalid @enderror" placeholder=""/>
-                            @error('cpf')
+                            @error('cpf_cnpj')
                             <div class="invalid-feedback d-flex">
                                 {{ $message }}
                             </div>
@@ -103,7 +103,7 @@
                         <div class="col-lg-2">
                             <label class="input-label">CEP</label>
                             <input onchange="toggleButton()" id="cep" type="text" name="cep" class="form-control @error('cep')  is-invalid @enderror" placeholder=""/>
-                            @error('cpf')
+                            @error('cep')
                             <div class="invalid-feedback d-flex">
                                 {{ $message }}
                             </div>
@@ -112,7 +112,7 @@
                         <div class="col-lg-4">
                             <label class="input-label">Nome da rua</label>
                             <input onchange="toggleButton()" id="street" type="text" name="street" class="form-control @error('street')  is-invalid @enderror" placeholder=""/>
-                            @error('cpf')
+                            @error('street')
                             <div class="invalid-feedback d-flex">
                                 {{ $message }}
                             </div>
@@ -121,7 +121,7 @@
                         <div class="col-lg-2">
                             <label class="input-label">Número</label>
                             <input onchange="toggleButton()" id="numStreet" type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" placeholder=""/>
-                            @error('cpf')
+                            @error('street_number')
                             <div class="invalid-feedback d-flex">
                                 {{ $message }}
                             </div>
@@ -135,7 +135,7 @@
                         <div class="col-lg-3">
                             <label class="input-label">Bairro</label>
                             <input onchange="toggleButton()" id="district" type="text" name="district" class="form-control @error('district')  is-invalid @enderror" placeholder=""/>
-                            @error('cpf')
+                            @error('district')
                             <div class="invalid-feedback d-flex">
                                 {{ $message }}
                             </div>
@@ -144,7 +144,7 @@
                         <div class="col-lg-2">
                             <label class="input-label">Cidade</label>
                             <input onchange="toggleButton()" id="city" type="text" name="city" class="form-control @error('city')  is-invalid @enderror" placeholder=""/>
-                            @error('cpf')
+                            @error('city')
                             <div class="invalid-feedback d-flex">
                                 {{ $message }}
                             </div>
@@ -222,8 +222,8 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <label class="input-label">Nome do cartão de crédito</label>
-                        <input id="nameCartao" type="text" name="nameCartao" class="form-control @error('nameCartao')  is-invalid @enderror" placeholder=""/>
-                        @error('cpf')
+                        <input id="nameCartao" type="text" name="nameCartao" class="form-control @error('nameCard')  is-invalid @enderror" placeholder=""/>
+                        @error('nameCard')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
@@ -232,7 +232,7 @@
                     <div class="col-lg-3">
                         <label class="input-label">Número do cartão</label>
                         <input id="numCredCard" type="text" name="numCredCard" class="form-control @error('numCredCard')  is-invalid @enderror" placeholder=""/>
-                        @error('cpf')
+                        @error('numCredCard')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
@@ -243,8 +243,8 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <label class="input-label">Data de vencimento</label>
-                            <input id="nameCartao" type="text" name="nameCartao" class="form-control @error('nameCartao')  is-invalid @enderror" placeholder=""/>
-                            @error('cpf')
+                            <input id="nameCartao" type="text" name="expiration" class="form-control @error('expiration')  is-invalid @enderror" placeholder=""/>
+                            @error('expiration')
                             <div class="invalid-feedback d-flex">
                                 {{ $message }}
                             </div>
@@ -252,8 +252,8 @@
                         </div>
                         <div class="col-lg-1">
                             <label class="input-label">CVV</label>
-                            <input id="numCredCard" type="text" name="numCredCard" class="form-control @error('numCredCard')  is-invalid @enderror" placeholder=""/>
-                            @error('cpf')
+                            <input id="numCredCard" type="text" name="cvv" class="form-control @error('cvv')  is-invalid @enderror" placeholder=""/>
+                            @error('cvv')
                             <div class="invalid-feedback d-flex">
                                 {{ $message }}
                             </div>
