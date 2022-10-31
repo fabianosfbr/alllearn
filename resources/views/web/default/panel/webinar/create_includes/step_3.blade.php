@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div class="row mt-20 align-items-center {{ ((!empty($webinar) && $webinar->credit_card) or old('credit_card') == '1') ? '' : 'd-none' }}" id="parcelasBoleto">
+                <div class="row mt-20 align-items-center {{ ((!empty($webinar) && $webinar->credit_card) or old('credit_card') == '1') ? 'd-flex' : 'd-none' }}" id="parcelasBoleto">
                     <div class="col-lg-4"><p class="font-12 font-weight-500">Número máximo de parcela:</p></div>
                     <div class="col-lg-2 custom-control custom-switch">
                         <input type="text" name="invoice_installment" value="{{ !empty($webinar) ? $webinar->invoice_installment : old('invoice_installment') }}" id="numParcelaBoleto" class="form-control">
