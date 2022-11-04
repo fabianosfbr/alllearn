@@ -18,7 +18,7 @@ return [
     'images' => 'Imagens',
     'demo_video' => 'Video de demonstração',
     'optional' => 'Opcional',
-    'description' => 'Descrição',
+    'description' => 'Breve descrição do curso',
     'summary' => 'Resumo',
     'study_time' => 'Tempo de estudo',
     'date_time' => 'Data/Hora',

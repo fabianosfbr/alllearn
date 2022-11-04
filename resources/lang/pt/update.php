@@ -769,7 +769,7 @@ return [
     'the_notification_was_successfully_sent_to_n_students' => 'A notificação foi enviada com sucesso para :count alunos.',
 
     // Course Bundles
-    'bundle' => 'Pacote de cursos',
+    'bundle' => 'Apenas cursos com pacotes de compra',
     'bundles' => 'Pacotes de curso',
     'new_bundle' => 'Novo pacote',
     'new_bundle_page_title_step' => 'Novo pacote de curso Passo :step',

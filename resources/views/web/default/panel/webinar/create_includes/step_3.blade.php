@@ -16,6 +16,7 @@
                 {{ $message }}
             </div>
             @enderror
+            <p class="font-12 text-gray mt-10">- <span style="font-weight: bold">Exclusivo para cursos livres.</span></p>
             <p class="font-12 text-gray mt-10">- Quantidade de dias disponível para o usuário consumir o curso. <span style="font-weight: bold">Para acesso vitalício deixe em branco.</span></p>
             <p class="font-12 text-gray mt-10">- {{ trans('update.access_days_input_hint') }}</p>
         </div>

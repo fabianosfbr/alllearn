@@ -16,7 +16,7 @@ return [
      'course_cover_size' => '1920x530px preferencial',
      'capacity_placeholder' => 'Quantos alunos serão permitidos?',
      'subscribe_hint' => 'Os alunos poderão acessar seu curso através de uma assinatura mensal, além de comprar diretamente.',
-     'webinar_description_placeholder' => 'Mínimo de 300 palavras. HTML e imagens são permitidos. ',
+     'webinar_description_placeholder' => 'Máximo de 300 palavras. HTML e imagens são permitidos. ',
      'empty_means_unlimited' => 'Deixe em branco para ilimitado.',
 
 ];
