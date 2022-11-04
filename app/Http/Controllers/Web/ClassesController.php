@@ -49,6 +49,7 @@ class ClassesController extends Controller
 
         $category = Category::where('id', 644)->first();
 
+
         $seoSettings = getSeoMetas('classes');
         $pageTitle = $seoSettings['title'] ?? '';
         $pageDescription = $seoSettings['description'] ?? '';
@@ -200,26 +201,26 @@ class ClassesController extends Controller
 
             //Transforma os id do filter_options em termos da consulta
             $filters = DB::table('filter_options')
-            ->join('filter_option_translations', 'filter_options.id', '=', 'filter_option_translations.filter_option_id')
-            ->whereIn('filter_options.id', $filterOptions)
-            ->groupBy('filter_option_translations.title')->get();
+                ->join('filter_option_translations', 'filter_options.id', '=', 'filter_option_translations.filter_option_id')
+                ->whereIn('filter_options.id', $filterOptions)
+                ->groupBy('filter_option_translations.title')->get();
 
             $items = array();
-            foreach ($filters as $item) { 
+            foreach ($filters as $item) {
                 $items[] = $item->title;
-            } 
+            }
 
             //Pesquisa todos os filter_options de acordo com os termos
             $filters = DB::table('filter_options')
-            ->join('filter_option_translations', 'filter_options.id', '=', 'filter_option_translations.filter_option_id')
-            ->whereIn('filter_option_translations.title', $items)
-            ->get();  
+                ->join('filter_option_translations', 'filter_options.id', '=', 'filter_option_translations.filter_option_id')
+                ->whereIn('filter_option_translations.title', $items)
+                ->get();
 
-            foreach ($filters as $item) { 
+            foreach ($filters as $item) {
                 $filterOptions[] = $item->filter_option_id;
-            }                             
+            }
 
-            
+
 
             $webinarIdsFilterOptions = WebinarFilterOption::whereIn('filter_option_id', $filterOptions)
                 ->pluck($this->columnId)
