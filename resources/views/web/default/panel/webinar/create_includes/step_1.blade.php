@@ -48,7 +48,7 @@
 
         <div class="form-group mt-15">
            <label class="input-label ">
-                {{ trans('public.title') }}
+                Nome do curso:
             </label>
             <input type="text" name="title" value="{{ (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->title : old('title') }}" class="form-control @error('title')  is-invalid @enderror" placeholder="Digite aqui o título do seu curso"/>
             @error('title')
@@ -58,21 +58,22 @@
             @enderror
         </div>
 
-        <div class="form-group mt-15">
-            <label class="input-label">
-                {{ trans('public.seo_description') }}
-            </label>
-            <div>
-                <p class="font-12 text-gray">- Descreva aqui um breve resumo do conteúdo que o visitante vai encontrar ao acessar seu curso, ele aparece logo abaixo do título da página quando faz uma pesquisa no Google.</p><br>
-                <p class="font-12 text-gray"><span style="font-weight: bold">Dica:</span> Seja objetivo e use ao mesmo tempo uma linguagem persuasiva que desperte interesse no visitante.</p><br>
+            <div class="col-12">
+                <div class="form-group">
+                    <label class="input-label">{{ trans('public.description') }}</label>
+                    <div>
+                        <p class="font-12 text-gray">- Descrição do seu curso para seus compradores.</p><br>
+                        <p class="font-12 text-gray"><span style="font-weight: bold">Dica:</span> Forneça o máximo de informações e detalhes sobre seu curso.</p><br>
+                    </div>
+                    <textarea id="summernote" name="description" class="form-control @error('description')  is-invalid @enderror" placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->description : old('description')  !!}</textarea>
+                    @error('description')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
             </div>
-            <input type="text" name="seo_description" value="{{ (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->seo_description : old('seo_description') }}" class="form-control @error('seo_description')  is-invalid @enderror " placeholder="{{ trans('forms.50_160_characters_preferred') }}"/>
-            @error('seo_description')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
-        </div>
+
 
         <div class="form-group mt-15">
             <label class="input-label ">
@@ -158,25 +159,23 @@
                 @enderror
             </div>
         </div>
-
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="form-group">
-            <label class="input-label">{{ trans('public.description') }}</label>
+                            
+        <div class="form-group mt-15">
+            <label class="input-label">
+                {{ trans('public.seo_description') }}
+            </label>
             <div>
-                <p class="font-12 text-gray">- Descrição do seu curso para seus compradores.</p><br>
-                <p class="font-12 text-gray"><span style="font-weight: bold">Dica:</span> Forneça o máximo de informações e detalhes sobre seu curso.</p><br>
+                <p class="font-12 text-gray">- Descreva aqui um breve resumo do conteúdo que o visitante vai encontrar ao acessar seu curso, ele aparece logo abaixo do título da página quando faz uma pesquisa no Google.</p><br>
+                <p class="font-12 text-gray"><span style="font-weight: bold">Dica:</span> Seja objetivo e use ao mesmo tempo uma linguagem persuasiva que desperte interesse no visitante.</p><br>
             </div>
-            <textarea id="summernote" name="description" class="form-control @error('description')  is-invalid @enderror" placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->description : old('description')  !!}</textarea>
-            @error('description')
+            <input type="text" name="seo_description" value="{{ (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->seo_description : old('seo_description') }}" class="form-control @error('seo_description')  is-invalid @enderror " placeholder="{{ trans('forms.50_160_characters_preferred') }}"/>
+            @error('seo_description')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
             @enderror
         </div>
+
     </div>
 </div>
 

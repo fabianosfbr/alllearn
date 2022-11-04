@@ -4,6 +4,47 @@
     <link rel="stylesheet" href="/assets/default/vendors/bootstrap-tagsinput/bootstrap-tagsinput.min.css">
 @endpush
 
+
+<div class="form-group mt-15 {{ (!empty($webinarCategoryFilters) and count($webinarCategoryFilters)) ? '' : 'd-none' }}" id="categoriesFiltersContainer">
+    <span class="input-label d-block">{{ trans('public.category_filters') }}</span>
+    <div>
+         <br>
+         <p class="font-12 text-gray">- Selecione os filtros de acordo com seu curso.</p><br>
+    </div>
+    <div id="categoriesFiltersCard" class="row mt-20">
+
+        @if(!empty($webinarCategoryFilters) and count($webinarCategoryFilters))
+            @foreach($webinarCategoryFilters as $filter)
+                <div class="col-12 col-md-3">
+                    <div class="webinar-category-filters">
+                        <strong class="category-filter-title d-block">{{ $filter->title }}</strong>
+                        <div class="py-10"></div>
+
+                        @php
+                            $webinarFilterOptions = $webinar->filterOptions->pluck('filter_option_id')->toArray();
+
+                            if (!empty(old('filters'))) {
+                                $webinarFilterOptions = array_merge($webinarFilterOptions, old('filters'));
+                            }
+                        @endphp
+
+                        @foreach($filter->options as $option)
+                            <div class="form-group mt-10 d-flex align-items-center justify-content-between">
+                                <label class="cursor-pointer font-14 text-gray" for="filterOptions{{ $option->id }}">{{ $option->title }}</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="filters[]" value="{{ $option->id }}" {{ ((!empty($webinarFilterOptions) && in_array($option->id, $webinarFilterOptions)) ? 'checked' : '') }} class="custom-control-input" id="filterOptions{{ $option->id }}">
+                                    <label class="custom-control-label" for="filterOptions{{ $option->id }}"></label>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        @endif
+
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12 col-md-6 mt-15">
 
@@ -147,9 +188,8 @@
         <div>
             <p class="font-12 text-gray">- Ao habilitar esse opção os alunos conseguirão fazer o download dos conteúdos do curso.</p>
         </div>
-
-
-        <div class="form-group mt-30 d-flex align-items-center justify-content-between">
+        {{--
+            <div class="form-group mt-30 d-flex align-items-center justify-content-between">
             <label class="cursor-pointer input-label" for="partnerInstructorSwitch">
                 {{ trans('public.partner_instructor') }} 
             </label>
@@ -162,26 +202,8 @@
             <p class="font-12 text-gray">- Ao habilitar esse opção o professor convidado terá acesso ao conteúdo do curso. Seu perfil será mostrado na página do curso.</p>
             <p class="font-12 text-gray">- O professor precisa ter conta no All Learn.</p>
             
-        </div>
-
-
-        <div id="partnerInstructorInput" class="form-group mt-15 {{ ((!empty($webinar) && $webinar->partner_instructor) or old('partner_instructor') == 'on') ? '' : 'd-none' }}">
-            <label class="input-label d-block">{{ trans('public.select_a_partner_teacher') }}</label>
-
-            <select name="partners[]" class="form-control panel-search-user-select2 @error('partners')  is-invalid @enderror" multiple="" data-search-option="just_teachers" data-placeholder="{{ trans('public.search_instructor') }}">
-                @if(!empty($webinar->webinarPartnerTeacher))
-                    @foreach($webinar->webinarPartnerTeacher as $partnerTeacher)
-                        <option selected value="{{ $partnerTeacher->teacher->id }}">{{ $partnerTeacher->teacher->full_name }}</option>
-                    @endforeach
-                @endif
-            </select>
-            @error('partners')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
-        </div>
-
+        </div>    
+        --}}
         <div class="form-group mt-15">
             <label class="input-label d-block">
                 {{ trans('public.tags') }} (opcional)
@@ -219,46 +241,44 @@
             </div>
             @enderror
         </div>
-
-    </div>
-</div>
-
-<div class="form-group mt-15 {{ (!empty($webinarCategoryFilters) and count($webinarCategoryFilters)) ? '' : 'd-none' }}" id="categoriesFiltersContainer">
-    <span class="input-label d-block">{{ trans('public.category_filters') }}</span>
-    <div>
-         <br>
-         <p class="font-12 text-gray">- Selecione os filtros de acordo com seu curso.</p><br>
-    </div>
-    <div id="categoriesFiltersCard" class="row mt-20">
-
-        @if(!empty($webinarCategoryFilters) and count($webinarCategoryFilters))
-            @foreach($webinarCategoryFilters as $filter)
-                <div class="col-12 col-md-3">
-                    <div class="webinar-category-filters">
-                        <strong class="category-filter-title d-block">{{ $filter->title }}</strong>
-                        <div class="py-10"></div>
-
-                        @php
-                            $webinarFilterOptions = $webinar->filterOptions->pluck('filter_option_id')->toArray();
-
-                            if (!empty(old('filters'))) {
-                                $webinarFilterOptions = array_merge($webinarFilterOptions, old('filters'));
-                            }
-                        @endphp
-
-                        @foreach($filter->options as $option)
-                            <div class="form-group mt-10 d-flex align-items-center justify-content-between">
-                                <label class="cursor-pointer font-14 text-gray" for="filterOptions{{ $option->id }}">{{ $option->title }}</label>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="filters[]" value="{{ $option->id }}" {{ ((!empty($webinarFilterOptions) && in_array($option->id, $webinarFilterOptions)) ? 'checked' : '') }} class="custom-control-input" id="filterOptions{{ $option->id }}">
-                                    <label class="custom-control-label" for="filterOptions{{ $option->id }}"></label>
-                                </div>
-                            </div>
-                        @endforeach
+        <section class="mt-50">
+            <div class="">
+                <h2 class="section-title after-line">{{ trans('public.prerequisites') }} ({{ trans('public.optional') }})</h2>
+            </div>
+            <div>
+                <br>
+                <p class="font-12 text-gray">- Aqui você deve incluir os pré requisitos necessários para que o aluno ingressar neste curso. Ex. Curso Excel Avançado, você pode definir como pré-requisito que o aluno tenha excel intermediário.</p>
+                <p class="font-12 text-gray">- Só pode escolher como requsito necessário, os seus cursos e não de outros.</p>
+                <br>
+            </div>
+        
+            <button id="webinarAddPrerequisites" data-webinar-id="{{ $webinar->id }}" type="button" class="btn btn-primary btn-sm mt-15">{{ trans('public.add_prerequisites') }}</button>
+        
+            <div class="row mt-10">
+                <div class="col-12">
+        
+                    <div class="accordion-content-wrapper mt-15" id="prerequisitesAccordion" role="tablist" aria-multiselectable="true">
+                        @if(!empty($webinar->prerequisites) and count($webinar->prerequisites))
+                            <ul class="draggable-lists" data-order-table="prerequisites">
+                                @foreach($webinar->prerequisites as $prerequisiteInfo)
+                                    @include('web.default.panel.webinar.create_includes.accordions.prerequisites',['webinar' => $webinar,'prerequisite' => $prerequisiteInfo])
+                                @endforeach
+                            </ul>
+                        @else
+                            @include(getTemplate() . '.includes.no-result',[
+                                'file_name' => 'comment.png',
+                                'title' => trans('public.prerequisites_no_result'),
+                                'hint' => trans('public.prerequisites_no_result_hint'),
+                            ])
+                        @endif
                     </div>
                 </div>
-            @endforeach
-        @endif
+            </div>
+        </section>
+        
+        <div id="newPrerequisiteForm" class="d-none">
+            @include('web.default.panel.webinar.create_includes.accordions.prerequisites',['webinar' => $webinar])
+        </div>
 
     </div>
 </div>

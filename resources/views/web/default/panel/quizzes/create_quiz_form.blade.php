@@ -99,14 +99,6 @@
                     </div>
 
                     <div class="form-group mt-20 d-flex align-items-center justify-content-between">
-                        <label class="cursor-pointer input-label" for="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}">{{ trans('quiz.certificate_included') }}</label>
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" name="ajax[certificate]" class="js-ajax-certificate custom-control-input" id="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}" {{ !empty($quiz) && $quiz->certificate ? 'checked' : ''}}>
-                            <label class="custom-control-label" for="certificateSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}"></label>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-20 d-flex align-items-center justify-content-between">
                         <label class="cursor-pointer input-label" for="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}">{{ trans('quiz.active_quiz') }}</label>
                         <div class="custom-control custom-switch">
                             <input type="checkbox" name="ajax[status]" class="js-ajax-status custom-control-input" id="statusSwitch{{ !empty($quiz) ? $quiz->id : 'record' }}" {{ (!empty($quiz) && $quiz->status == 'active') ? 'checked' : ''}}>

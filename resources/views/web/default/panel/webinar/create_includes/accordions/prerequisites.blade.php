@@ -39,14 +39,6 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div class="form-group mt-30 d-flex align-items-center justify-content-between mb-0">
-                            <label class="cursor-pointer input-label" for="requiredPrerequisitesSwitch{{ !empty($prerequisite) ? $prerequisite->id : 'record' }}">{{ trans('public.required') }}</label>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" id="requiredPrerequisitesSwitch{{ !empty($prerequisite) ? $prerequisite->id : 'record' }}" name="ajax[{{ !empty($prerequisite) ? $prerequisite->id : 'new' }}][required]" class="custom-control-input" @if(!empty($prerequisite) and $prerequisite->required) checked="checked" @endif>
-                                <label class="custom-control-label" for="requiredPrerequisitesSwitch{{ !empty($prerequisite) ? $prerequisite->id : 'record' }}"></label>
-                            </div>
-                        </div>
-
                         <div class="mt-5">
                             <p class="font-12 text-gray">- {{ trans('webinars.required_hint') }}</p>
                         </div>
