@@ -1168,7 +1168,7 @@ return [
 
     'cant_reserve_your_appointment' => 'Você não pode agendar um horário',
     'this_course_has_been_used_before' => 'Este curso já foi usado antes',
-    'include_certificate' => 'Certificado de Conclusão',
+    'include_certificate' => 'Emissão de diploma ou certificado?',
     'certificate_completion_hint' => 'Um certificado será concedido ao estudante quando aprovado no curso.',
     'guarantee' => 'Texto de garantia',
     'enter_guarantee_text' => 'Inserir um texto de garantia',

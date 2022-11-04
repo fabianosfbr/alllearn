@@ -124,8 +124,8 @@ return [
     'empty_means_webinar_capacity' => 'Deixe em branco para usar a capacidade total do curso',
 
     'show_only_subscribe' => 'Apenas com usuários inscritos',
-    'show_only_certificate_included' => 'Apenas que emitem certificado',
-    'show_only_with_quiz' => 'Apenas com questionário',
+    'show_only_certificate_included' => 'Apenas que emitem certificado ou diploma',
+    'show_only_with_quiz' => 'Apenas com provas e avaliações',
     'show_only_featured' => 'Apenas cursos em destaque',
 
     'private' => 'Privado',

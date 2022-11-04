@@ -63,29 +63,6 @@
 
                 <div class="col-12 col-lg-4">
                     <div class="mt-20 p-20 rounded-sm shadow-lg border border-gray300 filters-container">
-
-                        <div class="">
-                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">{{ trans('public.type') }}</h3>
-
-                            <div class="pt-10">
-                                @foreach(['bundle','webinar','course','text_lesson'] as $typeOption)
-                                <div class="d-flex align-items-center justify-content-between mt-20">
-                                    <label class="cursor-pointer" for="filterLanguage{{ $typeOption }}">
-                                        @if($typeOption == 'bundle')
-                                        {{ trans('update.bundle') }}
-                                        @else
-                                        {{ trans('webinars.'.$typeOption) }}
-                                        @endif
-                                    </label>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="type[]" id="filterLanguage{{ $typeOption }}" value="{{ $typeOption }}" @if(in_array($typeOption, request()->get('type', []))) checked="checked" @endif class="custom-control-input">
-                                        <label class="custom-control-label" for="filterLanguage{{ $typeOption }}"></label>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-
                         @if(!empty($category) and !empty($category->filters))
                         @foreach($category->filters as $filter)
                         <div class="mt-25 pt-25 border-top border-gray300">
@@ -109,9 +86,27 @@
                         @endif
 
                         <div class="mt-25 pt-25 border-top border-gray300">
-                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">{{ trans('site.more_options') }}</h3>
+                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">Outras opções</h3>
 
                             <div class="pt-10">
+                                <div class="pt-10">
+                                    @foreach(['bundle'] as $typeOption)
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="filterLanguage{{ $typeOption }}">
+                                            @if($typeOption == 'bundle')
+                                            {{ trans('update.bundle') }}
+                                            @else
+                                            {{ trans('webinars.'.$typeOption) }}
+                                            @endif
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="type[]" id="filterLanguage{{ $typeOption }}" value="{{ $typeOption }}" @if(in_array($typeOption, request()->get('type', []))) checked="checked" @endif class="custom-control-input">
+                                            <label class="custom-control-label" for="filterLanguage{{ $typeOption }}"></label>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+
                                 @foreach(['subscribe','certificate_included','with_quiz','featured'] as $moreOption)
                                 <div class="d-flex align-items-center justify-content-between mt-20">
                                     <label class="cursor-pointer" for="filterLanguage{{ $moreOption }}">{{ trans('webinars.show_only_'.$moreOption) }}</label>
