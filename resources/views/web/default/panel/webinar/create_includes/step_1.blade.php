@@ -57,21 +57,23 @@
             </div>
             @enderror
         </div>
-
-            <div class="col-12">
-                <div class="form-group">
-                    <label class="input-label">{{ trans('public.description') }}</label>
-                    <div>
-                        <p class="font-12 text-gray">- Descrição do seu curso para seus compradores.</p><br>
-                        <p class="font-12 text-gray"><span style="font-weight: bold">Dica:</span> Forneça o máximo de informações e detalhes sobre seu curso.</p><br>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="input-label">{{ trans('public.description') }}</label>
+                        <div>
+                            <p class="font-12 text-gray">- Descrição do seu curso para seus compradores.</p><br>
+                            <p class="font-12 text-gray"><span style="font-weight: bold">Dica:</span> Forneça o máximo de informações e detalhes sobre seu curso.</p><br>
+                        </div>
+                        <textarea id="summernote" name="description" class="form-control @error('description')  is-invalid @enderror" placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->description : old('description')  !!}</textarea>
+                        @error('description')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
-                    <textarea id="summernote" name="description" class="form-control @error('description')  is-invalid @enderror" placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->description : old('description')  !!}</textarea>
-                    @error('description')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
                 </div>
+
             </div>
 
 

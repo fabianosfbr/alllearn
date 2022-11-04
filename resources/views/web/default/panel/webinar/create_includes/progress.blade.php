@@ -1,22 +1,22 @@
 @php
     $progressSteps = [
         1 => [
-            'name' => 'informações básicas',
+            'name' => 'Informações básicas',
             'icon' => 'paper'
         ],
 
         2 => [
-            'name' => 'informações adicionais',
+            'name' => 'Informações adicionais',
             'icon' => 'paper_plus'
         ],
 
         3 => [
-            'name' => 'preços, formas de pagamento e promoções',
+            'name' => 'Preços, formas de pagamento e promoções',
             'icon' => 'wallet'
         ],
 
         4 => [
-            'name' => 'conteúdos (principalmente, mas não só para cursos livres)',
+            'name' => 'Conteúdos (principalmente, mas não só para cursos livres)',
             'icon' => 'folder'
         ],
 
@@ -26,7 +26,7 @@
         ],
 
         6 => [
-            'name' => 'mensagem ao revisor',
+            'name' => 'Mensagem ao revisor',
             'icon' => 'shield_done'
         ],
     ];
