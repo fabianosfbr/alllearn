@@ -3,11 +3,8 @@ font-size: 25px !important;
  color: #FFBB00;
 }
 
-.openDrop {
+.openDropdown {
   cursor: pointer;
-}
-
-.teste {
   font-weight: bold;
   font-size: 30px !important;
   color: #43D477;
