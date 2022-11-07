@@ -64,12 +64,13 @@
 
                 <div class="col-12 col-lg-4">
                     <div class="mt-20 p-20 rounded-sm shadow-lg border border-gray300 filters-container">
-                        <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
+                        <div class="mt-10 pt-10 d-flex justify-content-between">
                             <h3 class=" font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
                                 Expandir Filtros
                             </h3>
                             <i class="openDrop"><ion-icon name="chevron-down-outline" data-toggle="collapse" href="#collapseFilters"></ion-icon></i>
                         </div>
+                        <!--Dropdown Nível, Formato, tipo, forma de entrega e idioma -->
                         @if(!empty($category) and !empty($category->filters))
                         @foreach($category->filters as $filter)
                         <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
@@ -77,7 +78,7 @@
                                 {{ $filter->title }}
                             </h3>
                         </div>
-                        <div class="mt-25 pt-25 border-top border-gray300 collapse" id="collapseFilters">
+                        <div class="collapse" id="collapseFilters">
                             @if(!empty($filter->options))
                             <div class="pt-10">
                                 @foreach($filter->options as $option)
