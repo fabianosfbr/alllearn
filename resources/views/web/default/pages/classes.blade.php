@@ -173,13 +173,13 @@
                                     <div class="pt-10">
                                         <div class="pt-10">
                                             <div class="d-flex align-items-center justify-content-between mt-20">
-                                                <label class="cursor-pointer" for="fourStars">
+                                                <label class="cursor-pointer d-flex align-items-center" for="fourStars">
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star-outline"></ion-icon>
-                                                    <span>4.0 e acima</span> 
+                                                    <span class="textStars">4.0 e acima</span> 
                                                 </label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" name="fourStars" id="fourStars" value="" class="custom-control-input">
@@ -189,13 +189,13 @@
                                         </div>
                                         <div class="pt-10">
                                             <div class="d-flex align-items-center justify-content-between mt-20">
-                                                <label class="cursor-pointer" for="threeStars">
+                                                <label class="cursor-pointer d-flex align-items-center" for="threeStars">
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star-outline"></ion-icon>
                                                     <ion-icon name="star-outline"></ion-icon>
-                                                    <span>3.0 e acima</span>
+                                                    <span class="textStars">3.0 e acima</span>
                                                 </label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" name="threeStars" id="threeStars" value="" class="custom-control-input">
@@ -205,13 +205,13 @@
                                         </div>
                                         <div class="pt-10">
                                             <div class="d-flex align-items-center justify-content-between mt-20">
-                                                <label class="cursor-pointer" for="twoStars">
+                                                <label class="cursor-pointer d-flex align-items-center" for="twoStars">
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star-outline"></ion-icon>
                                                     <ion-icon name="star-outline"></ion-icon>
                                                     <ion-icon name="star-outline"></ion-icon>
-                                                    <span>2.0 e acima</span>
+                                                    <span class="textStars">2.0 e acima</span>
                                                 </label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" name="twoStars" id="twoStars" value="" class="custom-control-input">
