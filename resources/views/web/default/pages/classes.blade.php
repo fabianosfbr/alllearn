@@ -154,16 +154,16 @@
                             <div class="pt-10">
                                 <div class="pt-10">
                                     <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="fiveStars">
+                                        <label class="cursor-pointer" for="four_halfStars">
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star-half-outline"></ion-icon>
                                         </label>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="fiveStars" id="fiveStars" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="fiveStars"></label>
+                                            <input type="checkbox" name="four_halfStars" id="four_halfStars" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="four_halfStars"></label>
                                         </div>
                                     </div>
                                 </div>
@@ -182,6 +182,21 @@
                                         </div>
                                     </div>
                                 </div> 
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="three_falfStars">
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star-half-outline"></ion-icon>
+                                            <ion-icon name="star-outline"></ion-icon>
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="three_falfStars" id="three_falfStars" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="three_falfStars"></label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="pt-10">
                                     <div class="d-flex align-items-center justify-content-between mt-20">
                                         <label class="cursor-pointer" for="threeStars">
