@@ -3,6 +3,7 @@
 @push('styles_top')
 <link rel="stylesheet" href="/assets/default/vendors/swiper/swiper-bundle.min.css">
 <link rel="stylesheet" href="/assets/default/vendors/select2/select2.min.css">
+<link rel="stylesheet" href="/assets/default/css/custom.css">
 @endpush
 
 
@@ -84,6 +85,120 @@
                         </div>
                         @endforeach
                         @endif
+
+                        <div class="mt-25 pt-25 border-top border-gray300">
+                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">Preço</h3>
+
+                            <div class="pt-10">
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="zero_OneHundred">
+                                            De R$ 0,01 a R$ 100,00
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="zero_OneHundred" id="zero_OneHundred" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="zero_OneHundred"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="oneHundred_TwoHundred">
+                                            De R$ 100,01 a R$ 200,00
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="oneHundred_TwoHundred" id="oneHundred_TwoHundred" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="oneHundred_TwoHundred"></label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="twoHundred_fiveHundred">
+                                            De R$ 200,01 a R$ 500,00
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="twoHundred_fiveHundred" id="twoHundred_fiveHundred" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="twoHundred_fiveHundred"></label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="fiveHundred_oneThousand">
+                                            De R$ 500,00 a R$ 1.000,00
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="fiveHundred_oneThousand" id="fiveHundred_oneThousand" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="fiveHundred_oneThousand"></label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="oneThousand">
+                                            Acima de R$ 1.000,00
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="oneThousand" id="oneThousand" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="oneThousand"></label>
+                                        </div>
+                                    </div>
+                                </div>           
+                            </div>
+                        </div>
+
+                        <div class="mt-25 pt-25 border-top border-gray300">
+                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">Classificações</h3>
+
+                            <div class="pt-10">
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="fiveStars">
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="fiveStars" id="fiveStars" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="fiveStars"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="fourStars">
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star-outline"></ion-icon>
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="fourStars" id="fourStars" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="fourStars"></label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="pt-10">
+                                    <div class="d-flex align-items-center justify-content-between mt-20">
+                                        <label class="cursor-pointer" for="threeStars">
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star"></ion-icon>
+                                            <ion-icon name="star-outline"></ion-icon>
+                                            <ion-icon name="star-outline"></ion-icon>
+                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="threeStars" id="threeStars" value="" class="custom-control-input">
+                                            <label class="custom-control-label" for="threeStars"></label>
+                                        </div>
+                                    </div>
+                                </div>            
+                            </div>
+                        </div>
 
                         <div class="mt-25 pt-25 border-top border-gray300">
                             <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">Outras opções</h3>
