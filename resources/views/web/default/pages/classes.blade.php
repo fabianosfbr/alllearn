@@ -178,7 +178,7 @@
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star"></ion-icon>
                                                     <ion-icon name="star-outline"></ion-icon>
-                                                    <span>4,0 e acima</span> 
+                                                    <span>4.0 e acima</span> 
                                                 </label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" name="fourStars" id="fourStars" value="" class="custom-control-input">
