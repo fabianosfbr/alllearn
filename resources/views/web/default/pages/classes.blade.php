@@ -257,9 +257,8 @@
                                     </div>
                                     @endforeach
                                 </div>
+                                <button type="submit" class="btn btn-sm btn-primary btn-block mt-30">{{ trans('site.filter_items') }}</button>
                             </div>    
-
-                        <button type="submit" class="btn btn-sm btn-primary btn-block mt-30">{{ trans('site.filter_items') }}</button>
                     </div>
                 </div>
             </div>
