@@ -2,3 +2,7 @@ ion-icon {
 font-size: 22px !important;
  color: #FFBB00;
 }
+
+.openDrop {
+  cursor: pointer;
+}

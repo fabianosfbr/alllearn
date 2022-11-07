@@ -64,11 +64,20 @@
 
                 <div class="col-12 col-lg-4">
                     <div class="mt-20 p-20 rounded-sm shadow-lg border border-gray300 filters-container">
+                        <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
+                            <h3 class=" font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
+                                Expandir Filtros
+                            </h3>
+                            <i class="openDrop"><ion-icon name="chevron-down-outline" data-toggle="collapse" href="#collapseFilters"></ion-icon></i>
+                        </div>
                         @if(!empty($category) and !empty($category->filters))
                         @foreach($category->filters as $filter)
-                        <div class="mt-25 pt-25 border-top border-gray300">
-                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">{{ $filter->title }}</h3>
-
+                        <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
+                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
+                                {{ $filter->title }}
+                            </h3>
+                        </div>
+                        <div class="mt-25 pt-25 border-top border-gray300 collapse" id="collapseFilters">
                             @if(!empty($filter->options))
                             <div class="pt-10">
                                 @foreach($filter->options as $option)
@@ -86,157 +95,169 @@
                         @endforeach
                         @endif
 
-                        <div class="mt-25 pt-25 border-top border-gray300">
-                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">Preço</h3>
 
-                            <div class="pt-10">
-                                <div class="pt-10">
-                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="zero_OneHundred">
-                                            De R$ 0,01 a R$ 100,00
-                                        </label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="zero_OneHundred" id="zero_OneHundred" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="zero_OneHundred"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pt-10">
-                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="oneHundred_TwoHundred">
-                                            De R$ 100,01 a R$ 200,00
-                                        </label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="oneHundred_TwoHundred" id="oneHundred_TwoHundred" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="oneHundred_TwoHundred"></label>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="pt-10">
-                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="twoHundred_fiveHundred">
-                                            De R$ 200,01 a R$ 500,00
-                                        </label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="twoHundred_fiveHundred" id="twoHundred_fiveHundred" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="twoHundred_fiveHundred"></label>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="pt-10">
-                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="fiveHundred_oneThousand">
-                                            De R$ 500,00 a R$ 1.000,00
-                                        </label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="fiveHundred_oneThousand" id="fiveHundred_oneThousand" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="fiveHundred_oneThousand"></label>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="pt-10">
-                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="oneThousand">
-                                            Acima de R$ 1.000,00
-                                        </label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="oneThousand" id="oneThousand" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="oneThousand"></label>
-                                        </div>
-                                    </div>
-                                </div>           
+                        <!--Drop down filtro Preço-->
+                            <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
+                                <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
+                                    Preço
+                                </h3>
                             </div>
-                        </div>
 
-                        <div class="mt-25 pt-25 border-top border-gray300">
-                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">Classificações</h3>
-
-                            <div class="pt-10">
-                                <div class="pt-10">
-                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="fourStars">
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star-outline"></ion-icon>
-                                            <span>4,0 e acima</span> 
-                                        </label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="fourStars" id="fourStars" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="fourStars"></label>
+                            <div class="collapse" id="collapseFilters">
+                                    <div class="pt-10">
+                                        <div class="d-flex align-items-center justify-content-between mt-20">
+                                            <label class="cursor-pointer" for="zero_OneHundred">
+                                                De R$ 0,01 a R$ 100,00
+                                            </label>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="zero_OneHundred" id="zero_OneHundred" value="" class="custom-control-input">
+                                                <label class="custom-control-label" for="zero_OneHundred"></label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="pt-10">
-                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="threeStars">
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star-outline"></ion-icon>
-                                            <ion-icon name="star-outline"></ion-icon>
-                                            <span>3.0 e acima</span>
-                                        </label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="threeStars" id="threeStars" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="threeStars"></label>
+                                    <div class="pt-10">
+                                        <div class="d-flex align-items-center justify-content-between mt-20">
+                                            <label class="cursor-pointer" for="oneHundred_TwoHundred">
+                                                De R$ 100,01 a R$ 200,00
+                                            </label>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="oneHundred_TwoHundred" id="oneHundred_TwoHundred" value="" class="custom-control-input">
+                                                <label class="custom-control-label" for="oneHundred_TwoHundred"></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="pt-10">
-                                    <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="twoStars">
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star-outline"></ion-icon>
-                                            <ion-icon name="star-outline"></ion-icon>
-                                            <ion-icon name="star-outline"></ion-icon>
-                                            <span>2.0 e acima</span>
-                                        </label>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="twoStars" id="twoStars" value="" class="custom-control-input">
-                                            <label class="custom-control-label" for="threeStars"></label>
+                                    </div> 
+                                    <div class="pt-10">
+                                        <div class="d-flex align-items-center justify-content-between mt-20">
+                                            <label class="cursor-pointer" for="twoHundred_fiveHundred">
+                                                De R$ 200,01 a R$ 500,00
+                                            </label>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="twoHundred_fiveHundred" id="twoHundred_fiveHundred" value="" class="custom-control-input">
+                                                <label class="custom-control-label" for="twoHundred_fiveHundred"></label>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>              
+                                    </div> 
+                                    <div class="pt-10">
+                                        <div class="d-flex align-items-center justify-content-between mt-20">
+                                            <label class="cursor-pointer" for="fiveHundred_oneThousand">
+                                                De R$ 500,00 a R$ 1.000,00
+                                            </label>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="fiveHundred_oneThousand" id="fiveHundred_oneThousand" value="" class="custom-control-input">
+                                                <label class="custom-control-label" for="fiveHundred_oneThousand"></label>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="pt-10">
+                                        <div class="d-flex align-items-center justify-content-between mt-20">
+                                            <label class="cursor-pointer" for="oneThousand">
+                                                Acima de R$ 1.000,00
+                                            </label>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="oneThousand" id="oneThousand" value="" class="custom-control-input">
+                                                <label class="custom-control-label" for="oneThousand"></label>
+                                            </div>
+                                        </div>
+                                    </div>           
                             </div>
-                        </div>
 
-                        <div class="mt-25 pt-25 border-top border-gray300">
-                            <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue">Outras opções</h3>
+                            <!--Drop down filtro Classificações-->
+                            <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
+                                <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
+                                    Classificações
+                                </h3>
+                            </div>
 
-                            <div class="pt-10">
+                                <div class="collapse" id="collapseFilters">
+                                    <div class="pt-10">
+                                        <div class="pt-10">
+                                            <div class="d-flex align-items-center justify-content-between mt-20">
+                                                <label class="cursor-pointer" for="fourStars">
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <span>4,0 e acima</span> 
+                                                </label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" name="fourStars" id="fourStars" value="" class="custom-control-input">
+                                                    <label class="custom-control-label" for="fourStars"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">
+                                            <div class="d-flex align-items-center justify-content-between mt-20">
+                                                <label class="cursor-pointer" for="threeStars">
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <span>3.0 e acima</span>
+                                                </label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" name="threeStars" id="threeStars" value="" class="custom-control-input">
+                                                    <label class="custom-control-label" for="threeStars"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-10">
+                                            <div class="d-flex align-items-center justify-content-between mt-20">
+                                                <label class="cursor-pointer" for="twoStars">
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <span>2.0 e acima</span>
+                                                </label>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" name="twoStars" id="twoStars" value="" class="custom-control-input">
+                                                    <label class="custom-control-label" for="threeStars"></label>
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>           
+                                </div>
+
+                                <!--Drop down filtro Outras opções-->
+                            <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
+                                <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
+                                    Outras opções
+                                </h3>
+                            </div>
+                            <div class="collapse" id="collapseFilters">
                                 <div class="pt-10">
-                                    @foreach(['bundle'] as $typeOption)
+                                    <div class="pt-10">
+                                        @foreach(['bundle'] as $typeOption)
+                                        <div class="d-flex align-items-center justify-content-between mt-20">
+                                            <label class="cursor-pointer" for="filterLanguage{{ $typeOption }}">
+                                                @if($typeOption == 'bundle')
+                                                {{ trans('update.bundle') }}
+                                                @else
+                                                {{ trans('webinars.'.$typeOption) }}
+                                                @endif
+                                            </label>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="type[]" id="filterLanguage{{ $typeOption }}" value="{{ $typeOption }}" @if(in_array($typeOption, request()->get('type', []))) checked="checked" @endif class="custom-control-input">
+                                                <label class="custom-control-label" for="filterLanguage{{ $typeOption }}"></label>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+    
+                                    @foreach(['subscribe','certificate_included','with_quiz','featured'] as $moreOption)
                                     <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="filterLanguage{{ $typeOption }}">
-                                            @if($typeOption == 'bundle')
-                                            {{ trans('update.bundle') }}
-                                            @else
-                                            {{ trans('webinars.'.$typeOption) }}
-                                            @endif
-                                        </label>
+                                        <label class="cursor-pointer" for="filterLanguage{{ $moreOption }}">{{ trans('webinars.show_only_'.$moreOption) }}</label>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="type[]" id="filterLanguage{{ $typeOption }}" value="{{ $typeOption }}" @if(in_array($typeOption, request()->get('type', []))) checked="checked" @endif class="custom-control-input">
-                                            <label class="custom-control-label" for="filterLanguage{{ $typeOption }}"></label>
+                                            <input type="checkbox" name="moreOptions[]" id="filterLanguage{{ $moreOption }}" value="{{ $moreOption }}" @if(in_array($moreOption, request()->get('moreOptions', []))) checked="checked" @endif class="custom-control-input">
+                                            <label class="custom-control-label" for="filterLanguage{{ $moreOption }}"></label>
                                         </div>
                                     </div>
                                     @endforeach
                                 </div>
-
-                                @foreach(['subscribe','certificate_included','with_quiz','featured'] as $moreOption)
-                                <div class="d-flex align-items-center justify-content-between mt-20">
-                                    <label class="cursor-pointer" for="filterLanguage{{ $moreOption }}">{{ trans('webinars.show_only_'.$moreOption) }}</label>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="moreOptions[]" id="filterLanguage{{ $moreOption }}" value="{{ $moreOption }}" @if(in_array($moreOption, request()->get('moreOptions', []))) checked="checked" @endif class="custom-control-input">
-                                        <label class="custom-control-label" for="filterLanguage{{ $moreOption }}"></label>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-
+                            </div>    
 
                         <button type="submit" class="btn btn-sm btn-primary btn-block mt-30">{{ trans('site.filter_items') }}</button>
                     </div>
