@@ -160,7 +160,7 @@
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
-                                            4,0 e acima
+                                            <span>4,0 e acima</span> 
                                         </label>
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" name="fourStars" id="fourStars" value="" class="custom-control-input">
@@ -176,7 +176,7 @@
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
-                                            3.0 e acima
+                                            <span>3.0 e acima</span>
                                         </label>
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" name="threeStars" id="threeStars" value="" class="custom-control-input">
@@ -192,7 +192,7 @@
                                             <ion-icon name="star-outline"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
-                                            2.0 e acima
+                                            <span>2.0 e acima</span>
                                         </label>
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" name="twoStars" id="twoStars" value="" class="custom-control-input">
