@@ -214,7 +214,7 @@
                                                 </label>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" name="twoStars" id="twoStars" value="" class="custom-control-input">
-                                                    <label class="custom-control-label" for="threeStars"></label>
+                                                    <label class="custom-control-label" for="twoStars"></label>
                                                 </div>
                                             </div>
                                         </div>  
