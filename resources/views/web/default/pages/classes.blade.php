@@ -68,7 +68,7 @@
                             <h3 class=" font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
                                 Expandir Filtros
                             </h3>
-                            <i class="openDrop"><ion-icon name="chevron-down-outline" data-toggle="collapse" href="#collapseFilters"></ion-icon></i>
+                            <i class="openDrop"><ion-icon class="teste" name="chevron-down-outline" data-toggle="collapse" href="#collapseFilters"></ion-icon></i>
                         </div>
                         <!--Dropdown Nível, Formato, tipo, forma de entrega e idioma -->
                         @if(!empty($category) and !empty($category->filters))

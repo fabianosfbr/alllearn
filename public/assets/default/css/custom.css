@@ -6,3 +6,9 @@ font-size: 25px !important;
 .openDrop {
   cursor: pointer;
 }
+
+.teste {
+  font-weight: bold;
+  font-size: 30px !important;
+  color: #43D477;
+}
