@@ -258,7 +258,7 @@
                         </div>    
                     </div>
                 </div>
-
+            </div>
         </form>
         <div class="mt-50 pt-30">
             {{ $webinars->appends(request()->input())->links('vendor.pagination.panel') }}
