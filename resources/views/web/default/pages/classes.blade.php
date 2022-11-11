@@ -68,7 +68,9 @@
                             <h3 class=" font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
                                 Expandir Filtros
                             </h3>
+
                             <ion-icon class="openDropdown" name="chevron-down-outline" data-toggle="collapse" href="#collapseFilters"></ion-icon>
+
                         </div>
                         <!--Dropdown Nível, Formato, tipo, forma de entrega e idioma -->
                         @if(!empty($category) and !empty($category->filters))
@@ -110,7 +112,7 @@
                                         De R$ 0,01 a R$ 100,00
                                     </label>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="zero_OneHundred" id="zero_OneHundred" value="" class="custom-control-input">
+                                        <input type="checkbox" name="p1" id="zero_OneHundred" value="100" class="custom-control-input" @if(request()->get('p1') == 'a46RS9P5Ij') checked="checked" @endif >
                                         <label class="custom-control-label" for="zero_OneHundred"></label>
                                     </div>
                                 </div>
@@ -121,45 +123,46 @@
                                         De R$ 100,01 a R$ 200,00
                                     </label>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="oneHundred_TwoHundred" id="oneHundred_TwoHundred" value="" class="custom-control-input">
+                                        <input type="checkbox" name="p2" id="oneHundred_TwoHundred" value="V5AMb6iAf8" class="custom-control-input" @if(request()->get('p2', null) == 'V5AMb6iAf8') checked="checked" @endif >
                                         <label class="custom-control-label" for="oneHundred_TwoHundred"></label>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="pt-10">
                                 <div class="d-flex align-items-center justify-content-between mt-20">
                                     <label class="cursor-pointer" for="twoHundred_fiveHundred">
                                         De R$ 200,01 a R$ 500,00
                                     </label>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="twoHundred_fiveHundred" id="twoHundred_fiveHundred" value="" class="custom-control-input">
+                                        <input type="checkbox" name="p3" id="twoHundred_fiveHundred" value="0jD3l1cJE" class="custom-control-input" @if(request()->get('p3', null) == '0jD3l1cJE') checked="checked" @endif>
                                         <label class="custom-control-label" for="twoHundred_fiveHundred"></label>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="pt-10">
                                 <div class="d-flex align-items-center justify-content-between mt-20">
                                     <label class="cursor-pointer" for="fiveHundred_oneThousand">
                                         De R$ 500,00 a R$ 1.000,00
                                     </label>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="fiveHundred_oneThousand" id="fiveHundred_oneThousand" value="" class="custom-control-input">
+                                        <input type="checkbox" name="p4" id="fiveHundred_oneThousand" value="$xpM0wN00f" class="custom-control-input" @if(request()->get('p4', null) == '$xpM0wN00f') checked="checked" @endif>
                                         <label class="custom-control-label" for="fiveHundred_oneThousand"></label>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="pt-10">
                                 <div class="d-flex align-items-center justify-content-between mt-20">
                                     <label class="cursor-pointer" for="oneThousand">
                                         Acima de R$ 1.000,00
                                     </label>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="oneThousand" id="oneThousand" value="" class="custom-control-input">
+                                        <input type="checkbox" name="p5" id="oneThousand" value="6A1z01NQir" class="custom-control-input" @if(request()->get('p5', null) == '6A1z01NQir') checked="checked" @endif>
                                         <label class="custom-control-label" for="oneThousand"></label>
                                     </div>
                                 </div>
-                            </div>           
+                            </div>
                         </div>
+
                         <!--Drop down filtro Classificações-->
                         <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
                             <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
@@ -170,55 +173,56 @@
                             <div class="pt-10">
                                 <div class="pt-10">
                                     <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer d-flex align-items-center" for="fourStars">
+                                        <label class="cursor-pointer" for="fourStars">
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
-                                            <span class="textStars">4.0 e acima</span> 
+                                            <span>4.0 e acima</span>
                                         </label>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="fourStars" id="fourStars" value="" class="custom-control-input">
+                                            <input type="checkbox" name="stars-4" id="fourStars" value="on" class="custom-control-input" @if(request()->get('stars-4', null) == 'on') checked="checked" @endif>
                                             <label class="custom-control-label" for="fourStars"></label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="pt-10">
                                     <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer d-flex align-items-center" for="threeStars">
+                                        <label class="cursor-pointer" for="threeStars">
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
-                                            <span class="textStars">3.0 e acima</span>
+                                            <span>3.0 e acima</span>
                                         </label>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="threeStars" id="threeStars" value="" class="custom-control-input">
+                                            <input type="checkbox" name="stars-3" id="threeStars" value="on" class="custom-control-input" @if(request()->get('stars-3', null) == 'on') checked="checked" @endif>
                                             <label class="custom-control-label" for="threeStars"></label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="pt-10">
                                     <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer d-flex align-items-center" for="twoStars">
+                                        <label class="cursor-pointer" for="twoStars">
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
-                                            <span class="textStars">2.0 e acima</span>
+                                            <span>2.0 e acima</span>
                                         </label>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="twoStars" id="twoStars" value="" class="custom-control-input">
+                                            <input type="checkbox" name="stars-2" id="twoStars" value="on" class="custom-control-input" @if(request()->get('stars-2', null) == 'on') checked="checked" @endif>
                                             <label class="custom-control-label" for="twoStars"></label>
                                         </div>
                                     </div>
-                                </div>  
-                            </div>           
+                                </div>
+                            </div>
                         </div>
-                            <!--Drop down filtro Outras opções-->
+
+                        <!--Drop down filtro Outras opções-->
                         <div class="mt-25 pt-25 border-top border-gray300 d-flex justify-content-between">
                             <h3 class="category-filter-title font-20 font-weight-bold text-dark-blue" aria-expanded="false" aria-controls="collapseFilters">
                                 Outras opções
@@ -254,8 +258,9 @@
                                 </div>
                                 @endforeach
                             </div>
+
                             <button type="submit" class="btn btn-sm btn-primary btn-block mt-30">{{ trans('site.filter_items') }}</button>
-                        </div>    
+                        </div>
                     </div>
                 </div>
             </div>

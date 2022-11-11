@@ -33,6 +33,7 @@ class ClassesController extends Controller
             $this->columnId = 'bundle_id';
         }
 
+
         $webinarsQuery = $this->handleFilters($request, $webinarsQuery);
 
 
@@ -48,6 +49,7 @@ class ClassesController extends Controller
         ])->paginate(6);
 
         $category = Category::where('id', 644)->first();
+
 
         $seoSettings = getSeoMetas('classes');
         $pageTitle = $seoSettings['title'] ?? '';
@@ -76,6 +78,61 @@ class ClassesController extends Controller
         $filterOptions = $request->get('filter_option', []);
         $typeOptions = $request->get('type', []);
         $moreOptions = $request->get('moreOptions', []);
+
+        $price1 = $request->get('p1', null);
+        $price2 = $request->get('p2', null);
+        $price3 = $request->get('p3', null);
+        $price4 = $request->get('p4', null);
+        $price5 = $request->get('p4', null);
+
+
+        $stars4 = $request->get('stars-4', null);
+        $stars3 = $request->get('stars-3', null);
+        $stars2 = $request->get('stars-2', null);
+
+
+
+
+
+        if (!empty($price1) and $price1 == 'a46RS9P5Ij') {
+
+            $query->whereBetween('price', [0.01, 100]);
+        }
+
+        if (!empty($price2) and $price2 == 'V5AMb6iAf8') {
+
+            $query->whereBetween('price', [100.01, 200]);
+        }
+        if (!empty($price3) and $price3 == '0jD3l1cJE') {
+
+            $query->whereBetween('price', [200.01, 500]);
+        }
+        if (!empty($price4) and $price4 == '$xpM0wN00f') {
+
+            $query->whereBetween('price', [500.01, 1000]);
+        }
+        if (!empty($price5) and $price5 == '6A1z01NQir') {
+
+            $query->where('price', '>', 1000);
+        }
+
+        if (!empty($stars4) and $stars4 == 'on') {
+
+            //$query->where('price', '>', 1000);
+        }
+
+        if (!empty($stars3) and $stars3 == 'on') {
+
+            // $query->where('price', '>', 1000);
+        }
+
+
+        if (!empty($stars2) and $stars2 == 'on') {
+
+            // $query->where('price', '>', 1000);
+        }
+
+
 
         $query->whereHas('teacher', function ($query) {
             $query->where('status', 'active')
@@ -200,26 +257,26 @@ class ClassesController extends Controller
 
             //Transforma os id do filter_options em termos da consulta
             $filters = DB::table('filter_options')
-            ->join('filter_option_translations', 'filter_options.id', '=', 'filter_option_translations.filter_option_id')
-            ->whereIn('filter_options.id', $filterOptions)
-            ->groupBy('filter_option_translations.title')->get();
+                ->join('filter_option_translations', 'filter_options.id', '=', 'filter_option_translations.filter_option_id')
+                ->whereIn('filter_options.id', $filterOptions)
+                ->groupBy('filter_option_translations.title')->get();
 
             $items = array();
-            foreach ($filters as $item) { 
+            foreach ($filters as $item) {
                 $items[] = $item->title;
-            } 
+            }
 
             //Pesquisa todos os filter_options de acordo com os termos
             $filters = DB::table('filter_options')
-            ->join('filter_option_translations', 'filter_options.id', '=', 'filter_option_translations.filter_option_id')
-            ->whereIn('filter_option_translations.title', $items)
-            ->get();  
+                ->join('filter_option_translations', 'filter_options.id', '=', 'filter_option_translations.filter_option_id')
+                ->whereIn('filter_option_translations.title', $items)
+                ->get();
 
-            foreach ($filters as $item) { 
+            foreach ($filters as $item) {
                 $filterOptions[] = $item->filter_option_id;
-            }                             
+            }
 
-            
+
 
             $webinarIdsFilterOptions = WebinarFilterOption::whereIn('filter_option_id', $filterOptions)
                 ->pluck($this->columnId)

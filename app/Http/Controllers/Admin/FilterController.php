@@ -61,6 +61,7 @@ class FilterController extends Controller
             'category_id' => $data['category_id'],
         ]);
 
+
         FilterTranslation::updateOrCreate([
             'filter_id' => $filter->id,
             'locale' => mb_strtolower($data['locale']),
@@ -125,6 +126,8 @@ class FilterController extends Controller
         ], [
             'title' => $data['title'],
         ]);
+
+
 
         $filterOptions = !empty($data['sub_filters']) ? $data['sub_filters'] : [];
         $this->setSubFilters($filter, $filterOptions, $data['locale']);
