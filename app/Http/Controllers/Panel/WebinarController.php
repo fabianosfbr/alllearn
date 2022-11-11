@@ -697,8 +697,13 @@ class WebinarController extends Controller
             $data['teacher_id'] = $user->id;
         }
 
-        if (!$data['invoice']) $data['invoice_installment'] = null;
-        if (!$data['credit_card']) $data['credit_card_installment'] = null;
+        if (isset($data['invoice']) and $data['invoice'] == false) {
+            $data['invoice_installment'] = null;
+        }
+
+        if (isset($data['invoice']) and $data['credit_card'] == false) {
+            $data['credit_card_installment'] = null;
+        }
 
 
         $webinar->update($data);
