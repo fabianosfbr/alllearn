@@ -36,7 +36,7 @@ class WebinarController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-     
+
         if ($user->isUser()) {
             abort(404);
         }
@@ -275,7 +275,7 @@ class WebinarController extends Controller
             abort(404);
         }
 
-        
+
 
         $userPackage = new UserPackage();
         $userCoursesCountLimited = $userPackage->checkPackageLimit('courses_count');
@@ -289,7 +289,7 @@ class WebinarController extends Controller
         $currentStep = $request->get('current_step', 1);
 
         $rules = [
-           // 'type' => 'required|in:webinar,course,text_lesson',
+            // 'type' => 'required|in:webinar,course,text_lesson',
             'title' => 'required|max:255',
             'thumbnail' => 'required',
             'image_cover' => 'required',
@@ -349,7 +349,7 @@ class WebinarController extends Controller
         $user = auth()->user();
         $isOrganization = $user->isOrganization();
 
-  
+
         if (!$user->isTeacher() and !$user->isOrganization()) {
             abort(404);
         }
@@ -375,7 +375,7 @@ class WebinarController extends Controller
                     $query->where('teacher_id', $user->id);
                 });
             });
-        
+
 
         if ($step == '1') {
             $data['teachers'] = $user->getOrganizationTeachers()->get();
@@ -529,7 +529,7 @@ class WebinarController extends Controller
 
         if ($currentStep == 1) {
             $rules = [
-               // 'type' => 'required|in:webinar,course,text_lesson',
+                // 'type' => 'required|in:webinar,course,text_lesson',
                 'title' => 'required|max:255',
                 'thumbnail' => 'required',
                 'image_cover' => 'required',
@@ -554,7 +554,7 @@ class WebinarController extends Controller
         if (($currentStep == 8 and !$getNextStep and !$isDraft) or (!$getNextStep and !$isDraft)) {
             $webinarRulesRequired = empty($data['rules']);
         }
-        
+
 
         $this->validate($request, $rules);
 
@@ -617,19 +617,18 @@ class WebinarController extends Controller
             $data['subscribe'] = !empty($data['subscribe']) ? true : false;
             $data['invoice'] = !empty($data['invoice']) ? true : false;
             $data['credit_card'] = !empty($data['credit_card']) ? true : false;
-            $rules = [        
+            $rules = [
                 'invoice_installment' => 'required_if:invoice,on|min:2|numeric',
                 'credit_card_installment' => 'required_if:credit_card,on|min:2|max:12|numeric',
             ];
 
-             $this->validate($request, $rules);
-    
+            $this->validate($request, $rules);
         }
 
-        
 
-  
-   
+
+
+
 
         $filters = $request->get('filters', null);
         if (!empty($filters) and is_array($filters)) {
@@ -676,7 +675,8 @@ class WebinarController extends Controller
             ]);
         }
 
-        unset($data['_token'],
+        unset(
+            $data['_token'],
             $data['current_step'],
             $data['draft'],
             $data['get_next'],
@@ -692,7 +692,7 @@ class WebinarController extends Controller
         if (empty($data['teacher_id'])) {
             $data['teacher_id'] = $user->id;
         }
-      
+
         $webinar->update($data);
 
         $url = '/panel/webinars';
@@ -1239,7 +1239,6 @@ class WebinarController extends Controller
                             ->update(['order' => ($order + 1)]);
                     }
                     break;
-
             }
         }
 
