@@ -169,14 +169,14 @@
                   </div>
                   <div class="col-sm mt-30 text-uppercase font-weight-bold">
                     <p>Vídeo de apresentação para Empresas</p>
-                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/YOBdDFzY7_I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/G6c1M0-A5GU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col-sm mt-30 text-uppercase font-weight-bold">
                         <p>Vídeo de apresentação para Alunos</p>
-                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/kRmh0TPPecY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/oRElp3tpjb0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     
                     <div class="col-sm mt-30 text-uppercase font-weight-bold">
