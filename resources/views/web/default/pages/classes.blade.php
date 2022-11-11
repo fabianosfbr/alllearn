@@ -108,7 +108,6 @@
                                 Preço
                             </h3>
                         </div>
-
                         <div class="collapse" id="collapseFilters">
                             <div class="pt-10">
                                 <div class="d-flex align-items-center justify-content-between mt-20">
@@ -173,7 +172,6 @@
                                 Classificações
                             </h3>
                         </div>
-
                         <div class="collapse" id="collapseFilters">
                             <div class="pt-10">
                                 <div class="pt-10">
@@ -269,7 +267,6 @@
                     </div>
                 </div>
             </div>
-
         </form>
         <div class="mt-50 pt-30">
             {{ $webinars->appends(request()->input())->links('vendor.pagination.panel') }}
