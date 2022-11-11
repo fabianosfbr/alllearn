@@ -33,6 +33,7 @@ class ClassesController extends Controller
             $this->columnId = 'bundle_id';
         }
 
+
         $webinarsQuery = $this->handleFilters($request, $webinarsQuery);
 
 
@@ -77,6 +78,19 @@ class ClassesController extends Controller
         $filterOptions = $request->get('filter_option', []);
         $typeOptions = $request->get('type', []);
         $moreOptions = $request->get('moreOptions', []);
+
+        $price1 = $request->get('price1', null);
+        $price2 = $request->get('price2', null);
+
+        if (!empty($price1)) {
+
+            $query->whereBetween('price', [0.01, 100]);
+        }
+
+        if (!empty($price2)) {
+
+            $query->whereBetween('price', [100.01, 200]);
+        }
 
         $query->whereHas('teacher', function ($query) {
             $query->where('status', 'active')
