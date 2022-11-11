@@ -617,9 +617,13 @@ class WebinarController extends Controller
             $data['subscribe'] = !empty($data['subscribe']) ? true : false;
             $data['invoice'] = !empty($data['invoice']) ? true : false;
             $data['credit_card'] = !empty($data['credit_card']) ? true : false;
+
+
+
+
             $rules = [
-                'invoice_installment' => 'required_if:invoice,on|min:2|numeric',
-                'credit_card_installment' => 'required_if:credit_card,on|min:2|max:12|numeric',
+                'invoice_installment' => 'required_if:invoice,on',
+                'credit_card_installment' => 'required_if:credit_card,on',
             ];
 
             $this->validate($request, $rules);
@@ -692,6 +696,10 @@ class WebinarController extends Controller
         if (empty($data['teacher_id'])) {
             $data['teacher_id'] = $user->id;
         }
+
+        if (!$data['invoice']) $data['invoice_installment'] = null;
+        if (!$data['credit_card']) $data['credit_card_installment'] = null;
+
 
         $webinar->update($data);
 
