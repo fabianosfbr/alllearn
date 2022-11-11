@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="form-group mt-15">
-                    <label class="input-label">{{ trans('financial.identity_scan') }}</label>
+                    <label class="input-label">Cartão CNPJ digitalizado</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <button type="button" class="input-group-text admin-file-manager" data-input="identity_scan" data-preview="holder">
