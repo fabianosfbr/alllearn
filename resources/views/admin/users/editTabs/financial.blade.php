@@ -6,19 +6,13 @@
 
                 <div class="form-group">
                     <label>{{ trans('financial.account_type') }}</label>
-                    <input type="text" name="account_type"
-                           class="form-control "
-                           value="{{ !empty($user) ? $user->account_type : old('account_type') }}"
-                           placeholder="{{ trans('financial.account_type') }}"/>
+                    <input type="text" name="account_type" class="form-control " value="{{ !empty($user) ? $user->account_type : old('account_type') }}" placeholder="{{ trans('financial.account_type') }}" />
                 </div>
 
 
                 <div class="form-group">
                     <label>{{ trans('financial.account_id') }}</label>
-                    <input type="text" name="account_id"
-                           class="form-control "
-                           value="{{ !empty($user) ? $user->account_id : old('account_id') }}"
-                           placeholder="{{ trans('financial.account_id') }}"/>
+                    <input type="text" name="account_id" class="form-control " value="{{ !empty($user) ? $user->account_id : old('account_id') }}" placeholder="{{ trans('financial.account_id') }}" />
                 </div>
 
                 <div class="form-group mt-15">
@@ -29,31 +23,25 @@
                                 <i class="fa fa-chevron-up"></i>
                             </button>
                         </div>
-                        <input type="text" name="identity_scan" id="identity_scan" value="{{ !empty($user->identity_scan) ? $user->identity_scan : old('identity_scan') }}" class="form-control"/>
+                        <input type="text" name="identity_scan" id="identity_scan" value="{{ !empty($user->identity_scan) ? $user->identity_scan : old('identity_scan') }}" class="form-control" />
                         <div class="input-group-append">
-                            <button type="button" class="input-group-text admin-file-view" data-input="identity_scan">
+                            <a href="{{ (strpos($user->identity_scan,'http') != false) ? $user->identity_scan : url($user->identity_scan) }}" target="_blank" class="input-group-text text-decoration-none">
                                 <i class="fa fa-eye"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>{{ trans('financial.address') }}</label>
-                    <input type="text" name="address"
-                           class="form-control "
-                           value="{{ !empty($user) ? $user->address : old('address') }}"
-                           placeholder="{{ trans('financial.address') }}"/>
+                    <input type="text" name="address" class="form-control " value="{{ !empty($user) ? $user->address : old('address') }}" placeholder="{{ trans('financial.address') }}" />
                 </div>
 
                 @if(!$user->isUser())
-                    <div class="form-group">
-                        <label>{{ trans('admin/main.user_commission') }} (%)</label>
-                        <input type="text" name="commission"
-                               class="form-control "
-                               value="{{ !empty($user) ? $user->commission : old('commission') }}"
-                               placeholder="{{ trans('admin/main.user_commission_placeholder') }}"/>
-                    </div>
+                <div class="form-group">
+                    <label>{{ trans('admin/main.user_commission') }} (%)</label>
+                    <input type="text" name="commission" class="form-control " value="{{ !empty($user) ? $user->commission : old('commission') }}" placeholder="{{ trans('admin/main.user_commission_placeholder') }}" />
+                </div>
                 @endif
 
                 <div class="form-group mb-0 d-flex align-items-center">
