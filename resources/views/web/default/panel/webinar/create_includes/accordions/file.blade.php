@@ -128,6 +128,7 @@
                                     <option value="{{ $fileType }}" @if(!empty($file) and $file->file_type == $fileType) selected @endif>{{ trans('update.file_type_'.$fileType) }}</option>
                                     @endforeach
                                 </select>
+
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
