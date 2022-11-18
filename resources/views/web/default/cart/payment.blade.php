@@ -272,25 +272,32 @@
 
                                 <option value="{{$installment}}">{{$installment == 1? "À vista" : $installment. " parcelas" }}</option>
                                 @endforeach
-
-                                <!-- 
-                                    Boleto
-                                @foreach ($invoiceInstallment as $installment)
-
-                                <option value="{{$installment}}">Parcela {{ $installment }}</option>
-                                @endforeach -->
-
-
                             </select>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
 
+        <div style="display: none" class="forn-group mt-25" id="infoInvoice">
+            <div class="form-group mt-15">
+                <div class="form-group mt-15">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label class="input-label">Parcelas</label>
+                            <select onchange="toggleButton()" class="form-control" id="state" name="estado">
+                                <option value="" selected disabled hidden>Selecione</option>
 
+                                @foreach ($creditCardInstallment as $installment)
 
+                                <option value="{{$installment}}">{{$installment == 1? "À vista" : $installment. " parcelas" }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class=" d-flex align-items-center justify-content-between mt-45">
             <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ addCurrencyToPrice($total) }}</span>
             <button type="button" id="paymentSubmit" class="btn btn-sm btn-primary" disabled>Finalizar pagamento</button>

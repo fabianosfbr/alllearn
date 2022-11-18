@@ -26,14 +26,17 @@ $('body').on("click",'input[name="alllearn"]',() => {
 
 $('body').on("click",'input[name="credCard"]',() => {
   $("#infoCredCard").addClass("d-block")
+  $("#infoInvoice").removeClass("d-block")
 });
 
 $('body').on("click",'input[name="boleto"]', () => {
+  $("#infoInvoice").addClass("d-block")
   $("#infoCredCard").removeClass("d-block")
 });
 
 $('body').on("click",'input[name="pix"]',() => {
   $("#infoCredCard").removeClass("d-block")
+  $("#infoInvoice").removeClass("d-block")
 });
 
 function toggleButton() {
