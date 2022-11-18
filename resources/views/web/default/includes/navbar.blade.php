@@ -99,6 +99,9 @@ $navBtnText = $navbarButton->title;
                     </li>
                     @endforeach
                     @endif
+                    <li class="nav-item">
+                        <a href="https://atendimento.alllearn.com.br" class="nav-link">Central de ajuda</a>
+                    </li>
                 </ul>
             </div>
 
