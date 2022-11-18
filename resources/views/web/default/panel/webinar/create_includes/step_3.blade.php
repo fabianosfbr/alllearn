@@ -32,7 +32,8 @@
             <p class="font-12 text-gray mt-10">- Defina o preço do seu curso.</p>
         </div>
 
-        <div class="form-group mt-15">
+        <!--
+            <div class="form-group mt-15">
             <label class="input-label">Configuração de pagamento do curso</label>
                 <div class="row mt-15">
                     <div class="col-lg-5"><p class="font-14 font-weight-500">Aceita parcelamento em boleto?</p></div>
@@ -75,6 +76,7 @@
                     </div>
                 </div>
          </div>
+        -->
 
 
         @if($authUser->isOrganization() and $authUser->id == $webinar->creator_id)
