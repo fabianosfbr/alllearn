@@ -67,6 +67,7 @@
 </section>
 
 @endsection
+
 @push('scripts_bottom')
 <script src="/assets/default/js/parts/payment.min.js"></script>
 @endpush
