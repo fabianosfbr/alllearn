@@ -78,7 +78,7 @@ return [
     'purchased' => 'Comprado',
 
     'favorites' => 'Favoritos',
-    'favorite' => 'Favorito',
+    'favorite' => 'Eu quero',
     'favorite_live_classes' => 'Cursos favoritos',
     'no_result_favorites' => 'Nenhum curso favorito!',
     'no_result_favorites_hint' => 'Você pode adicionar um curso aos seus favoritos e se inscrever mais tarde.',
