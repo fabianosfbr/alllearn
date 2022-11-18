@@ -615,18 +615,19 @@ class WebinarController extends Controller
 
         if ($currentStep == 3) {
             $data['subscribe'] = !empty($data['subscribe']) ? true : false;
-            $data['invoice'] = !empty($data['invoice']) ? true : false;
-            $data['credit_card'] = !empty($data['credit_card']) ? true : false;
+
+            // $data['invoice'] = !empty($data['invoice']) ? true : false;
+            // $data['credit_card'] = !empty($data['credit_card']) ? true : false;
 
 
 
 
-            $rules = [
-                'invoice_installment' => 'required_if:invoice,on',
-                'credit_card_installment' => 'required_if:credit_card,on',
-            ];
+            // $rules = [
+            //     'invoice_installment' => 'required_if:invoice,on',
+            //     'credit_card_installment' => 'required_if:credit_card,on',
+            // ];
 
-            $this->validate($request, $rules);
+            //$this->validate($request, $rules);
         }
 
 
