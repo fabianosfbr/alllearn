@@ -136,7 +136,6 @@ class CartManagerController extends Controller
                 }
             }
         } catch (\Exception $exception) {
-
         }
     }
 
