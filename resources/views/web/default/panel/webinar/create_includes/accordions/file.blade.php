@@ -132,7 +132,7 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <label class="input-label">{{ trans('webinars.file_volume') }}</label>
+                                <label class="input-label">Tamanho (MB)</label>
                                 <input type="text" name="ajax[{{ !empty($file) ? $file->id : 'new' }}][volume]" value="{{ (!empty($file)) ? $file->volume : '' }}" class="js-ajax-volume form-control" placeholder="{{ trans('webinars.online_file_volume') }}" />
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -146,7 +146,7 @@
 
                         <div class="js-online_viewer-input form-group mt-20">
                             <div class="d-flex align-items-center justify-content-between">
-                                <label class="cursor-pointer input-label" for="online_viewerSwitch{{ !empty($file) ? $file->id : '_record' }}">{{ trans('update.online_viewer') }}</label>
+                                <label class="cursor-pointer input-label" for="online_viewerSwitch{{ !empty($file) ? $file->id : '_record' }}">Visualizador online (somente arquivos pdf)</label>
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" name="ajax[{{ !empty($file) ? $file->id : 'new' }}][online_viewer]" class="custom-control-input" id="online_viewerSwitch{{ !empty($file) ? $file->id : '_record' }}" {{ (!empty($file) and $file->online_viewer) ? 'checked' : ''  }}>
                                     <label class="custom-control-label" for="online_viewerSwitch{{ !empty($file) ? $file->id : '_record' }}"></label>
