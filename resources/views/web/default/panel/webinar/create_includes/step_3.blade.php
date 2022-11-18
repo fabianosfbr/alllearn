@@ -32,7 +32,6 @@
             <p class="font-12 text-gray mt-10">- Defina o preço do seu curso.</p>
         </div>
 
-        <!--
             <div class="form-group mt-15">
             <label class="input-label">Configuração de pagamento do curso</label>
                 <div class="row mt-15">
@@ -76,8 +75,6 @@
                     </div>
                 </div>
          </div>
-        -->
-
 
         @if($authUser->isOrganization() and $authUser->id == $webinar->creator_id)
             <div class="form-group mt-15">
