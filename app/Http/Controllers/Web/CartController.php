@@ -53,7 +53,8 @@ class CartController extends Controller
 
             if (!empty($hasPhysicalProduct) and count($hasPhysicalProduct)) {
                 foreach ($hasPhysicalProduct as $physicalProductCart) {
-                    if (!empty($physicalProductCart->productOrder) and
+                    if (
+                        !empty($physicalProductCart->productOrder) and
                         !empty($physicalProductCart->productOrder->product) and
                         !empty($physicalProductCart->productOrder->product->delivery_estimated_time) and
                         $physicalProductCart->productOrder->product->delivery_estimated_time > $deliveryEstimateTime
@@ -464,10 +465,29 @@ class CartController extends Controller
                     }
                 }
 
+                $webinar = Webinar::find($carts[0]->webinar_id);
+                $credit_card_installment = array(1 => 1);
+                $invoice_installment = array(1 => 1);
+
+                if ($webinar->credit_card == 1) {
+                    for ($i = 1; $i <= $webinar->credit_card_installment; $i++) {
+                        $credit_card_installment[$i] = $i;
+                    }
+                }
+
+                if ($webinar->invoice == 1) {
+                    for ($i = 1; $i <= $webinar->invoice_installment; $i++) {
+                        $invoice_installment[$i] = $i;
+                    }
+                }
+
                 $data = [
                     'pageTitle' => trans('public.checkout_page_title'),
                     'paymentChannels' => $paymentChannels,
                     'carts' => $carts,
+                    'webinar' => $webinar,
+                    'creditCardInstallment' => $credit_card_installment,
+                    'invoiceInstallment' => $invoice_installment,
                     'subTotal' => $calculate["sub_total"],
                     'totalDiscount' => $calculate["total_discount"],
                     'tax' => $calculate["tax"],
@@ -574,8 +594,8 @@ class CartController extends Controller
             }
 
             $order->update([
-                'type' => (!empty($cart->reserve_meeting_id)) ? 'meeting' : null,          
-            ]);            
+                'type' => (!empty($cart->reserve_meeting_id)) ? 'meeting' : null,
+            ]);
 
             OrderItem::create([
                 'user_id' => $user->id,
@@ -627,7 +647,7 @@ class CartController extends Controller
                 $taxPrice += $priceWithoutDiscount * $tax / 100;
             }
 
-            
+
 
             if (!empty($commission) and $commission > 0) {
                 $commissionPrice += $priceWithoutDiscount > 0 ? ($priceWithoutDiscount - $taxPrice) * $commission / 100 : 0;
@@ -637,7 +657,6 @@ class CartController extends Controller
 
             $totalDiscount += $discount;
             $subTotal += $price;
-
         } elseif (!empty($cart->reserve_meeting_id)) {
             $price = $cart->reserveMeeting->paid_amount;
             $discount = $cart->reserveMeeting->getDiscountPrice($user);
