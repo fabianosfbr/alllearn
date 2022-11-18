@@ -551,8 +551,7 @@ class Webinar extends Model implements TranslatableContract
         if (
             auth()->check() and
             $this->checkUserHasBought() and
-            (
-                !$this->isWebinar() or
+            (!$this->isWebinar() or
                 ($this->isWebinar() and $this->isProgressing()) or
                 $isLearningPage
             )
@@ -655,7 +654,11 @@ class Webinar extends Model implements TranslatableContract
         if ($this->type == 'webinar') {
             $salesCount = !empty($this->sales_count) ? $this->sales_count : $this->sales()->count();
 
-            return ($this->start_date > time() and $salesCount < $this->capacity);
+            if ($this->capacity > 0) {
+                return ($this->start_date > time() and $salesCount < $this->capacity);
+            }
+
+            return ($this->start_date > time());
         }
 
         return true;
