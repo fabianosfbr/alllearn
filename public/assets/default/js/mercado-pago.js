@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (status == 200) {
             let paymentMethod = response[0];
             document.getElementById('paymentMethodId').value = paymentMethod.id;
+            document.querySelector('.brand').innerHTML="<img src='"+response[0].thumbnail+"' alt='bandeira do cartão'>";
             getIssuers(paymentMethod.id);
         } else {
             alert(`payment method info error: ${response}`);

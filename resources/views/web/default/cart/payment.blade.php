@@ -202,48 +202,74 @@
                     </div>
                 </div>
             </div>
-            <h3>Detalhes do pagamento</h3>
-            <div>
-                <div>
-                    <label class="input-label" for="cardholderName">Titular do cartão</label>
-                    <input class="form-control" id="cardholderName" data-checkout="cardholderName" type="text">
-                </div>
-                <div>
-                    <label class="input-label" for="">Data de vencimento</label>
-                    <div>
-                        <input class="form-control" type="text" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
-                        <span class="date-separator">/</span>
-                        <input class="form-control" type="text" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+            <div class="form-group">
+                <div class="mt-2 d-flex">
+                    <div class="custom-control custom-radio col-lg-3">
+                        <input id="boleto" class="custom-control-input" type="radio" name="boleto">
+                        <label for="boleto" class="custom-control-label">Boleto</label>
                     </div>
-                </div>
-                <div>
-                    <label class="input-label" class="input-label" for="cardNumber">Número do cartão</label>
-                    <input class="form-control" type="text" id="cardNumber" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
-                </div>
-                <div>
-                    <label class="input-label" for="securityCode">Código de segurança</label>
-                    <input class="form-control" id="securityCode" data-checkout="securityCode" type="text" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
-                </div>
-                <div id="issuerInput">
-                    <label class="input-label" for="issuer">Banco emissor</label>
-                    <select class="form-control" id="issuer" name="issuer" data-checkout="issuer"></select>
-                </div>
-                <div>
-                    <label class="input-label" for="installments">Parcelas</label>
-                    <select class="form-control" type="text" id="installments" name="installments"></select>
-                </div>
-                <div>
-                    <input type="hidden" name="transactionAmount" id="transactionAmount" value="{{$total}}" />
-                    <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
-                    <input type="hidden" name="description" id="description" />
-                    <input type="hidden" name="creditCardInstallment" id="creditCardInstallment" value="{{$creditCardInstallment}}" />
-                    <br>
+                    <div class="custom-control custom-radio col-lg-3">
+                        <input id="pix" class="custom-control-input" type="radio" name="pix">
+                        <label for="pix" class="custom-control-label">Pix</label>
+                    </div>
+                    <div class="custom-control custom-radio col-lg-3">
+                        <input id="crédito" class="custom-control-input" type="radio" name="credCard">
+                        <label for="crédito" class="custom-control-label">Cartão de Crédito</label>
+                    </div>
+                </div>    
+            </div>
 
+            <div class="d-none pt-2" id="infoCredCard">
+                <h3 class="mb-2 mt-3">Detalhes do pagamento</h3>
+                <div>
+                    <div class="row mb-2">
+                        <div class="col-lg-3">
+                            <label class="input-label" for="cardholderName">Titular do cartão</label>
+                            <input class="form-control" id="cardholderName" data-checkout="cardholderName" type="text">
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="input-label" class="input-label" for="cardNumber">Número do cartão</label>
+                            <div class="d-flex align-items-center">
+                                <input class="form-control" type="text" id="cardNumber" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                                <div class="brand mx-1"></div>
+                            </div>
+                        </div>    
+                        <div class="col-lg-2">
+                            <label class="input-label" for="">Data de vencimento</label>
+                            <div class="d-flex align-items-center">
+                                <input class="form-control" type="text" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                                <span class="date-separator p-1">/</span>
+                                <input class="form-control" type="text" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label class="input-label" for="securityCode">Código de segurança</label>
+                            <input class="form-control" id="securityCode" data-checkout="securityCode" type="text" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                        </div>
+                        <div id="issuerInput" class="col-lg-2">
+                            <label class="input-label" for="issuer">Banco emissor</label>
+                            <select class="form-control" id="issuer" name="issuer" data-checkout="issuer"></select>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="input-label" for="installments">Parcelas</label>
+                            <select class="form-control" type="text" id="installments" name="installments"></select>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="hidden" name="transactionAmount" id="transactionAmount" value="{{$total}}" />
+                        <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
+                        <input type="hidden" name="description" id="description" />
+                        <input type="hidden" name="creditCardInstallment" id="creditCardInstallment" value="{{$creditCardInstallment}}" />
+                        <br>
+                    </div>
                 </div>
             </div>
             <div class=" d-flex align-items-center justify-content-between mt-45">
                 <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ addCurrencyToPrice($total) }}</span>
-                <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
+                <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary" disabled>Finalizar pagamento</button>
             </div>
         </div>
 
