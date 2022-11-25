@@ -43,7 +43,7 @@ function toggleButton() {
   const nome = document.querySelector('#first_name').value
   const segundoNome = document.querySelector('#last_name').value
   const telefone = document.querySelector('#phone').value
-  const cpfOrCnpj = document.querySelector('#cpf_cnpj').value
+  const cpfOrCnpj = document.querySelector('#docNumber').value
   const cep = document.querySelector('#cep').value
   const street = document.querySelector('#street').value
   const numStreet = document.querySelector('#numStreet').value
