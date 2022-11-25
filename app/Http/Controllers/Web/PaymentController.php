@@ -33,7 +33,7 @@ class PaymentController extends Controller
     public function paymentRequest(Request $request)
     {
 
-        //dd($request->all());
+        dd($request->all());
 
         $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
 
@@ -42,7 +42,7 @@ class PaymentController extends Controller
         $payment = new MercadoPayment();
         $payment->transaction_amount = (float)$request->transactionAmount;
         $payment->token = $request->token;
-        $payment->description = "Licenciatura em Pedagogia";
+        $payment->description = "Curso All Learn";
         $payment->installments = (int)$request->installments;
         $payment->payment_method_id = $request->paymentMethodId;
         $payment->issuer_id = (int)$request->issuer;
@@ -56,13 +56,17 @@ class PaymentController extends Controller
                 "number" => $request->docNumber
             ),
             "address" => array(
-                "zip_code" => "52",
-                "street_name" => "Av. das Nações Unidas",
-                "street_number" => "2",
-                "neigborhood" => "Bonfim",
-                "city" => "Jundiaí",
-                "federal_unit" => "SP",
+                "zip_code" => $request->zip_code,
+                "street_name" => $request->street_name,
+                "street_number" => $request->street_number,
+                "neigborhood" => $request->neigborhood,
+                "city" => $request->city,
+                "federal_unit" => $request->federal_unit,
             ),
+            "phone" => array(
+                "area_code" => $request->code_zone,
+                "number" => $request->phone_number,
+            )
         );
 
         dd($payment);

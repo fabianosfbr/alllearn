@@ -466,6 +466,8 @@ class CartController extends Controller
                 }
 
                 $webinar = Webinar::find($carts[0]->webinar_id);
+
+
                 $credit_card_installment = 1;
                 $invoice_installment = array(1 => 1);
 

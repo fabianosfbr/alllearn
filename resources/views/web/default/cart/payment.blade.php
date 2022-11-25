@@ -118,8 +118,8 @@
                 <div class="row">
                     <div class="col-lg-2">
                         <label class="input-label">CEP</label>
-                        <input onchange="toggleButton()" id="cep" type="text" name="cep" class="form-control @error('cep')  is-invalid @enderror" placeholder="" />
-                        @error('cep')
+                        <input onchange="toggleButton()" id="zip_code" type="text" name="zip_code" class="form-control @error('zip_code')  is-invalid @enderror" placeholder="" />
+                        @error('zip_code')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
@@ -127,8 +127,8 @@
                     </div>
                     <div class="col-lg-4">
                         <label class="input-label">Nome da rua</label>
-                        <input onchange="toggleButton()" id="street" type="text" name="street" class="form-control @error('street')  is-invalid @enderror" placeholder="" />
-                        @error('street')
+                        <input onchange="toggleButton()" id="street_name" type="text" name="street_name" class="form-control @error('street_name')  is-invalid @enderror" placeholder="" />
+                        @error('street_name')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label class="input-label">Número</label>
-                        <input onchange="toggleButton()" id="numStreet" type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" placeholder="" />
+                        <input onchange="toggleButton()" id="street_number" type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" placeholder="" />
                         @error('street_number')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -150,8 +150,8 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <label class="input-label">Bairro</label>
-                        <input onchange="toggleButton()" id="district" type="text" name="district" class="form-control @error('district')  is-invalid @enderror" placeholder="" />
-                        @error('district')
+                        <input onchange="toggleButton()" id="neigborhood" type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" placeholder="" />
+                        @error('neigborhood')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
@@ -168,7 +168,7 @@
                     </div>
                     <div class="col-lg-3">
                         <label class="input-label">Estado</label>
-                        <select onchange="toggleButton()" class="form-control" id="state" name="estado">
+                        <select onchange="toggleButton()" class="form-control" id="federal_unit" name="federal_unit">
                             <option value="" selected disabled hidden>Selecione</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
@@ -216,7 +216,7 @@
                         <input id="crédito" class="custom-control-input" type="radio" name="credCard">
                         <label for="crédito" class="custom-control-label">Cartão de Crédito</label>
                     </div>
-                </div>    
+                </div>
             </div>
 
             <div class="d-none pt-2" id="infoCredCard">
@@ -233,7 +233,7 @@
                                 <input class="form-control" type="text" id="cardNumber" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
                                 <div class="brand mx-1"></div>
                             </div>
-                        </div>    
+                        </div>
                         <div class="col-lg-2">
                             <label class="input-label" for="">Data de vencimento</label>
                             <div class="d-flex align-items-center">
@@ -282,6 +282,7 @@
 @push('scripts_bottom')
 <script src="/assets/default/js/payment.js"></script>
 <script src="/assets/default/js/mercado-pago.js"></script>
+<script src="/assets/default/js/busca-cep.js"></script>
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <!-- <script src="/assets/default/js/parts/payment.min.js"></script> -->
 @endpush

@@ -22,10 +22,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (status == 200) {
             let paymentMethod = response[0];
             document.getElementById('paymentMethodId').value = paymentMethod.id;
-            document.querySelector('.brand').innerHTML="<img src='"+response[0].thumbnail+"' alt='bandeira do cartão'>";
+            document.querySelector('.brand').innerHTML = "<img src='" + response[0].thumbnail + "' alt='bandeira do cartão'>";
             getIssuers(paymentMethod.id);
         } else {
-            alert(`payment method info error: ${response}`);
+            $.toast({
+                heading: 'Ops, tivemos um problema',
+                text: 'Cartão de crédito é inválido',
+                position: 'top-right',
+                icon: 'error'
+            })
         }
     }
 
@@ -52,7 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 issuerSelect.value
             );
         } else {
-            alert(`issuers method info error: ${response}`);
+            $.toast({
+                heading: 'Ops, tivemos um problema',
+                text: 'Verifique os dados do cartão',
+                position: 'top-right',
+                icon: 'error'
+            })
         }
     }
 
@@ -77,7 +87,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         } else {
-            alert(`installments method info error: ${response}`);
+            $.toast({
+                heading: 'Ops, tivemos um problema',
+                text: 'Verifique os dados do cartão',
+                position: 'top-right',
+                icon: 'error'
+            })
         }
     }
 
@@ -107,7 +122,13 @@ document.addEventListener('DOMContentLoaded', function () {
             doSubmit = true;
             form.submit();
         } else {
-            alert("Verify filled data!\n" + JSON.stringify(response, null, 4));
+            $.toast({
+                heading: 'Ops, tivemos um problema',
+                text: 'Verifique os dados do cartão',
+                position: 'top-right',
+                icon: 'error'
+            })
+
         }
     };
 
