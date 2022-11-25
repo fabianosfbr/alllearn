@@ -35,10 +35,7 @@ class PaymentController extends Controller
 
         //dd($request->all());
 
-        $public_key = env('MERCADO_PAGO_PUBLIC_KEY');
         $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
-        $client_id = env('MERCADO_CLIENT_ID');
-        $client_secret = env('MERCADO_CLIENT_SECRET');
 
         Mercado::setAccessToken($access_token);
 
@@ -51,9 +48,24 @@ class PaymentController extends Controller
         $payment->issuer_id = (int)$request->issuer;
 
         $payment->payer = array(
-            "email" => "silva.fernandes777@gmail.com"
+            "email" => $request->email,
+            "first_name" => $request->first_name,
+            "last_name" => $request->last_name,
+            "identification" => array(
+                "type" => $request->docType,
+                "number" => $request->docNumber
+            ),
+            "address" => array(
+                "zip_code" => "52",
+                "street_name" => "Av. das Nações Unidas",
+                "street_number" => "2",
+                "neigborhood" => "Bonfim",
+                "city" => "Jundiaí",
+                "federal_unit" => "SP",
+            ),
         );
 
+        dd($payment);
         $payment->save();
 
         dd($payment);
