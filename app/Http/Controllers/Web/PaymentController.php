@@ -27,7 +27,7 @@ class PaymentController extends Controller
     public function paymentRequest(Request $request)
     {
 
-        dd("Entrou aqui");
+        dd($request->all());
 
         $this->validate($request, [
             'gateway' => 'required'

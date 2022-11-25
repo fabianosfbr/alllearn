@@ -466,13 +466,11 @@ class CartController extends Controller
                 }
 
                 $webinar = Webinar::find($carts[0]->webinar_id);
-                $credit_card_installment = array(1 => 1);
+                $credit_card_installment = 1;
                 $invoice_installment = array(1 => 1);
 
                 if ($webinar->credit_card == 1) {
-                    for ($i = 1; $i <= $webinar->credit_card_installment; $i++) {
-                        $credit_card_installment[$i] = $i;
-                    }
+                    $credit_card_installment = $webinar->credit_card_installment;
                 }
 
                 if ($webinar->invoice == 1) {

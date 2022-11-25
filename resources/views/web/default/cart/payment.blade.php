@@ -4,6 +4,8 @@
 
 @endpush
 
+
+
 @section('content')
 <section class="cart-banner position-relative text-center">
     <h1 class="font-30 text-white font-weight-bold">{{ trans('cart.checkout') }}</h1>
@@ -13,9 +15,10 @@
 <section class="container mt-45">
     <h2 class="section-title">{{ trans('financial.select_a_payment_gateway') }}</h2>
 
-    <form action="/payments/payment-request" method="post" class=" mt-25">
+    <form action="/payments/payment-request" method="post" id="paymentForm" class=" mt-25">
         {{ csrf_field() }}
         <input type="hidden" name="order_id" value="{{ $order->id }}">
+
 
         <div class="row">
             {{-- Botão para pagar com boleto, pix ou cartão --}}
@@ -47,8 +50,9 @@
             </div>
         </div>
 
-        {{-- Mostrar formulário somente se o usuario escolhar a opção de pagamento boleto, pix ou cartão de crédito --}}
+
         <div class="col-12 d-none" id="personalInfo">
+            <h3>Dados do comprador</h3>
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-4">
@@ -71,13 +75,35 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-1">
+                    <div class="col-lg-4">
+                        <label class="input-label" for="docType">Tipo de documento</label>
+                        <select class="form-control" id="docType" name="docType" data-checkout="docType" type="text"></select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="input-label" for="docNumber">Número do documento</label>
+                        <input class="form-control" id="docNumber" name="docNumber" data-checkout="docNumber" type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <label class="input-label" for="email">E-mail</label>
+                        <input class="form-control" id="email" name="email" type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-2">
                         <label class="input-label">DDD</label>
                         <input onchange="toggleButton()" id="ddd" class="form-control" type="text" name="code_zone">
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-6">
                         <label class="input-label">Celular</label>
                         <input onchange="toggleButton()" id="phone" type="tel" name="phone_number" class="form-control @error('phone_number')  is-invalid @enderror" placeholder="" />
                         @error('phone_number')
@@ -86,18 +112,8 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col-lg-4">
-                        <label class="input-label">CPF/CNPJ</label>
-                        <input onchange="toggleButton()" id="cpf_cnpj" type="text" name="cpf_cnpj" class="form-control @error('cpf_cnpj')  is-invalid @enderror" placeholder="" />
-                        @error('cpf_cnpj')
-                        <div class="invalid-feedback d-flex">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
                 </div>
             </div>
-            <br>
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-2">
@@ -186,122 +202,51 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <h3>Detalhes do pagamento</h3>
+            <div>
+                <div>
+                    <label class="input-label" for="cardholderName">Titular do cartão</label>
+                    <input class="form-control" id="cardholderName" data-checkout="cardholderName" type="text">
+                </div>
+                <div>
+                    <label class="input-label" for="">Data de vencimento</label>
+                    <div>
+                        <input class="form-control" type="text" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                        <span class="date-separator">/</span>
+                        <input class="form-control" type="text" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                    </div>
+                </div>
+                <div>
+                    <label class="input-label" class="input-label" for="cardNumber">Número do cartão</label>
+                    <input class="form-control" type="text" id="cardNumber" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                </div>
+                <div>
+                    <label class="input-label" for="securityCode">Código de segurança</label>
+                    <input class="form-control" id="securityCode" data-checkout="securityCode" type="text" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                </div>
+                <div id="issuerInput">
+                    <label class="input-label" for="issuer">Banco emissor</label>
+                    <select class="form-control" id="issuer" name="issuer" data-checkout="issuer"></select>
+                </div>
+                <div>
+                    <label class="input-label" for="installments">Parcelas</label>
+                    <select class="form-control" type="text" id="installments" name="installments"></select>
+                </div>
+                <div>
+                    <input type="hidden" name="transactionAmount" id="transactionAmount" value="{{$total}}" />
+                    <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
+                    <input type="hidden" name="description" id="description" />
+                    <input type="hidden" name="creditCardInstallment" id="creditCardInstallment" value="{{$creditCardInstallment}}" />
+                    <br>
 
-        <div class="col-12 d-none" id="paymentOptions">
-            <p class="section-title">Opções de pagamento</p>
-            <div class="row">
-                <div class="col-lg-2 mt-25">
-                    <div class="d-flex align-items-center js-ajax-accessibility">
-                        <div class="custom-control custom-radio">
-                            <input class="custom-control-input" type="radio" name="boleto" id="choseBoleto">
-                            <label class="custom-control-label font-14 cursor-pointer" for="choseBoleto">Boleto</label>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-lg-2 mt-25">
-                    <div class="d-flex align-items-center js-ajax-accessibility">
-                        <div class="custom-control custom-radio">
-                            <input class="custom-control-input" type="radio" name="pix" id="chosePix">
-                            <label class="custom-control-label font-14 cursor-pointer" for="chosePix">Pix</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 mt-25">
-                    <div class="d-flex align-items-center js-ajax-accessibility">
-                        <div class="custom-control custom-radio">
-                            <input class="custom-control-input" type="radio" name="credCard" id="choseCredCard">
-                            <label class="custom-control-label font-14 cursor-pointer" for="choseCredCard">Cartão de Crédito</label>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div class=" d-flex align-items-center justify-content-between mt-45">
+                <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ addCurrencyToPrice($total) }}</span>
+                <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
             </div>
         </div>
 
-        <div style="display: none" class="forn-group mt-25" id="infoCredCard">
-            <div class="row">
-                <div class="col-lg-3">
-                    <label class="input-label">Nome do cartão de crédito</label>
-                    <input id="nameCartao" type="text" name="nameCartao" class="form-control @error('nameCard')  is-invalid @enderror" placeholder="" />
-                    @error('nameCard')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-3">
-                    <label class="input-label">Número do cartão</label>
-                    <input id="numCredCard" type="text" name="numCredCard" class="form-control @error('numCredCard')  is-invalid @enderror" placeholder="" />
-                    @error('numCredCard')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-            <div class="form-group mt-15">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label class="input-label">Data de vencimento</label>
-                        <input id="nameCartao" type="text" name="expiration" class="form-control @error('expiration')  is-invalid @enderror" placeholder="" />
-                        @error('expiration')
-                        <div class="invalid-feedback d-flex">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                    <div class="col-lg-1">
-                        <label class="input-label">CVV</label>
-                        <input id="numCredCard" type="text" name="cvv" class="form-control @error('cvv')  is-invalid @enderror" placeholder="" />
-                        @error('cvv')
-                        <div class="invalid-feedback d-flex">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group mt-15">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <label class="input-label">Parcelas</label>
-                            <select onchange="toggleButton()" class="form-control" id="state" name="estado">
-                                <option value="" selected disabled hidden>Selecione</option>
-
-                                @foreach ($creditCardInstallment as $installment)
-
-                                <option value="{{$installment}}">{{$installment == 1? "À vista" : $installment. " parcelas" }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="display: none" class="forn-group mt-25" id="infoInvoice">
-            <div class="form-group mt-15">
-                <div class="form-group mt-15">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <label class="input-label">Parcelas</label>
-                            <select onchange="toggleButton()" class="form-control" id="state" name="estado">
-                                <option value="" selected disabled hidden>Selecione</option>
-
-                                @foreach ($creditCardInstallment as $installment)
-
-                                <option value="{{$installment}}">{{$installment == 1? "À vista" : $installment. " parcelas" }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class=" d-flex align-items-center justify-content-between mt-45">
-            <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ addCurrencyToPrice($total) }}</span>
-            <button type="button" id="paymentSubmit" class="btn btn-sm btn-primary" disabled>Finalizar pagamento</button>
-        </div>
     </form>
 
 </section>
@@ -310,5 +255,7 @@
 
 @push('scripts_bottom')
 <script src="/assets/default/js/payment.js"></script>
+<script src="/assets/default/js/mercado-pago.js"></script>
+<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 <!-- <script src="/assets/default/js/parts/payment.min.js"></script> -->
 @endpush
