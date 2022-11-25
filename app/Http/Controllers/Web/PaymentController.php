@@ -26,6 +26,9 @@ class PaymentController extends Controller
 
     public function paymentRequest(Request $request)
     {
+
+        dd("Entrou aqui");
+
         $this->validate($request, [
             'gateway' => 'required'
         ]);
@@ -95,7 +98,6 @@ class PaymentController extends Controller
             }
 
             return Redirect::away($redirect_url);
-
         } catch (\Exception $exception) {
 
             $toastData = [
@@ -113,15 +115,13 @@ class PaymentController extends Controller
             ->where('status', 'active')
             ->first();
 
-        if ($request->isMethod('GET'))
-        {
+        if ($request->isMethod('GET')) {
             try {
-                
+
                 $channelManager = ChannelManager::makeChannel($paymentChannel);
                 $order = $channelManager->verify($request);
-                
-                return $this->paymentOrderAfterVerify($order);
 
+                return $this->paymentOrderAfterVerify($order);
             } catch (\Exception $exception) {
                 $toastData = [
                     'title' => trans('cart.fail_purchase'),
@@ -129,15 +129,13 @@ class PaymentController extends Controller
                     'status' => 'error'
                 ];
                 return redirect('cart')->with(['toast' => $toastData]);
-            } 
+            }
         }
 
-        if ($request->isMethod('POST'))
-        {
+        if ($request->isMethod('POST')) {
             $data = $request->all();
 
-            if (array_key_exists('type', $data))
-            {
+            if (array_key_exists('type', $data)) {
 
                 $channelManager = ChannelManager::makeChannel($paymentChannel);
                 $order = $channelManager->verify($request);
@@ -147,32 +145,27 @@ class PaymentController extends Controller
                     if ($order->status == Order::$paying) {
                         $this->setPaymentAccounting($order);
                         $order->update(['status' => Order::$paid]);
-                    }else{
+                    } else {
                         if ($order->type === Order::$meeting) {
                             $orderItem = OrderItem::where('order_id', $order->id)->first();
 
                             if ($orderItem && $orderItem->reserve_meeting_id) {
-                            $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
+                                $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
 
-                            if ($reserveMeeting) {
-                                $reserveMeeting->update(['locked_at' => null]);
+                                if ($reserveMeeting) {
+                                    $reserveMeeting->update(['locked_at' => null]);
+                                }
                             }
                         }
-                        }
                     }
-                }               
-
-
+                }
             }
 
 
-           
-            
+
+
             return response()->json($data, 200);
-         
-        } 
-
-
+        }
     }
 
     /*
@@ -192,7 +185,6 @@ class PaymentController extends Controller
             $order = $channelManager->verify($request);
 
             return $this->paymentOrderAfterVerify($order);
-
         } catch (\Exception $exception) {
             $toastData = [
                 'title' => trans('cart.fail_purchase'),
@@ -210,10 +202,8 @@ class PaymentController extends Controller
             if ($order->status == Order::$paying) {
                 $this->setPaymentAccounting($order);
                 $order->update(['status' => Order::$paid]);
-
             } elseif ($order->status == Order::$pending) { //Order waiting payment, clear cart
-                Cart::emptyCart($order->user_id); 
-
+                Cart::emptyCart($order->user_id);
             } else {
                 if ($order->type === Order::$meeting) {
                     $orderItem = OrderItem::where('order_id', $order->id)->first();
