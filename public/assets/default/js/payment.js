@@ -13,15 +13,14 @@ $('body').on('click','input[name="gateway"]',() => {
   $('input[name="alllearn"]:checked').not(this).prop('checked', false)
   $("#personalInfo").addClass("d-block")
   $("#paymentOptions").addClass("d-block")
+  $('#paymentSubmit').prop('disabled', true)
 });
 
 $('body').on("click",'input[name="alllearn"]',() => {
   $('input[name="gateway"]:checked').not(this).prop('checked', false)
   $('input[name="alllearn"]:checked').not(this).prop('checked', true)
-  $("#personalInfo").addClass("d-block")
-  $("#paymentOptions").removeClass("d-block")
-  $("#paymentOptions").addClass("d-none")
-  $("#infoCredCard").removeClass("d-block")
+  $("#personalInfo").removeClass("d-block")
+  $('#paymentSubmit').prop('disabled', false)
 });
 
 $('body').on("click",'input[name="credCard"]',() => {
@@ -54,5 +53,5 @@ function toggleButton() {
   if (nome && segundoNome && telefone && cpfOrCnpj && cep && street && numStreet && city && state && district) {
       document.querySelector('#paymentSubmit').disabled = false
       return
-  }   document.querySelector('#paymentSubmit').disabled = true   
+  }   document.querySelector('#paymentSubmit').disabled = true
 };
