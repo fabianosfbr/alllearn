@@ -20,6 +20,12 @@ use App\PaymentChannels\ChannelManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use MercadoPago\SDK as Mercado;
+use MercadoPago\Preference as MercadoPreference;
+use MercadoPago\Item as MercadoItem;
+use MercadoPago\Payer as MercadoPagoPayer;
+use MercadoPago\Payment as MercadoPayment;
+
 class PaymentController extends Controller
 {
     protected $order_session_key = 'payment.order_id';
@@ -27,7 +33,33 @@ class PaymentController extends Controller
     public function paymentRequest(Request $request)
     {
 
-        dd($request->all());
+        //dd($request->all());
+
+        $public_key = env('MERCADO_PAGO_PUBLIC_KEY');
+        $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
+        $client_id = env('MERCADO_CLIENT_ID');
+        $client_secret = env('MERCADO_CLIENT_SECRET');
+
+        Mercado::setAccessToken($access_token);
+
+        $payment = new MercadoPayment();
+        $payment->transaction_amount = (float)$request->transactionAmount;
+        $payment->token = $request->token;
+        $payment->description = "Licenciatura em Pedagogia";
+        $payment->installments = (int)$request->installments;
+        $payment->payment_method_id = $request->paymentMethodId;
+        $payment->issuer_id = (int)$request->issuer;
+
+        $payment->payer = array(
+            "email" => "silva.fernandes777@gmail.com"
+        );
+
+        $payment->save();
+
+        dd($payment);
+
+
+
 
         $this->validate($request, [
             'gateway' => 'required'
@@ -107,6 +139,11 @@ class PaymentController extends Controller
             ];
             return back()->with(['toast' => $toastData]);
         }
+    }
+
+
+    public function makePayment()
+    {
     }
 
     public function paymentVerify(Request $request, $gateway)
