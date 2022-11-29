@@ -13,14 +13,15 @@ $('body').on('click','input[name="gateway"]',() => {
   $('input[name="alllearn"]:checked').not(this).prop('checked', false)
   $("#personalInfo").addClass("d-block")
   $("#paymentOptions").addClass("d-block")
-  $('#paymentSubmit').prop('disabled', true)
+  $("#infoPayment").removeClass("d-none")
 });
 
 $('body').on("click",'input[name="alllearn"]',() => {
   $('input[name="gateway"]:checked').not(this).prop('checked', false)
   $('input[name="alllearn"]:checked').not(this).prop('checked', true)
-  $("#personalInfo").removeClass("d-block")
-  $('#paymentSubmit').prop('disabled', false)
+  $("#personalInfo").addClass("d-block")
+  $("#infoPayment").addClass("d-none")
+  $("#infoCredCard").removeClass("d-block")
 });
 
 $('body').on("click",'input[name="credCard"]',() => {

@@ -202,8 +202,9 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="mt-2 d-flex">
+            <div id="infoPayment" class="form-group pt-3">
+                <h3 class="mb-3">Opções de Pagamento</h3>
+                <div class="d-flex">
                     <div class="custom-control custom-radio col-lg-3">
                         <input id="boleto" class="custom-control-input" type="radio" name="boleto">
                         <label for="boleto" class="custom-control-label">Boleto</label>
