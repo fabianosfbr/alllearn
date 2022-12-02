@@ -51,14 +51,14 @@ return [
     |--------------------------------------------------------------------------
      */
 
-    'max_image_size' => 100000, //100MB
-    'max_file_size' => 100000,
+    'max_image_size' => 25000, //100MB
+    'max_file_size' => 25000,
 
     'folder_categories' => [
         'file' => [
             'folder_name' => '/',
             'startup_view' => 'list',
-            'max_size' => 100000, // size in KB
+            'max_size' => 25000, // size in KB
             'valid_mime' => [
                 '.pdf',
                 '.doc',
@@ -84,7 +84,7 @@ return [
         'image' => [
             'folder_name' => '/',
             'startup_view' => 'list',
-            'max_size' => 100000, // size in KB
+            'max_size' => 25000, // size in KB
             'valid_mime' => [
                 '.pdf',
                 '.doc',

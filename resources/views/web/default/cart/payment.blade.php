@@ -270,7 +270,7 @@
         </div>
         <div class=" d-flex align-items-center justify-content-between mt-45">
             <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ addCurrencyToPrice($total) }}</span>
-            <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary" disabled>Finalizar pagamento</button>
+            <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
         </div>
 
     </form>
