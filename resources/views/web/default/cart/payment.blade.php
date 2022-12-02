@@ -23,7 +23,7 @@
         <div class="row">
             {{-- Botão para pagar com boleto, pix ou cartão --}}
             <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                <input type="radio" name="gateway" id="gateway" value="credit">
+                <input type="radio" name="gateway" id="gateway" value="gateway">
                 <label for="gateway" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
@@ -36,7 +36,7 @@
 
             {{-- Botão para pagar com saldo All Learn --}}
             <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                <input type="radio" name="alllearn" id="alllearn" value="credit">
+                <input type="radio" name="gateway" id="credit" value="credit">
                 <label for="alllearn" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
