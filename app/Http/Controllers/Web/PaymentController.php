@@ -33,8 +33,151 @@ class PaymentController extends Controller
     public function paymentRequest(Request $request)
     {
 
-        dd($request->all());
 
+
+        $rules = [
+            'order_id' => 'required',
+            'gateway' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'docType' => 'required',
+            'docNumber' => 'required',
+            'email' => 'required',
+            'code_zone' => 'required',
+            'phone_number' => 'required',
+            'zip_code' => 'required',
+            'street_name' =>'required',
+            'street_number' => 'required',
+            'neigborhood' => 'required',
+            'city' => 'required',
+            'federal_unit' => 'required',
+            'credCard' => 'on',
+            'issuer' => 'required',
+            'installments' => 'required',
+            'transactionAmount' =>'required',
+            'paymentMethodId' => 'required',
+            'creditCardInstallment' => 'required',
+            'token' => 'required',
+        ];
+
+        $errorMessages = [
+            'first_name.required' => 'O nome é obrigatório.',
+            'last_name.required' => 'O sobrenome é obrigatório.',
+            'docType.required' => 'O tipo de documento é obrigatório.',
+            'docNumber.required' => 'O número do documento é obrigatório.',
+            'email.required' => 'O email é obrigatório.',
+            'code_zone.required' => 'O DDD é obrigatório.',
+            'phone_number.required' => 'O número de telefone é obrigatório.',
+            'zip_code.required' => 'O CEP é obrigatório.',
+            'street_name.required' =>'O nome da rua é obrigatório.',
+            'street_number.required' => 'O número da residência é obrigatório.',
+            'neigborhood.required' => 'O bairro é obrigatório.',
+            'city.required' => 'A cidade é é obrigatória.',
+            'federal_unit.required' => 'A UF é é obrigatória.',
+            'installments.required' => 'O número de parcelas é é obrigatório.',
+            'transactionAmount.required' =>'O valor é é obrigatório.',
+            'paymentMethodId.required' => 'A forma de pagamento é obrigatória.',
+
+
+        ];
+
+
+        $dataValidate = $this->validate($request, $rules, $errorMessages);
+
+
+        $user = auth()->user();
+        $gateway = $request->input('gateway');
+        $orderId = $request->input('order_id');
+
+        $order = Order::where('id', $orderId)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if ($order->type === Order::$meeting) {
+            $orderItem = OrderItem::where('order_id', $order->id)->first();
+            $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
+            $reserveMeeting->update(['locked_at' => time()]);
+        }
+
+        // Credit payment All Learn
+        if ($gateway === 'credit') {
+
+            if ($user->getAccountingCharge() < $order->amount) {
+                $order->update(['status' => Order::$fail]);
+
+                session()->put($this->order_session_key, $order->id);
+
+                return redirect('/payments/status');
+            }
+
+            $order->update([
+                'payment_method' => Order::$credit
+            ]);
+
+            $this->setPaymentAccounting($order, 'credit');
+
+            $order->update([
+                'status' => Order::$paid
+            ]);
+
+            session()->put($this->order_session_key, $order->id);
+
+            return redirect('/payments/status');
+        }
+
+
+        // Credit Card payment - MP
+        if(isset($data->credCard) && $data->credCard == 'on'){
+
+            $order->payment_method = Order::$paymentChannel;
+            $order->save();
+            try {
+
+                $this->makePaymentCreditCard($request);
+
+                return Redirect::away($redirect_url);
+
+            } catch (\Exception $exception) {
+
+                $toastData = [
+                    'title' => trans('cart.fail_purchase'),
+                    'msg' => trans('cart.gateway_error'),
+                    'status' => 'error'
+                ];
+                return back()->with(['toast' => $toastData]);
+            }
+
+        }
+
+        if(isset($data->boleto) and $data->boleto == 'on' ){
+
+        }
+
+        try {
+
+            // Cartao Mercado Pago
+            $channelManager = ChannelManager::makeChannel($paymentChannel);
+            $redirect_url = $channelManager->paymentRequest($order);
+
+            if (in_array($paymentChannel->class_name, PaymentChannel::$gatewayIgnoreRedirect)) {
+                return $redirect_url;
+            }
+
+            return Redirect::away($redirect_url);
+        } catch (\Exception $exception) {
+
+            $toastData = [
+                'title' => trans('cart.fail_purchase'),
+                'msg' => trans('cart.gateway_error'),
+                'status' => 'error'
+            ];
+            return back()->with(['toast' => $toastData]);
+        }
+    }
+
+
+    public function makePaymentCreditCard($request)
+    {
         $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
 
         Mercado::setAccessToken($access_token);
@@ -73,93 +216,6 @@ class PaymentController extends Controller
         $payment->save();
 
         dd($payment);
-
-
-
-
-        $this->validate($request, [
-            'gateway' => 'required'
-        ]);
-
-        $user = auth()->user();
-        $gateway = $request->input('gateway');
-        $orderId = $request->input('order_id');
-
-        $order = Order::where('id', $orderId)
-            ->where('user_id', $user->id)
-            ->first();
-
-        if ($order->type === Order::$meeting) {
-            $orderItem = OrderItem::where('order_id', $order->id)->first();
-            $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
-            $reserveMeeting->update(['locked_at' => time()]);
-        }
-
-        if ($gateway === 'credit') {
-
-            if ($user->getAccountingCharge() < $order->amount) {
-                $order->update(['status' => Order::$fail]);
-
-                session()->put($this->order_session_key, $order->id);
-
-                return redirect('/payments/status');
-            }
-
-            $order->update([
-                'payment_method' => Order::$credit
-            ]);
-
-            $this->setPaymentAccounting($order, 'credit');
-
-            $order->update([
-                'status' => Order::$paid
-            ]);
-
-            session()->put($this->order_session_key, $order->id);
-
-            return redirect('/payments/status');
-        }
-
-        $paymentChannel = PaymentChannel::where('id', $gateway)
-            ->where('status', 'active')
-            ->first();
-
-        if (!$paymentChannel) {
-            $toastData = [
-                'title' => trans('cart.fail_purchase'),
-                'msg' => trans('public.channel_payment_disabled'),
-                'status' => 'error'
-            ];
-            return back()->with(['toast' => $toastData]);
-        }
-
-        $order->payment_method = Order::$paymentChannel;
-        $order->save();
-
-
-        try {
-            $channelManager = ChannelManager::makeChannel($paymentChannel);
-            $redirect_url = $channelManager->paymentRequest($order);
-
-            if (in_array($paymentChannel->class_name, PaymentChannel::$gatewayIgnoreRedirect)) {
-                return $redirect_url;
-            }
-
-            return Redirect::away($redirect_url);
-        } catch (\Exception $exception) {
-
-            $toastData = [
-                'title' => trans('cart.fail_purchase'),
-                'msg' => trans('cart.gateway_error'),
-                'status' => 'error'
-            ];
-            return back()->with(['toast' => $toastData]);
-        }
-    }
-
-
-    public function makePayment()
-    {
     }
 
     public function paymentVerify(Request $request, $gateway)

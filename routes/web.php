@@ -136,6 +136,8 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
 
             Route::post('/coupon/validate', 'CartController@couponValidate');
             Route::post('/checkout', 'CartController@checkout')->name('checkout');
+            Route::get('/checkout', 'CartController@checkout')->name('checkout');
+
         });
 
         Route::group(['prefix' => 'users'], function () {

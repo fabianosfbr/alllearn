@@ -12,7 +12,7 @@
     <span class="payment-hint font-20 text-white d-block">{{$currency . $total . ' ' .  trans('cart.for_items',['count' => $count]) }}</span>
 </section>
 
-<section class="container mt-45">
+<section x-data="init()" class="container mt-45">
     <h2 class="section-title">{{ trans('financial.select_a_payment_gateway') }}</h2>
 
     <form action="/payments/payment-request" method="post" id="paymentForm" class=" mt-25">
@@ -22,8 +22,8 @@
 
         <div class="row">
             {{-- Botão para pagar com boleto, pix ou cartão --}}
-            <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                <input type="radio" name="gateway" id="gateway" value="gateway">
+            <div class="col-6 col-lg-4 mb-40 charge-account-radio" @click="open = ! open">
+                <input type="radio" name="gateway" id="gateway" value="credit">
                 <label for="gateway" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
@@ -36,7 +36,7 @@
 
             {{-- Botão para pagar com saldo All Learn --}}
             <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                <input type="radio" name="gateway" id="credit" value="credit">
+                <input type="radio" name="alllearn" id="alllearn" value="credit">
                 <label for="alllearn" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
@@ -51,7 +51,9 @@
         </div>
 
 
-        <div class="col-12 d-none" id="personalInfo">
+
+        <div class="col-12" >
+            {{-- Dados do comprador --}}
             <h3>Dados do comprador</h3>
             <div class="form-group">
                 <div class="row">
@@ -75,7 +77,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="form-group">
                 <div class="row">
@@ -145,7 +146,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-3">
@@ -202,9 +202,10 @@
                     </div>
                 </div>
             </div>
-            <div id="infoPayment" class="form-group pt-3">
-                <h3 class="mb-3">Opções de Pagamento</h3>
-                <div class="d-flex">
+
+            {{-- Dados do pagamento --}}
+            <div class="form-group pt-3">
+                <div class="mt-2 d-flex">
                     <div class="custom-control custom-radio col-lg-3">
                         <input id="boleto" class="custom-control-input" type="radio" name="boleto">
                         <label for="boleto" class="custom-control-label">Boleto</label>
@@ -219,8 +220,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="d-none pt-2" id="infoCredCard">
+            {{-- Pagamento com cartão de crédito --}}
+            <div class="pt-3" x-show>
                 <h3 class="mb-2 mt-3">Detalhes do pagamento</h3>
                 <div>
                     <div class="row mb-2">
@@ -271,12 +272,27 @@
         </div>
         <div class=" d-flex align-items-center justify-content-between mt-45">
             <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ addCurrencyToPrice($total) }}</span>
-            <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
+            <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary" >Finalizar pagamento</button>
         </div>
 
     </form>
 
 </section>
+
+<script>
+
+    function init() {
+        return {
+
+            showGateway = false,
+            showCredit = false;
+
+        };
+
+    }
+
+
+</script>
 
 @endsection
 
@@ -285,5 +301,6 @@
 <script src="/assets/default/js/mercado-pago.js"></script>
 <script src="/assets/default/js/busca-cep.js"></script>
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <!-- <script src="/assets/default/js/parts/payment.min.js"></script> -->
 @endpush
