@@ -7,7 +7,7 @@
         <br>
     </div>
 <div class="row">
-    <div class="col-12 col-md-4 mt-15">
+    <div class="col-12 mt-15">
 
         @if(!empty(getGeneralSettings('content_translate')))
             <div class="form-group">
@@ -46,7 +46,7 @@
         @endif
 
 
-        <div class="form-group mt-15">
+        <div class="form-group mt-15 col-md-4">
            <label class="input-label ">
                 Nome do curso:
             </label>
@@ -57,27 +57,24 @@
             </div>
             @enderror
         </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label class="input-label">{{ trans('public.description') }}</label>
-                        <div>
-                            <p class="font-12 text-gray">- Descrição do seu curso para seus compradores.</p><br>
-                            <p class="font-12 text-gray"><span style="font-weight: bold">Dica:</span> Forneça o máximo de informações e detalhes sobre seu curso.</p><br>
-                        </div>
-                        <textarea id="summernote" name="description" class="form-control @error('description')  is-invalid @enderror" placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->description : old('description')  !!}</textarea>
-                        @error('description')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
+        
+        <div class="col-12">
+            <div class="form-group">
+                <label class="input-label">{{ trans('public.description') }}</label>
+                <div>
+                    <p class="font-12 text-gray">- Descrição do seu curso para seus compradores.</p><br>
+                    <p class="font-12 text-gray"><span style="font-weight: bold">Dica:</span> Forneça o máximo de informações e detalhes sobre seu curso.</p><br>
                 </div>
-
+                <textarea id="summernote" name="description" class="form-control @error('description')  is-invalid @enderror" placeholder="{{ trans('forms.webinar_description_placeholder') }}">{!! (!empty($webinar) and !empty($webinar->translate($locale))) ? $webinar->translate($locale)->description : old('description')  !!}</textarea>
+                @error('description')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
+        </div>
 
-
-        <div class="form-group mt-15">
+        <div class="form-group mt-15 col-md-4">
             <label class="input-label ">
                 {{ trans('public.thumbnail_image') }}<span style="color: red; font-size: 12px;"> *Obrigatório</span> 
             </label>
@@ -99,7 +96,7 @@
             </div>
         </div>
 
-        <div class="form-group mt-15">
+        <div class="form-group mt-15 col-md-4">
             <label class="input-label">
                 {{ trans('public.cover_image') }}<span style="color: red; font-size: 12px;"> *Obrigatório</span> 
             </label>
@@ -121,7 +118,7 @@
             </div>
         </div>
 
-        <div class="form-group mt-25">
+        <div class="form-group mt-25 col-md-4">
             <label class="input-label">
                 {{ trans('public.demo_video') }} ({{ trans('public.optional') }})
             </label>
@@ -141,7 +138,7 @@
             </div>
         </div>
 
-        <div class="form-group mt-0">
+        <div class="form-group mt-0 col-md-4">
             <label class="input-label font-12">Vídeo para upload (Somente se tiver selecionado um vídeo de demonstração)</label>
             <div class="input-group js-video-demo-path-input">
                 <div class="input-group-prepend">
@@ -162,7 +159,7 @@
             </div>
         </div>
                             
-        <div class="form-group mt-15">
+        <div class="form-group mt-15 col-md-4">
             <label class="input-label">
                 {{ trans('public.seo_description') }}
             </label>

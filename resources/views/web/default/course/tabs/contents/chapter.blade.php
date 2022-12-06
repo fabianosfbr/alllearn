@@ -17,7 +17,7 @@
                             <div class="d-flex align-items-center">
                                 <span class="mr-15 font-14 text-gray">
                                     {{ $chapter->getTopicsCount(true) }} 
-                                    {{ $chapter->getTopicsCount(true) == 1 ? "aula" : "aulas" }} 
+                                    {{ $chapter->getTopicsCount(true) == 1 ? "conteúdo" : "conteúdos" }} 
                                 </span>
 
                                 <i class="collapse-chevron-icon" data-feather="chevron-down" height="20" href="#collapseChapter{{ !empty($chapter) ? $chapter->id :'record' }}" aria-controls="collapseChapter{{ !empty($chapter) ? $chapter->id :'record' }}" data-parent="#chaptersAccordion" role="button" data-toggle="collapse" aria-expanded="true"></i>
