@@ -117,8 +117,12 @@
                         <label class="js-organization-label font-weight-500 text-dark-blue {{ !$isOrganizationRole ? 'd-none' : '' }}">{{ trans('update.organization_extra_information') }}</label>
                         <textarea name="description" rows="6" class="form-control">{{ !empty($lastRequest) ? $lastRequest->description : old('description') }}</textarea>
                     </div>
+                    
                     <div>
-                        <p class="js-instructor-label font-weight-500" style="font-size: 16px"><span class="font-weight-bold" style="color: red; font-size: 16px;">Atenção:</span> O prazo para aprovação de parceria é de no máximo 48 horas após a solicitação.</p>
+                        <p class="js-instructor-label font-weight-500" style="font-size: 16px">
+                        <span class="font-weight-bold" style="color: red; font-size: 16px;">Atenção:</span>
+                         O prazo para aprovação de parceria é de no máximo 48 horas após a solicitação.
+                        </p>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block mt-20">{{ (!empty(getRegistrationPackagesGeneralSettings('show_packages_during_registration')) and getRegistrationPackagesGeneralSettings('show_packages_during_registration')) ? trans('webinars.next') : trans('site.send_request') }}</button>
