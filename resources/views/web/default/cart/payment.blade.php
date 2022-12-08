@@ -1,10 +1,5 @@
 @extends(getTemplate().'.layouts.app')
 
-@push('styles_top')
-
-@endpush
-
-
 
 @section('content')
 <section class="cart-banner position-relative text-center">
@@ -22,8 +17,8 @@
 
         <div class="row">
             {{-- Botão para pagar com boleto, pix ou cartão --}}
-            <div class="col-6 col-lg-4 mb-40 charge-account-radio" @click="open = ! open">
-                <input type="radio" name="gateway" id="gateway" value="credit">
+            <div class="col-6 col-lg-4 mb-40 charge-account-radio">
+                <input type="radio" name="gateway" id="gateway" value="credit" @click="showForm=true, showPaymentMethod=true">
                 <label for="gateway" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
@@ -36,7 +31,7 @@
 
             {{-- Botão para pagar com saldo All Learn --}}
             <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                <input type="radio" name="alllearn" id="alllearn" value="credit">
+                <input type="radio" name="alllearn" id="alllearn" value="credit" @click="showForm=true, showPaymentMethod=false, creditCardForm=false">
                 <label for="alllearn" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
@@ -52,7 +47,7 @@
 
 
 
-        <div class="col-12" >
+        <div class="col-12" x-show="showForm">
             {{-- Dados do comprador --}}
             <h3>Dados do comprador</h3>
             <div class="form-group">
@@ -204,24 +199,24 @@
             </div>
 
             {{-- Dados do pagamento --}}
-            <div class="form-group pt-3">
+            <div class="form-group pt-3" x-show="showPaymentMethod">
                 <div class="mt-2 d-flex">
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="boleto" class="custom-control-input" type="radio" name="boleto">
+                        <input id="boleto" class="custom-control-input" type="radio" name="boleto" @click="creditCardForm = false">
                         <label for="boleto" class="custom-control-label">Boleto</label>
                     </div>
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="pix" class="custom-control-input" type="radio" name="pix">
+                        <input id="pix" class="custom-control-input" type="radio" name="pix" @click="creditCardForm = false">
                         <label for="pix" class="custom-control-label">Pix</label>
                     </div>
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="crédito" class="custom-control-input" type="radio" name="credCard">
+                        <input id="crédito" class="custom-control-input" type="radio" name="credCard" @click="creditCardForm = true">
                         <label for="crédito" class="custom-control-label">Cartão de Crédito</label>
                     </div>
                 </div>
             </div>
             {{-- Pagamento com cartão de crédito --}}
-            <div class="pt-3" x-show>
+            <div class="pt-3" x-show="creditCardForm">
                 <h3 class="mb-2 mt-3">Detalhes do pagamento</h3>
                 <div>
                     <div class="row mb-2">
@@ -272,7 +267,7 @@
         </div>
         <div class=" d-flex align-items-center justify-content-between mt-45">
             <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ addCurrencyToPrice($total) }}</span>
-            <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary" >Finalizar pagamento</button>
+            <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
         </div>
 
     </form>
@@ -280,18 +275,16 @@
 </section>
 
 <script>
-
     function init() {
         return {
+            showForm: false,
+            creditCardForm: false,
+            showPaymentMethod: true,
 
-            showGateway = false,
-            showCredit = false;
 
         };
 
     }
-
-
 </script>
 
 @endsection
