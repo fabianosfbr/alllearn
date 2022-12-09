@@ -19,10 +19,12 @@
 
             <div class="d-flex align-items-center justify-content-center">
                 @if(!empty($generalSettings['site_phone']))
+                <a href="https://api.whatsapp.com/send/?phone=551129238695" target="_blank" rel="noopener noreferrer">
                     <span class="d-flex align-items-center py-10 py-lg-0 text-dark-blue font-14">                       
                         <ion-icon name="logo-whatsapp" class="mr-10"></ion-icon>
                         {{ $generalSettings['site_phone'] }}
                     </span>
+                </a>
                 @endif
 
                 @if(!empty($generalSettings['site_email']))
