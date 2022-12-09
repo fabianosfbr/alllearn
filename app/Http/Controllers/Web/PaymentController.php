@@ -146,23 +146,24 @@ class PaymentController extends Controller
 
             $order->payment_method = Order::$paymentChannel;
             $order->save();
-
+            try {
 
 
                 // Mercado
                 //https://www.mercadopago.com.br/developers/pt/docs/checkout-api-v1/receiving-payment-by-card
 
+
                 $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
                 Mercado::setAccessToken($access_token);
 
                 $payment = new MercadoPayment();
-
                 $payment->transaction_amount = (float)$data['transactionAmount'];
                 $payment->token = $data['token'];
                 $payment->description = "Curso All Learn";
                 $payment->installments = (int)$data['installments'];
                 $payment->payment_method_id = $data['paymentMethodId'];
                 $payment->issuer_id = (int)$data['issuer'];
+                $payment->notification_url = url("/payments/verify/MercadoPago");
 
                 $parts = explode(" ", $data['full_name']);
                 if(count($parts) > 1) {
@@ -175,25 +176,43 @@ class PaymentController extends Controller
                     $lastname = " ";
                 }
 
-
-
-                $payer = new MercadoPagoPayer();
-                $payer->email = $data['email'];
-                $payer->identification = array(
-                    "type" => $data['docType'],
-                    "number" => $data['docNumber']
+                $payment->payer = array(
+                    "email" => $data['email'],
+                    "first_name" => $firstname,
+                    "last_name" => $lastname,
+                    "identification" => array(
+                        "type" => $data['docType'],
+                        "number" => $data['docNumber']
+                    ),
+                    "address" => array(
+                        "zip_code" => $data['zip_code'],
+                        "street_name" => $data['street_name'],
+                        "street_number" => $data['street_number'],
+                        "neigborhood" => $data['neigborhood'],
+                        "city" => $data['city'],
+                        "federal_unit" => $data['federal_unit'],
+                    ),
+                    "phone" => array(
+                        "area_code" => $data['code_zone'],
+                        "number" => $data['phone_number'],
+                    )
                 );
-                $payment->payer = $payer;
 
-                $payment->save();
 
-                $response = array(
-                    'status' => $payment->status,
-                    'status_detail' => $payment->status_detail,
-                    'id' => $payment->id
-                );
 
-                dd($response);
+
+                dd($payment->save());
+
+            } catch (\Exception $exception) {
+
+                dd($exception->getMessage());
+/*                 $toastData = [
+                    'title' => trans('cart.fail_purchase'),
+                    'msg' => trans('cart.gateway_error'),
+                    'status' => 'error'
+                ];
+                return back()->with(['toast' => $toastData]); */
+            }
 
         }
 
