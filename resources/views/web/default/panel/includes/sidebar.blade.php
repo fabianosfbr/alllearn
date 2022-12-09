@@ -72,6 +72,15 @@
             </a>
         </li>
 
+        <li class="sidenav-item">
+            <a href="/panel" class="d-flex align-items-center panel-file-manager" ata-input="demo_video">
+                <span class="sidenav-item-icon mr-10">
+                    <img src="/assets/default/img/icons/basic-info.svg" alt="gerenciador">
+                </span>
+                <span class="font-14 text-dark-blue font-weight-500">Gerenciar arquivos</span>
+            </a>
+        </li>
+
         @if($authUser->isOrganization())
             <li class="sidenav-item {{ (request()->is('panel/instructors') or request()->is('panel/manage/instructors*')) ? 'sidenav-item-active' : '' }}">
                 <a class="d-flex align-items-center" data-toggle="collapse" href="#instructorsCollapse" role="button" aria-expanded="false" aria-controls="instructorsCollapse">
