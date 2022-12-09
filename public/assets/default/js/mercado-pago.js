@@ -100,19 +100,33 @@ document.addEventListener('DOMContentLoaded', function () {
         doSubmit = false;
         document.getElementById('paymentForm').addEventListener('submit', getCardToken);
         function getCardToken(event) {
+
+            let $ccf = document.getElementById('creditCardForm');
             event.preventDefault();
             if (!doSubmit) {
-                let $form = document.getElementById('paymentForm');
-                window.Mercadopago.createToken($form, setCardTokenAndPay);
-                return false;
+                if($ccf.value === 'true'){
+                    let $form = document.getElementById('paymentForm');
+                    window.Mercadopago.createToken($form, setCardTokenAndPay);
+                    return false;
+
+                    return false;
+                }else{
+                   submitionWithoutCreditCardRules();
+                    return false;
+                }
+
             }
         };
     }
 
+    function submitionWithoutCreditCardRules(){
+        let form = document.getElementById('paymentForm');
+        doSubmit = true;
+        form.submit();
+    }
+
     function setCardTokenAndPay(status, response) {
         if (status == 200 || status == 201) {
-            console.log(status)
-            console.log(response)
             let form = document.getElementById('paymentForm');
             let card = document.createElement('input');
             card.setAttribute('name', 'token');
