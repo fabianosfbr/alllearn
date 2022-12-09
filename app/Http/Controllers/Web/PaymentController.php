@@ -65,7 +65,7 @@ class PaymentController extends Controller
             'street_name.required' =>'O nome da rua é obrigatório.',
             'street_number.required' => 'O número da residência é obrigatório.',
             'neigborhood.required' => 'O bairro é obrigatório.',
-            'city.required' => 'A cidade é é obrigatória.',
+            'city.required' => 'A cidade é obrigatória.',
             'federal_unit.required' => 'A UF é é obrigatória.',
             'installments.required' => 'O número de parcelas é é obrigatório.',
             'transactionAmount.required' =>'O valor é é obrigatório.',

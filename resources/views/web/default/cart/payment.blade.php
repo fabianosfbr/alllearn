@@ -47,7 +47,7 @@
 
 
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="errorMessage divErrorMessage p-3 mb-2">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
