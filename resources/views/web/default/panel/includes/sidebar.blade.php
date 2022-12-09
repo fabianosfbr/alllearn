@@ -74,7 +74,7 @@
 
         <li class="sidenav-item">
             <a href="/panel" class="d-flex align-items-center panel-file-manager" ata-input="demo_video">
-                <span class="sidenav-item-icon mr-10">
+                <span class="sidenav-item-icon mr-10 d-flex">
                     <img src="/assets/default/img/icons/basic-info.svg" alt="gerenciador">
                 </span>
                 <span class="font-14 text-dark-blue font-weight-500">Gerenciar arquivos</span>
