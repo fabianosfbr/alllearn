@@ -146,22 +146,54 @@ class PaymentController extends Controller
 
             $order->payment_method = Order::$paymentChannel;
             $order->save();
-            try {
 
-                $this->makePaymentCreditCard($request);
 
-                //return Redirect::away($redirect_url);
 
-            } catch (\Exception $exception) {
+                // Mercado
+                //https://www.mercadopago.com.br/developers/pt/docs/checkout-api-v1/receiving-payment-by-card
 
-                dd($exception);
-                $toastData = [
-                    'title' => trans('cart.fail_purchase'),
-                    'msg' => trans('cart.gateway_error'),
-                    'status' => 'error'
-                ];
-                return back()->with(['toast' => $toastData]);
-            }
+                $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
+                Mercado::setAccessToken($access_token);
+
+                $payment = new MercadoPayment();
+
+                $payment->transaction_amount = (float)$data['transactionAmount'];
+                $payment->token = $data['token'];
+                $payment->description = "Curso All Learn";
+                $payment->installments = (int)$data['installments'];
+                $payment->payment_method_id = $data['paymentMethodId'];
+                $payment->issuer_id = (int)$data['issuer'];
+
+                $parts = explode(" ", $data['full_name']);
+                if(count($parts) > 1) {
+                    $lastname = array_pop($parts);
+                    $firstname = implode(" ", $parts);
+                }
+                else
+                {
+                    $firstname = $name;
+                    $lastname = " ";
+                }
+
+
+
+                $payer = new MercadoPagoPayer();
+                $payer->email = $data['email'];
+                $payer->identification = array(
+                    "type" => $data['docType'],
+                    "number" => $data['docNumber']
+                );
+                $payment->payer = $payer;
+
+                $payment->save();
+
+                $response = array(
+                    'status' => $payment->status,
+                    'status_detail' => $payment->status_detail,
+                    'id' => $payment->id
+                );
+
+                dd($response);
 
         }
 
