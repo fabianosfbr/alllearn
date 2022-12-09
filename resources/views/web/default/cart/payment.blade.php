@@ -124,7 +124,7 @@
                     </div>
                     <div class="col-lg-6">
                         <label class="input-label">Celular</label>
-                        <input  id="phone" type="tel" name="phone_number" class="form-control @error('phone_number')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->phone_number : old('phone_number') }}"  />
+                        <input  id="phone" type="tel" name="phone_number" class="form-control @error('phone_number')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->mobile : old('mobile') }}"  />
                         @error('phone_number')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -137,7 +137,7 @@
                 <div class="row">
                     <div class="col-lg-2">
                         <label class="input-label">CEP</label>
-                        <input  id="zip_code" type="text" name="zip_code" class="form-control @error('zip_code')  is-invalid @enderror" placeholder="" />
+                        <input  id="zip_code" type="text" name="zip_code" class="form-control @error('zip_code')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->zip_code : old('zip_code') }}" />
                         @error('zip_code')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -146,7 +146,7 @@
                     </div>
                     <div class="col-lg-4">
                         <label class="input-label">Nome da rua</label>
-                        <input  id="street_name" type="text" name="street_name" class="form-control @error('street_name')  is-invalid @enderror" placeholder="" />
+                        <input  id="street_name" type="text" name="street_name" class="form-control @error('street_name')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->street_name : old('street_name') }}" />
                         @error('street_name')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -155,7 +155,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label class="input-label">Número</label>
-                        <input  id="street_number" type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" placeholder="" />
+                        <input  id="street_number" type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->street_number : old('street_number') }}" />
                         @error('street_number')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -168,7 +168,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <label class="input-label">Bairro</label>
-                        <input  id="neigborhood" type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" placeholder="" />
+                        <input  id="neigborhood" type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->neigborhood : old('neigborhood') }}" />
                         @error('neigborhood')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -177,7 +177,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label class="input-label">Cidade</label>
-                        <input  id="city" type="text" name="city" class="form-control @error('city')  is-invalid @enderror" placeholder="" />
+                        <input  id="city" type="text" name="city" class="form-control @error('city')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->city : old('city') }}" />
                         @error('city')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -186,7 +186,7 @@
                     </div>
                     <div class="col-lg-3">
                         <label class="input-label">Estado</label>
-                        <select  class="form-control @error('federal_unit')  is-invalid @enderror"" id="federal_unit" name="federal_unit" >
+                        <select  class="form-control @error('federal_unit')  is-invalid @enderror"" id="federal_unit" name="federal_unit"  >
                             <option value="" selected disabled hidden>Selecione</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
@@ -230,15 +230,15 @@
             <div class="form-group pt-3" x-show="showPaymentMethod">
                 <div class="mt-2 d-flex">
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="boleto" class="custom-control-input" type="radio" name="boleto" @click="creditCardForm = false">
+                        <input id="boleto" class="custom-control-input" type="radio" name="payment_type" value="boleto" @click="creditCardForm = false">
                         <label for="boleto" class="custom-control-label">Boleto</label>
                     </div>
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="pix" class="custom-control-input" type="radio" name="pix" @click="creditCardForm = false">
+                        <input id="pix" class="custom-control-input" type="radio" name="payment_type" value="pix" @click="creditCardForm = false">
                         <label for="pix" class="custom-control-label">Pix</label>
                     </div>
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="crédito" class="custom-control-input" type="radio" name="credCard" @click="creditCardForm = true">
+                        <input id="crédito" class="custom-control-input" type="radio" name="payment_type" value="cartao" @click="creditCardForm = true">
                         <label for="crédito" class="custom-control-label">Cartão de Crédito</label>
                     </div>
                 </div>
@@ -278,7 +278,7 @@
                             <label class="input-label" for="issuer">Banco emissor</label>
                             <select class="form-control" id="issuer" name="issuer" data-checkout="issuer"></select>
                         </div>
-                        <div class="col-lg-4">
+                        <div id="installments_number" class="col-lg-4 d-none">
                             <label class="input-label" for="installments">Parcelas</label>
                             <select class="form-control" type="text" id="installments" name="installments"></select>
                         </div>

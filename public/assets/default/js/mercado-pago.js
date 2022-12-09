@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function setInstallments(status, response) {
         if (status == 200) {
+            document.getElementById('installments_number').classList.remove("d-none");
             document.getElementById('installments').options.length = 0;
             let maxInstallments = document.getElementById('creditCardInstallment').value;
             for (let i = 0; i < maxInstallments; i++) {

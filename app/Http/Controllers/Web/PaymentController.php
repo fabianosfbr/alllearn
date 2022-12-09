@@ -34,8 +34,10 @@ class PaymentController extends Controller
     {
 
 
+
         $rules = [
             'payment_option'=> 'required|in:gateway,credit',
+            'payment_type'=> 'required_if:payment_option,gateway',
             'order_id' => 'required',
             'full_name' => 'required',
             'docType' => 'required',
@@ -66,19 +68,23 @@ class PaymentController extends Controller
             'street_number.required' => 'O número da residência é obrigatório.',
             'neigborhood.required' => 'O bairro é obrigatório.',
             'city.required' => 'A cidade é obrigatória.',
-            'federal_unit.required' => 'A UF é é obrigatória.',
-            'installments.required' => 'O número de parcelas é é obrigatório.',
-            'transactionAmount.required' =>'O valor é é obrigatório.',
+            'federal_unit.required' => 'A UF é obrigatória.',
+            'payment_type.required_if' => 'Obrigatório selecionar boleto, pix ou cartão.',
+            'installments.required' => 'O número de parcelas é obrigatório.',
+            'transactionAmount.required' =>'O valor é obrigatório.',
             'paymentMethodId.required' => 'A forma de pagamento é obrigatória.',
 
         ];
 
 
+
+
         $dataValidate = $this->validate($request, $rules, $errorMessages);
 
 
+
         $user = auth()->user();
-        $gateway = $request->input('gateway');
+        $data = $request->all();
         $orderId = $request->input('order_id');
 
         $order = Order::where('id', $orderId)
@@ -91,8 +97,25 @@ class PaymentController extends Controller
             $reserveMeeting->update(['locked_at' => time()]);
         }
 
+
+        $user->update([
+            'full_name' => $dataValidate['full_name'],
+            'docType' => $dataValidate['docType'],
+            'docNumber' => $dataValidate['docNumber'],
+            'email' => $dataValidate['email'],
+            'code_zone' => $dataValidate['code_zone'],
+            'mobile' => $dataValidate['phone_number'],
+            'zip_code' => $dataValidate['zip_code'],
+            'street_name' => $dataValidate['street_name'],
+            'neigborhood' => $dataValidate['neigborhood'],
+            'street_number' => $dataValidate['street_number'],
+            'city' => $dataValidate['city'],
+            'federal_unit' => $dataValidate['federal_unit'],
+        ]);
+
+
         // Credit payment All Learn
-        if ($gateway === 'credit') {
+        if ($dataValidate['payment_option'] === 'credit') {
 
             if ($user->getAccountingCharge() < $order->amount) {
                 $order->update(['status' => Order::$fail]);
@@ -119,7 +142,7 @@ class PaymentController extends Controller
 
 
         // Credit Card payment - MP
-        if(isset($data->credCard) && $data->credCard == 'on'){
+        if($data['payment_option'] == 'gateway' and $data['payment_type'] == 'cartao'){
 
             $order->payment_method = Order::$paymentChannel;
             $order->save();
@@ -127,10 +150,11 @@ class PaymentController extends Controller
 
                 $this->makePaymentCreditCard($request);
 
-                return Redirect::away($redirect_url);
+                //return Redirect::away($redirect_url);
 
             } catch (\Exception $exception) {
 
+                dd($exception);
                 $toastData = [
                     'title' => trans('cart.fail_purchase'),
                     'msg' => trans('cart.gateway_error'),
@@ -174,6 +198,8 @@ class PaymentController extends Controller
 
         Mercado::setAccessToken($access_token);
 
+
+
         $payment = new MercadoPayment();
         $payment->transaction_amount = (float)$request->transactionAmount;
         $payment->token = $request->token;
@@ -204,10 +230,8 @@ class PaymentController extends Controller
             )
         );
 
-        dd($payment);
         $payment->save();
 
-        dd($payment);
     }
 
     public function paymentVerify(Request $request, $gateway)
