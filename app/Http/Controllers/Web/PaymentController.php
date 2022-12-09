@@ -34,35 +34,28 @@ class PaymentController extends Controller
     {
 
 
-
         $rules = [
+            'payment_option'=> 'required|in:gateway,credit',
             'order_id' => 'required',
-            'gateway' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'full_name' => 'required',
             'docType' => 'required',
             'docNumber' => 'required',
             'email' => 'required',
             'code_zone' => 'required',
             'phone_number' => 'required',
             'zip_code' => 'required',
-            'street_name' =>'required',
-            'street_number' => 'required',
+            'street_name' => 'required',
             'neigborhood' => 'required',
+            'street_number' => 'required',
             'city' => 'required',
             'federal_unit' => 'required',
-            'credCard' => 'on',
-            'issuer' => 'required',
-            'installments' => 'required',
-            'transactionAmount' =>'required',
-            'paymentMethodId' => 'required',
-            'creditCardInstallment' => 'required',
-            'token' => 'required',
+
+
         ];
 
         $errorMessages = [
-            'first_name.required' => 'O nome é obrigatório.',
-            'last_name.required' => 'O sobrenome é obrigatório.',
+            'payment_option.required' => 'Você deve selecionar a forma de pagamento',
+            'full_name.required' => 'O nome é obrigatório.',
             'docType.required' => 'O tipo de documento é obrigatório.',
             'docNumber.required' => 'O número do documento é obrigatório.',
             'email.required' => 'O email é obrigatório.',
@@ -77,7 +70,6 @@ class PaymentController extends Controller
             'installments.required' => 'O número de parcelas é é obrigatório.',
             'transactionAmount.required' =>'O valor é é obrigatório.',
             'paymentMethodId.required' => 'A forma de pagamento é obrigatória.',
-
 
         ];
 

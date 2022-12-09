@@ -490,6 +490,7 @@ class CartController extends Controller
                     'invoiceInstallment' => $invoice_installment,
                     'subTotal' => $calculate["sub_total"],
                     'totalDiscount' => $calculate["total_discount"],
+                    'user' => $user,
                     'tax' => $calculate["tax"],
                     'taxPrice' => $calculate["tax_price"],
                     'total' => $calculate["total"],

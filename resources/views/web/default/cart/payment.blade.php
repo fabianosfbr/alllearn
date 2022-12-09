@@ -18,7 +18,7 @@
         <div class="row">
             {{-- Botão para pagar com boleto, pix ou cartão --}}
             <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                <input type="radio" name="gateway" id="gateway" value="credit" @click="showForm=true, showPaymentMethod=true">
+                <input type="radio" name="payment_option" id="gateway" value="gateway" @click="showForm=true, showPaymentMethod=true">
                 <label for="gateway" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
@@ -31,7 +31,7 @@
 
             {{-- Botão para pagar com saldo All Learn --}}
             <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                <input type="radio" name="alllearn" id="alllearn" value="credit" @click="showForm=true, showPaymentMethod=false, creditCardForm=false">
+                <input type="radio" name="payment_option" id="alllearn" value="credit" @click="showForm=true, showPaymentMethod=false, creditCardForm=false">
                 <label for="alllearn" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
@@ -46,30 +46,33 @@
         </div>
 
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
 
         <div class="col-12" x-show="showForm">
             {{-- Dados do comprador --}}
             <h3>Dados do comprador</h3>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-8">
                         <label class="input-label">Nome</label>
-                        <input onchange="toggleButton()" id="first_name" type="text" name="first_name" class="form-control @error('first_name')  is-invalid @enderror" placeholder="" />
-                        @error('first_name')
+                        <input  id="full_name" type="text" name="full_name" class="form-control @error('full_name')  is-invalid @enderror" placeholder="" value="{{ (!empty($user)) ? $user->full_name : old('full_name') }}"  />
+                        @error('full_name')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
-                    <div class="col-lg-4">
-                        <label class="input-label">Sobrenome</label>
-                        <input onchange="toggleButton()" id="last_name" type="text" name="last_name" class="form-control @error('last_name')  is-invalid @enderror" placeholder="" />
-                        @error('last_name')
-                        <div class="invalid-feedback d-flex">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
+
                 </div>
             </div>
 
@@ -77,11 +80,21 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <label class="input-label" for="docType">Tipo de documento</label>
-                        <select class="form-control" id="docType" name="docType" data-checkout="docType" type="text"></select>
+                        <select class="form-control" id="docType" name="docType" data-checkout="docType" type="text" value="{{ (!empty($user)) ? $user->docType : old('docType') }}"></select>
+                        @error('docType')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                     <div class="col-lg-4">
                         <label class="input-label" for="docNumber">Número do documento</label>
-                        <input class="form-control" id="docNumber" name="docNumber" data-checkout="docNumber" type="text" />
+                        <input class="form-control @error('docNumber')  is-invalid @enderror"" id="docNumber" name="docNumber" data-checkout="docNumber" type="text" value="{{ (!empty($user)) ? $user->docNumber : old('docNumber') }}" />
+                        @error('docNumber')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -89,7 +102,12 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <label class="input-label" for="email">E-mail</label>
-                        <input class="form-control" id="email" name="email" type="text" />
+                        <input class="form-control @error('email')  is-invalid @enderror" id="email" name="email" type="text" value="{{ (!empty($user)) ? $user->email : old('email') }}"  />
+                        @error('email')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -97,11 +115,16 @@
                 <div class="row">
                     <div class="col-lg-2">
                         <label class="input-label">DDD</label>
-                        <input onchange="toggleButton()" id="ddd" class="form-control" type="text" name="code_zone">
+                        <input  id="ddd" class="form-control @error('code_zone')  is-invalid @enderror"" type="text" name="code_zone" value="{{ (!empty($user)) ? $user->code_zone : old('code_zone') }}">
+                        @error('code_zone')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                     <div class="col-lg-6">
                         <label class="input-label">Celular</label>
-                        <input onchange="toggleButton()" id="phone" type="tel" name="phone_number" class="form-control @error('phone_number')  is-invalid @enderror" placeholder="" />
+                        <input  id="phone" type="tel" name="phone_number" class="form-control @error('phone_number')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->phone_number : old('phone_number') }}"  />
                         @error('phone_number')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -114,7 +137,7 @@
                 <div class="row">
                     <div class="col-lg-2">
                         <label class="input-label">CEP</label>
-                        <input onchange="toggleButton()" id="zip_code" type="text" name="zip_code" class="form-control @error('zip_code')  is-invalid @enderror" placeholder="" />
+                        <input  id="zip_code" type="text" name="zip_code" class="form-control @error('zip_code')  is-invalid @enderror" placeholder="" />
                         @error('zip_code')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -123,7 +146,7 @@
                     </div>
                     <div class="col-lg-4">
                         <label class="input-label">Nome da rua</label>
-                        <input onchange="toggleButton()" id="street_name" type="text" name="street_name" class="form-control @error('street_name')  is-invalid @enderror" placeholder="" />
+                        <input  id="street_name" type="text" name="street_name" class="form-control @error('street_name')  is-invalid @enderror" placeholder="" />
                         @error('street_name')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -132,7 +155,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label class="input-label">Número</label>
-                        <input onchange="toggleButton()" id="street_number" type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" placeholder="" />
+                        <input  id="street_number" type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" placeholder="" />
                         @error('street_number')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -145,7 +168,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <label class="input-label">Bairro</label>
-                        <input onchange="toggleButton()" id="neigborhood" type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" placeholder="" />
+                        <input  id="neigborhood" type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" placeholder="" />
                         @error('neigborhood')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -154,7 +177,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label class="input-label">Cidade</label>
-                        <input onchange="toggleButton()" id="city" type="text" name="city" class="form-control @error('city')  is-invalid @enderror" placeholder="" />
+                        <input  id="city" type="text" name="city" class="form-control @error('city')  is-invalid @enderror" placeholder="" />
                         @error('city')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
@@ -163,7 +186,7 @@
                     </div>
                     <div class="col-lg-3">
                         <label class="input-label">Estado</label>
-                        <select onchange="toggleButton()" class="form-control" id="federal_unit" name="federal_unit">
+                        <select  class="form-control @error('federal_unit')  is-invalid @enderror"" id="federal_unit" name="federal_unit" >
                             <option value="" selected disabled hidden>Selecione</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
@@ -194,6 +217,11 @@
                             <option value="TO">Tocantins</option>
                             <option value="EX">Estrangeiro</option>
                         </select>
+                        @error('federal_unit')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -256,6 +284,7 @@
                         </div>
                     </div>
                     <div>
+                        <input type="hidden" name="creditCardForm" id="creditCardForm" x-model="creditCardForm" />
                         <input type="hidden" name="transactionAmount" id="transactionAmount" value="{{$total}}" />
                         <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
                         <input type="hidden" name="description" id="description" />
@@ -280,8 +309,6 @@
             showForm: false,
             creditCardForm: false,
             showPaymentMethod: true,
-
-
         };
 
     }
