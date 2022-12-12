@@ -40,7 +40,7 @@
 
                     <div class="form-group">
                         <label class="font-weight-500 text-dark-blue">Nº CNPJ</label>
-                        <input type="text" name="cnpj_id" value="{{ (!empty($user)) ? $user->cnpj_id : old('cnpj_id') }}" class="form-control @error('cnpj_id')  is-invalid @enderror" placeholder="" />
+                        <input type="text" name="cnpj_id" value="{{ (!empty($user)) ? $user->cnpj_id : old('cnpj_id') }}" class="form-control @error('cnpj_id')  is-invalid @enderror" placeholder=""/>
                         @error('cnpj_id')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -49,8 +49,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="js-instructor-label font-weight-500 text-dark-blue {{ !$isInstructorRole ? 'd-none' : '' }}">RG ou CNH ou Passaporte</label>
-                        <label class="js-organization-label font-weight-500 text-dark-blue {{ !$isOrganizationRole ? 'd-none' : '' }}">Contrato social da empresa</label>
+                        <label class="js-instructor-label font-weight-500 text-dark-blue {{ !$isInstructorRole ? 'd-none' : '' }}">Faça o upload do RG ou CNH ou Passaporte</label>
+                        <label class="js-organization-label font-weight-500 text-dark-blue {{ !$isOrganizationRole ? 'd-none' : '' }}">Faça o upload do Contrato social da empresa</label>
 
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -58,7 +58,12 @@
                                     <i data-feather="arrow-up" width="18" height="18" class="text-white"></i>
                                 </button>
                             </div>
-                            <input type="text" name="certificate" id="certificate" value="{{ (!empty($user)) ? $user->certificate : old('certificate') }}" class="form-control " />
+                            <input type="text" name="certificate" id="certificate" value="{{ (!empty($user)) ? $user->certificate : old('certificate') }}" class="form-control  @error('certificate')  is-invalid @enderror" readonly />
+                            @error('certificate')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
 
@@ -95,15 +100,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="js-instructor-label font-weight-500 text-dark-blue {{ !$isInstructorRole ? 'd-none' : '' }}">Cartão CNPJ digitalizado</label>
-                        <label class="js-organization-label font-weight-500 text-dark-blue {{ !$isOrganizationRole ? 'd-none' : '' }}">Cartão CNPJ digitalizado</label>
+                        <label class="js-instructor-label font-weight-500 text-dark-blue {{ !$isInstructorRole ? 'd-none' : '' }}">Faça o upload do Cartão CNPJ digitalizado</label>
+                        <label class="js-organization-label font-weight-500 text-dark-blue {{ !$isOrganizationRole ? 'd-none' : '' }}">Faça o upload do Cartão CNPJ digitalizado</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <button type="button" class="input-group-text panel-file-manager" data-input="identity_scan" data-preview="holder">
                                     <i data-feather="arrow-up" width="18" height="18" class="text-white"></i>
                                 </button>
                             </div>
-                            <input type="text" name="identity_scan" id="identity_scan" value="{{ (!empty($user)) ? $user->identity_scan : old('identity_scan') }}" class="form-control @error('identity_scan')  is-invalid @enderror" />
+                            <input type="text" name="identity_scan" id="identity_scan" value="{{ (!empty($user)) ? $user->identity_scan : old('identity_scan') }}" class="form-control @error('identity_scan')  is-invalid @enderror" readonly/>
                             @error('identity_scan')
                             <div class="invalid-feedback">
                                 {{ $message }}
