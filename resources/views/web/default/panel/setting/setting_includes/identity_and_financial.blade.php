@@ -50,7 +50,7 @@
                             <i data-feather="arrow-up" width="18" height="18" class="text-white"></i>
                         </button>
                     </div>
-                    <input type="text" name="identity_scan" id="identity_scan" value="{{ (!empty($user) and empty($new_user)) ? $user->identity_scan : old('identity_scan') }}" class="form-control @error('identity_scan')  is-invalid @enderror" {{ ($user->financial_approval) ? 'disabled' : '' }}/>
+                    <input type="text" name="identity_scan" id="identity_scan" value="{{ (!empty($user) and empty($new_user)) ? $user->identity_scan : old('identity_scan') }}" class="form-control @error('identity_scan')  is-invalid @enderror" {{ ($user->financial_approval) ? 'disabled' : '' }} readonly/>
                     @error('identity_scan')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -60,15 +60,15 @@
             </div>
 
             <div class="form-group">
-                <label class="input-label {{ $user->isOrganization() ? 'd-none' : '' }} ">{{ trans('update.instructor_certificate_and_documents') }}</label>
-                <label class="input-label {{ !$user->isOrganization() ? 'd-none' : '' }} ">{{ trans('update.organization_certificate_and_documents') }}</label>
+                <label class="input-label {{ $user->isOrganization() ? 'd-none' : '' }} ">Upload do Cartão CNPJ digitalizado</label>
+                <label class="input-label {{ !$user->isOrganization() ? 'd-none' : '' }} ">Upload do Contrato social da empresa</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <button type="button" class="input-group-text panel-file-manager" data-input="certificate" data-preview="holder">
                             <i data-feather="arrow-up" width="18" height="18" class="text-white"></i>
                         </button>
                     </div>
-                    <input type="text" name="certificate" id="certificate" value="{{ (!empty($user) and empty($new_user)) ? $user->certificate : old('certificate') }}" class="form-control "/>
+                    <input type="text" name="certificate" id="certificate" value="{{ (!empty($user) and empty($new_user)) ? $user->certificate : old('certificate') }}" class="form-control " readonly/>
                 </div>
             </div>
 
