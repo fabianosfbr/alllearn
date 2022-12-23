@@ -152,8 +152,7 @@ class WebinarController extends Controller
                     ->orWhere('price', '<', '0');
             });
         }
-
-        return $query;
+            return $query;
     }
 
     private function makeMyClassAndInvitationsData($query, $user, $request)

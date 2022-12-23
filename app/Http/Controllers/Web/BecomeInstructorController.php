@@ -56,7 +56,7 @@ class BecomeInstructorController extends Controller
         $this->validate($request, [
                     'role' => 'required',
                     'occupations' => 'nullable',
-                    'certificate' => 'nullable|string',
+                    'certificate' => 'required',
                     'account_type' => 'required',
                     'cnpj_id' => 'required',
                     //'iban' => 'required',

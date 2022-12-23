@@ -5491,7 +5491,8 @@ input[type="submit"].btn-block {
 
 .divErrorMessage {
   background-color: #ff4747;
-  border-radius: 10px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
 }
 
 .alert {
