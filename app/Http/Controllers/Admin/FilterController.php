@@ -153,6 +153,8 @@ class FilterController extends Controller
 
         $allFilterOptionsIds = $filter->options->pluck('id')->toArray();
 
+        //dd($filterOptions);
+
         if (!empty($filterOptions) and count($filterOptions)) {
             $order = 1;
 
