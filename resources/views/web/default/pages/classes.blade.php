@@ -173,7 +173,7 @@
                             <div class="pt-10">
                                 <div class="pt-10">
                                     <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="fourStars">
+                                        <label class="cursor-pointer d-flex align-items-end" for="fourStars">
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
@@ -189,7 +189,7 @@
                                 </div>
                                 <div class="pt-10">
                                     <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="threeStars">
+                                        <label class="cursor-pointer d-flex align-items-end" for="threeStars">
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="pt-10">
                                     <div class="d-flex align-items-center justify-content-between mt-20">
-                                        <label class="cursor-pointer" for="twoStars">
+                                        <label class="cursor-pointer d-flex align-items-end" for="twoStars">
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star"></ion-icon>
                                             <ion-icon name="star-outline"></ion-icon>
