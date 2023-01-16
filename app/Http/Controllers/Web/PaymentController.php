@@ -36,8 +36,8 @@ class PaymentController extends Controller
 
 
         $rules = [
-            'payment_option'=> 'required|in:gateway,credit',
-            'payment_type'=> 'required_if:payment_option,gateway',
+            'payment_option' => 'required|in:gateway,credit',
+            'payment_type' => 'required_if:payment_option,gateway',
             'order_id' => 'required',
             'full_name' => 'required',
             'docType' => 'required',
@@ -64,14 +64,14 @@ class PaymentController extends Controller
             'code_zone.required' => 'O DDD é obrigatório.',
             'phone_number.required' => 'O número de telefone é obrigatório.',
             'zip_code.required' => 'O CEP é obrigatório.',
-            'street_name.required' =>'O nome da rua é obrigatório.',
+            'street_name.required' => 'O nome da rua é obrigatório.',
             'street_number.required' => 'O número da residência é obrigatório.',
             'neigborhood.required' => 'O bairro é obrigatório.',
             'city.required' => 'A cidade é obrigatória.',
             'federal_unit.required' => 'A UF é obrigatória.',
             'payment_type.required_if' => 'Obrigatório selecionar boleto, pix ou cartão.',
             'installments.required' => 'O número de parcelas é obrigatório.',
-            'transactionAmount.required' =>'O valor é obrigatório.',
+            'transactionAmount.required' => 'O valor é obrigatório.',
             'paymentMethodId.required' => 'A forma de pagamento é obrigatória.',
 
         ];
@@ -81,10 +81,9 @@ class PaymentController extends Controller
 
         $dataValidate = $this->validate($request, $rules, $errorMessages);
 
-
-
         $user = auth()->user();
         $data = $request->all();
+
         $orderId = $request->input('order_id');
 
         $order = Order::where('id', $orderId)
@@ -118,21 +117,22 @@ class PaymentController extends Controller
         if ($dataValidate['payment_option'] === 'credit') {
 
             if ($user->getAccountingCharge() < $order->amount) {
-                $order->update(['status' => Order::$fail]);
+                $order->update([
+                    'status' => Order::$fail,
+                    'payment_method' => 'credit'
+                ]);
 
                 session()->put($this->order_session_key, $order->id);
 
                 return redirect('/payments/status');
             }
 
-            $order->update([
-                'payment_method' => Order::$credit
-            ]);
 
             $this->setPaymentAccounting($order, 'credit');
 
             $order->update([
-                'status' => Order::$paid
+                'status' => Order::$paid,
+                'payment_method' => 'credit'
             ]);
 
             session()->put($this->order_session_key, $order->id);
@@ -142,103 +142,67 @@ class PaymentController extends Controller
 
 
         // Credit Card payment - MP
-        if($data['payment_option'] == 'gateway' and $data['payment_type'] == 'cartao'){
+        if ($data['payment_option'] == 'gateway' and $data['payment_type'] == 'cartao') {
 
-            $order->payment_method = Order::$paymentChannel;
-            $order->save();
-            try {
+            $order->update([
+                'payment_method' => 'payment_channel'
+            ]);
 
+            // Mercado
+            $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
+            Mercado::setAccessToken($access_token);
 
-                // Mercado
-                //https://www.mercadopago.com.br/developers/pt/docs/checkout-api-v1/receiving-payment-by-card
+            $payment = new MercadoPayment();
 
+            $payment->transaction_amount = $data['transactionAmount'];
+            $payment->token = $data['token'];
+            $payment->description = "Curso All Learn";
+            $payment->installments = $data['installments'];
+            $payment->payment_method_id = $data['paymentMethodId'];
 
-                $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
-                Mercado::setAccessToken($access_token);
+            $payer = new MercadoPagoPayer();
+            $payer->email = $data['email'];
+            $payer->identification = array(
+                "type" => $data['docType'],
+                "number" => $data['docNumber']
+            );
 
-                $payment = new MercadoPayment();
-                $payment->transaction_amount = (float)$data['transactionAmount'];
-                $payment->token = $data['token'];
-                $payment->description = "Curso All Learn";
-                $payment->installments = (int)$data['installments'];
-                $payment->payment_method_id = $data['paymentMethodId'];
-                $payment->issuer_id = (int)$data['issuer'];
-                $payment->notification_url = url("/payments/verify/MercadoPago");
-
-                $parts = explode(" ", $data['full_name']);
-                if(count($parts) > 1) {
-                    $lastname = array_pop($parts);
-                    $firstname = implode(" ", $parts);
-                }
-                else
-                {
-                    $firstname = $name;
-                    $lastname = " ";
-                }
-
-                $payment->payer = array(
-                    "email" => $data['email'],
-                    "first_name" => $firstname,
-                    "last_name" => $lastname,
-                    "identification" => array(
-                        "type" => $data['docType'],
-                        "number" => $data['docNumber']
-                    ),
-                    "address" => array(
-                        "zip_code" => $data['zip_code'],
-                        "street_name" => $data['street_name'],
-                        "street_number" => $data['street_number'],
-                        "neigborhood" => $data['neigborhood'],
-                        "city" => $data['city'],
-                        "federal_unit" => $data['federal_unit'],
-                    ),
-                    "phone" => array(
-                        "area_code" => $data['code_zone'],
-                        "number" => $data['phone_number'],
-                    )
-                );
+            $payment->payer = $payer;
+            $payment->save();
 
 
-
-
-                dd($payment->save());
-
-            } catch (\Exception $exception) {
-
-                dd($exception->getMessage());
-/*                 $toastData = [
-                    'title' => trans('cart.fail_purchase'),
-                    'msg' => trans('cart.gateway_error'),
+            if ($payment->status !== "approved") {
+                $order->update([
+                    'status' => Order::$fail,
+                    'payment_data' => serialize($payment),
+                ]);
+                $toastData = [
+                    'title' => "Erro",
+                    'msg' => "Erro ao processar pagamento, consulte a administradora do cartão de crédito",
                     'status' => 'error'
                 ];
-                return back()->with(['toast' => $toastData]); */
+                return back()->with(['toast' => $toastData]);
+            } elseif ($payment->status == "approved") {
+                // dd("aprovado");
+                $this->setPaymentAccounting($order);
+                $order->update([
+                    'status' => Order::$paid,
+                    'reference_id' => $payment->id,
+                    'payment_data' => serialize($payment),
+                ]);
+
+                session()->put($this->order_session_key, $order->id);
+                return redirect('/payments/status');
             }
 
+            /*  $response = array(
+                'status' => $payment->status,
+                'status_detail' => $payment->status_detail,
+                'id' => $payment->id
+            ); */
         }
 
-        if(isset($data->boleto) and $data->boleto == 'on' ){
-
-        }
-
-        try {
-
-            // Cartao Mercado Pago
-            $channelManager = ChannelManager::makeChannel($paymentChannel);
-            $redirect_url = $channelManager->paymentRequest($order);
-
-            if (in_array($paymentChannel->class_name, PaymentChannel::$gatewayIgnoreRedirect)) {
-                return $redirect_url;
-            }
-
-            return Redirect::away($redirect_url);
-        } catch (\Exception $exception) {
-
-            $toastData = [
-                'title' => trans('cart.fail_purchase'),
-                'msg' => trans('cart.gateway_error'),
-                'status' => 'error'
-            ];
-            return back()->with(['toast' => $toastData]);
+        if (isset($data['boleto']) and $data['boleto'] == 'on') {
         }
     }
 
@@ -282,7 +246,6 @@ class PaymentController extends Controller
         );
 
         $payment->save();
-
     }
 
     public function paymentVerify(Request $request, $gateway)
