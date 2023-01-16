@@ -20,13 +20,32 @@ namespace Google\Service\Dns;
 class RRSetRoutingPolicyGeoPolicy extends \Google\Collection
 {
   protected $collection_key = 'items';
+  /**
+   * @var bool
+   */
+  public $enableFencing;
   protected $itemsType = RRSetRoutingPolicyGeoPolicyGeoPolicyItem::class;
   protected $itemsDataType = 'array';
+  public $items;
   /**
    * @var string
    */
   public $kind;
 
+  /**
+   * @param bool
+   */
+  public function setEnableFencing($enableFencing)
+  {
+    $this->enableFencing = $enableFencing;
+  }
+  /**
+   * @return bool
+   */
+  public function getEnableFencing()
+  {
+    return $this->enableFencing;
+  }
   /**
    * @param RRSetRoutingPolicyGeoPolicyGeoPolicyItem[]
    */

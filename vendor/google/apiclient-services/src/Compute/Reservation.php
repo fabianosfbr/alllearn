@@ -43,6 +43,9 @@ class Reservation extends \Google\Model
    * @var string
    */
   public $name;
+  protected $resourceStatusType = AllocationResourceStatus::class;
+  protected $resourceStatusDataType = '';
+  public $resourceStatus;
   /**
    * @var bool
    */
@@ -53,8 +56,10 @@ class Reservation extends \Google\Model
   public $selfLink;
   protected $shareSettingsType = ShareSettings::class;
   protected $shareSettingsDataType = '';
+  public $shareSettings;
   protected $specificReservationType = AllocationSpecificSKUReservation::class;
   protected $specificReservationDataType = '';
+  public $specificReservation;
   /**
    * @var bool
    */
@@ -151,6 +156,20 @@ class Reservation extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param AllocationResourceStatus
+   */
+  public function setResourceStatus(AllocationResourceStatus $resourceStatus)
+  {
+    $this->resourceStatus = $resourceStatus;
+  }
+  /**
+   * @return AllocationResourceStatus
+   */
+  public function getResourceStatus()
+  {
+    return $this->resourceStatus;
   }
   /**
    * @param bool

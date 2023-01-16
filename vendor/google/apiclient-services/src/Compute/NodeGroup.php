@@ -21,6 +21,7 @@ class NodeGroup extends \Google\Model
 {
   protected $autoscalingPolicyType = NodeGroupAutoscalingPolicy::class;
   protected $autoscalingPolicyDataType = '';
+  public $autoscalingPolicy;
   /**
    * @var string
    */
@@ -51,6 +52,7 @@ class NodeGroup extends \Google\Model
   public $maintenancePolicy;
   protected $maintenanceWindowType = NodeGroupMaintenanceWindow::class;
   protected $maintenanceWindowDataType = '';
+  public $maintenanceWindow;
   /**
    * @var string
    */
@@ -63,6 +65,9 @@ class NodeGroup extends \Google\Model
    * @var string
    */
   public $selfLink;
+  protected $shareSettingsType = ShareSettings::class;
+  protected $shareSettingsDataType = '';
+  public $shareSettings;
   /**
    * @var int
    */
@@ -243,6 +248,20 @@ class NodeGroup extends \Google\Model
   public function getSelfLink()
   {
     return $this->selfLink;
+  }
+  /**
+   * @param ShareSettings
+   */
+  public function setShareSettings(ShareSettings $shareSettings)
+  {
+    $this->shareSettings = $shareSettings;
+  }
+  /**
+   * @return ShareSettings
+   */
+  public function getShareSettings()
+  {
+    return $this->shareSettings;
   }
   /**
    * @param int

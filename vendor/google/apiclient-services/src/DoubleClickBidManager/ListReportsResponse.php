@@ -23,28 +23,11 @@ class ListReportsResponse extends \Google\Collection
   /**
    * @var string
    */
-  public $kind;
-  /**
-   * @var string
-   */
   public $nextPageToken;
   protected $reportsType = Report::class;
   protected $reportsDataType = 'array';
+  public $reports;
 
-  /**
-   * @param string
-   */
-  public function setKind($kind)
-  {
-    $this->kind = $kind;
-  }
-  /**
-   * @return string
-   */
-  public function getKind()
-  {
-    return $this->kind;
-  }
   /**
    * @param string
    */

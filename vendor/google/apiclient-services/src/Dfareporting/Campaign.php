@@ -19,15 +19,17 @@ namespace Google\Service\Dfareporting;
 
 class Campaign extends \Google\Collection
 {
-  protected $collection_key = 'traffickerEmails';
+  protected $collection_key = 'eventTagOverrides';
   /**
    * @var string
    */
   public $accountId;
   protected $adBlockingConfigurationType = AdBlockingConfiguration::class;
   protected $adBlockingConfigurationDataType = '';
+  public $adBlockingConfiguration;
   protected $additionalCreativeOptimizationConfigurationsType = CreativeOptimizationConfiguration::class;
   protected $additionalCreativeOptimizationConfigurationsDataType = 'array';
+  public $additionalCreativeOptimizationConfigurations;
   /**
    * @var string
    */
@@ -38,32 +40,38 @@ class Campaign extends \Google\Collection
   public $advertiserId;
   protected $advertiserIdDimensionValueType = DimensionValue::class;
   protected $advertiserIdDimensionValueDataType = '';
+  public $advertiserIdDimensionValue;
   /**
    * @var bool
    */
   public $archived;
   protected $audienceSegmentGroupsType = AudienceSegmentGroup::class;
   protected $audienceSegmentGroupsDataType = 'array';
+  public $audienceSegmentGroups;
   /**
    * @var string
    */
   public $billingInvoiceCode;
   protected $clickThroughUrlSuffixPropertiesType = ClickThroughUrlSuffixProperties::class;
   protected $clickThroughUrlSuffixPropertiesDataType = '';
+  public $clickThroughUrlSuffixProperties;
   /**
    * @var string
    */
   public $comment;
   protected $createInfoType = LastModifiedInfo::class;
   protected $createInfoDataType = '';
+  public $createInfo;
   /**
    * @var string[]
    */
   public $creativeGroupIds;
   protected $creativeOptimizationConfigurationType = CreativeOptimizationConfiguration::class;
   protected $creativeOptimizationConfigurationDataType = '';
+  public $creativeOptimizationConfiguration;
   protected $defaultClickThroughEventTagPropertiesType = DefaultClickThroughEventTagProperties::class;
   protected $defaultClickThroughEventTagPropertiesDataType = '';
+  public $defaultClickThroughEventTagProperties;
   /**
    * @var string
    */
@@ -74,6 +82,7 @@ class Campaign extends \Google\Collection
   public $endDate;
   protected $eventTagOverridesType = EventTagOverride::class;
   protected $eventTagOverridesDataType = 'array';
+  public $eventTagOverrides;
   /**
    * @var string
    */
@@ -84,22 +93,21 @@ class Campaign extends \Google\Collection
   public $id;
   protected $idDimensionValueType = DimensionValue::class;
   protected $idDimensionValueDataType = '';
+  public $idDimensionValue;
   /**
    * @var string
    */
   public $kind;
   protected $lastModifiedInfoType = LastModifiedInfo::class;
   protected $lastModifiedInfoDataType = '';
+  public $lastModifiedInfo;
   protected $measurementPartnerLinkType = MeasurementPartnerCampaignLink::class;
   protected $measurementPartnerLinkDataType = '';
+  public $measurementPartnerLink;
   /**
    * @var string
    */
   public $name;
-  /**
-   * @var bool
-   */
-  public $nielsenOcrEnabled;
   /**
    * @var string
    */
@@ -108,10 +116,6 @@ class Campaign extends \Google\Collection
    * @var string
    */
   public $subaccountId;
-  /**
-   * @var string[]
-   */
-  public $traffickerEmails;
 
   /**
    * @param string
@@ -464,20 +468,6 @@ class Campaign extends \Google\Collection
     return $this->name;
   }
   /**
-   * @param bool
-   */
-  public function setNielsenOcrEnabled($nielsenOcrEnabled)
-  {
-    $this->nielsenOcrEnabled = $nielsenOcrEnabled;
-  }
-  /**
-   * @return bool
-   */
-  public function getNielsenOcrEnabled()
-  {
-    return $this->nielsenOcrEnabled;
-  }
-  /**
    * @param string
    */
   public function setStartDate($startDate)
@@ -504,20 +494,6 @@ class Campaign extends \Google\Collection
   public function getSubaccountId()
   {
     return $this->subaccountId;
-  }
-  /**
-   * @param string[]
-   */
-  public function setTraffickerEmails($traffickerEmails)
-  {
-    $this->traffickerEmails = $traffickerEmails;
-  }
-  /**
-   * @return string[]
-   */
-  public function getTraffickerEmails()
-  {
-    return $this->traffickerEmails;
   }
 }
 

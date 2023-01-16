@@ -23,6 +23,10 @@ class Disk extends \Google\Collection
   /**
    * @var string
    */
+  public $architecture;
+  /**
+   * @var string
+   */
   public $creationTimestamp;
   /**
    * @var string
@@ -30,8 +34,10 @@ class Disk extends \Google\Collection
   public $description;
   protected $diskEncryptionKeyType = CustomerEncryptionKey::class;
   protected $diskEncryptionKeyDataType = '';
+  public $diskEncryptionKey;
   protected $guestOsFeaturesType = GuestOsFeature::class;
   protected $guestOsFeaturesDataType = 'array';
+  public $guestOsFeatures;
   /**
    * @var string
    */
@@ -76,6 +82,9 @@ class Disk extends \Google\Collection
    * @var string
    */
   public $options;
+  protected $paramsType = DiskParams::class;
+  protected $paramsDataType = '';
+  public $params;
   /**
    * @var string
    */
@@ -122,6 +131,7 @@ class Disk extends \Google\Collection
   public $sourceImage;
   protected $sourceImageEncryptionKeyType = CustomerEncryptionKey::class;
   protected $sourceImageEncryptionKeyDataType = '';
+  public $sourceImageEncryptionKey;
   /**
    * @var string
    */
@@ -132,6 +142,7 @@ class Disk extends \Google\Collection
   public $sourceSnapshot;
   protected $sourceSnapshotEncryptionKeyType = CustomerEncryptionKey::class;
   protected $sourceSnapshotEncryptionKeyDataType = '';
+  public $sourceSnapshotEncryptionKey;
   /**
    * @var string
    */
@@ -157,6 +168,20 @@ class Disk extends \Google\Collection
    */
   public $zone;
 
+  /**
+   * @param string
+   */
+  public function setArchitecture($architecture)
+  {
+    $this->architecture = $architecture;
+  }
+  /**
+   * @return string
+   */
+  public function getArchitecture()
+  {
+    return $this->architecture;
+  }
   /**
    * @param string
    */
@@ -366,6 +391,20 @@ class Disk extends \Google\Collection
   public function getOptions()
   {
     return $this->options;
+  }
+  /**
+   * @param DiskParams
+   */
+  public function setParams(DiskParams $params)
+  {
+    $this->params = $params;
+  }
+  /**
+   * @return DiskParams
+   */
+  public function getParams()
+  {
+    return $this->params;
   }
   /**
    * @param string

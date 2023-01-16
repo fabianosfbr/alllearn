@@ -23,14 +23,33 @@ class CommitRequest extends \Google\Collection
   /**
    * @var string
    */
+  public $databaseId;
+  /**
+   * @var string
+   */
   public $mode;
   protected $mutationsType = Mutation::class;
   protected $mutationsDataType = 'array';
+  public $mutations;
   /**
    * @var string
    */
   public $transaction;
 
+  /**
+   * @param string
+   */
+  public function setDatabaseId($databaseId)
+  {
+    $this->databaseId = $databaseId;
+  }
+  /**
+   * @return string
+   */
+  public function getDatabaseId()
+  {
+    return $this->databaseId;
+  }
   /**
    * @param string
    */

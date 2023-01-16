@@ -26,6 +26,7 @@ class Conversion extends \Google\Collection
   public $childDirectedTreatment;
   protected $customVariablesType = CustomFloodlightVariable::class;
   protected $customVariablesDataType = 'array';
+  public $customVariables;
   /**
    * @var string
    */
@@ -50,6 +51,10 @@ class Conversion extends \Google\Collection
    * @var string
    */
   public $gclid;
+  /**
+   * @var string
+   */
+  public $impressionId;
   /**
    * @var string
    */
@@ -199,6 +204,20 @@ class Conversion extends \Google\Collection
   public function getGclid()
   {
     return $this->gclid;
+  }
+  /**
+   * @param string
+   */
+  public function setImpressionId($impressionId)
+  {
+    $this->impressionId = $impressionId;
+  }
+  /**
+   * @return string
+   */
+  public function getImpressionId()
+  {
+    return $this->impressionId;
   }
   /**
    * @param string

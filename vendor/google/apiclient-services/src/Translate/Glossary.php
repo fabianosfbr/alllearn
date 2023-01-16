@@ -22,6 +22,10 @@ class Glossary extends \Google\Model
   /**
    * @var string
    */
+  public $displayName;
+  /**
+   * @var string
+   */
   public $endTime;
   /**
    * @var int
@@ -29,10 +33,13 @@ class Glossary extends \Google\Model
   public $entryCount;
   protected $inputConfigType = GlossaryInputConfig::class;
   protected $inputConfigDataType = '';
+  public $inputConfig;
   protected $languageCodesSetType = LanguageCodesSet::class;
   protected $languageCodesSetDataType = '';
+  public $languageCodesSet;
   protected $languagePairType = LanguageCodePair::class;
   protected $languagePairDataType = '';
+  public $languagePair;
   /**
    * @var string
    */
@@ -42,6 +49,20 @@ class Glossary extends \Google\Model
    */
   public $submitTime;
 
+  /**
+   * @param string
+   */
+  public function setDisplayName($displayName)
+  {
+    $this->displayName = $displayName;
+  }
+  /**
+   * @return string
+   */
+  public function getDisplayName()
+  {
+    return $this->displayName;
+  }
   /**
    * @param string
    */

@@ -22,6 +22,7 @@ class Routine extends \Google\Collection
   protected $collection_key = 'importedLibraries';
   protected $argumentsType = Argument::class;
   protected $argumentsDataType = 'array';
+  public $arguments;
   /**
    * @var string
    */
@@ -56,16 +57,23 @@ class Routine extends \Google\Collection
   public $lastModifiedTime;
   protected $remoteFunctionOptionsType = RemoteFunctionOptions::class;
   protected $remoteFunctionOptionsDataType = '';
+  public $remoteFunctionOptions;
   protected $returnTableTypeType = StandardSqlTableType::class;
   protected $returnTableTypeDataType = '';
+  public $returnTableType;
   protected $returnTypeType = StandardSqlDataType::class;
   protected $returnTypeDataType = '';
+  public $returnType;
   protected $routineReferenceType = RoutineReference::class;
   protected $routineReferenceDataType = '';
+  public $routineReference;
   /**
    * @var string
    */
   public $routineType;
+  protected $sparkOptionsType = SparkOptions::class;
+  protected $sparkOptionsDataType = '';
+  public $sparkOptions;
   /**
    * @var bool
    */
@@ -266,6 +274,20 @@ class Routine extends \Google\Collection
   public function getRoutineType()
   {
     return $this->routineType;
+  }
+  /**
+   * @param SparkOptions
+   */
+  public function setSparkOptions(SparkOptions $sparkOptions)
+  {
+    $this->sparkOptions = $sparkOptions;
+  }
+  /**
+   * @return SparkOptions
+   */
+  public function getSparkOptions()
+  {
+    return $this->sparkOptions;
   }
   /**
    * @param bool

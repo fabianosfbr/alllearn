@@ -21,12 +21,17 @@ class RRSetRoutingPolicy extends \Google\Model
 {
   protected $geoType = RRSetRoutingPolicyGeoPolicy::class;
   protected $geoDataType = '';
+  public $geo;
   /**
    * @var string
    */
   public $kind;
+  protected $primaryBackupType = RRSetRoutingPolicyPrimaryBackupPolicy::class;
+  protected $primaryBackupDataType = '';
+  public $primaryBackup;
   protected $wrrType = RRSetRoutingPolicyWrrPolicy::class;
   protected $wrrDataType = '';
+  public $wrr;
 
   /**
    * @param RRSetRoutingPolicyGeoPolicy
@@ -55,6 +60,20 @@ class RRSetRoutingPolicy extends \Google\Model
   public function getKind()
   {
     return $this->kind;
+  }
+  /**
+   * @param RRSetRoutingPolicyPrimaryBackupPolicy
+   */
+  public function setPrimaryBackup(RRSetRoutingPolicyPrimaryBackupPolicy $primaryBackup)
+  {
+    $this->primaryBackup = $primaryBackup;
+  }
+  /**
+   * @return RRSetRoutingPolicyPrimaryBackupPolicy
+   */
+  public function getPrimaryBackup()
+  {
+    return $this->primaryBackup;
   }
   /**
    * @param RRSetRoutingPolicyWrrPolicy

@@ -31,6 +31,9 @@ class AcceleratorConfig extends \Google\Model
    * @var string
    */
   public $gpuPartitionSize;
+  protected $gpuSharingConfigType = GPUSharingConfig::class;
+  protected $gpuSharingConfigDataType = '';
+  public $gpuSharingConfig;
 
   /**
    * @param string
@@ -73,6 +76,20 @@ class AcceleratorConfig extends \Google\Model
   public function getGpuPartitionSize()
   {
     return $this->gpuPartitionSize;
+  }
+  /**
+   * @param GPUSharingConfig
+   */
+  public function setGpuSharingConfig(GPUSharingConfig $gpuSharingConfig)
+  {
+    $this->gpuSharingConfig = $gpuSharingConfig;
+  }
+  /**
+   * @return GPUSharingConfig
+   */
+  public function getGpuSharingConfig()
+  {
+    return $this->gpuSharingConfig;
   }
 }
 

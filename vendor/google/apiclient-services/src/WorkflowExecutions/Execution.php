@@ -30,9 +30,14 @@ class Execution extends \Google\Model
   /**
    * @var string
    */
+  public $duration;
+  /**
+   * @var string
+   */
   public $endTime;
   protected $errorType = Error::class;
   protected $errorDataType = '';
+  public $error;
   /**
    * @var string
    */
@@ -49,6 +54,9 @@ class Execution extends \Google\Model
    * @var string
    */
   public $state;
+  protected $statusType = Status::class;
+  protected $statusDataType = '';
+  public $status;
   /**
    * @var string
    */
@@ -81,6 +89,20 @@ class Execution extends \Google\Model
   public function getCallLogLevel()
   {
     return $this->callLogLevel;
+  }
+  /**
+   * @param string
+   */
+  public function setDuration($duration)
+  {
+    $this->duration = $duration;
+  }
+  /**
+   * @return string
+   */
+  public function getDuration()
+  {
+    return $this->duration;
   }
   /**
    * @param string
@@ -165,6 +187,20 @@ class Execution extends \Google\Model
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param Status
+   */
+  public function setStatus(Status $status)
+  {
+    $this->status = $status;
+  }
+  /**
+   * @return Status
+   */
+  public function getStatus()
+  {
+    return $this->status;
   }
   /**
    * @param string

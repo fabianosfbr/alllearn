@@ -21,10 +21,20 @@ class OracleSourceConfig extends \Google\Model
 {
   protected $dropLargeObjectsType = DropLargeObjects::class;
   protected $dropLargeObjectsDataType = '';
+  public $dropLargeObjects;
   protected $excludeObjectsType = OracleRdbms::class;
   protected $excludeObjectsDataType = '';
+  public $excludeObjects;
   protected $includeObjectsType = OracleRdbms::class;
   protected $includeObjectsDataType = '';
+  public $includeObjects;
+  /**
+   * @var int
+   */
+  public $maxConcurrentCdcTasks;
+  protected $streamLargeObjectsType = StreamLargeObjects::class;
+  protected $streamLargeObjectsDataType = '';
+  public $streamLargeObjects;
 
   /**
    * @param DropLargeObjects
@@ -67,6 +77,34 @@ class OracleSourceConfig extends \Google\Model
   public function getIncludeObjects()
   {
     return $this->includeObjects;
+  }
+  /**
+   * @param int
+   */
+  public function setMaxConcurrentCdcTasks($maxConcurrentCdcTasks)
+  {
+    $this->maxConcurrentCdcTasks = $maxConcurrentCdcTasks;
+  }
+  /**
+   * @return int
+   */
+  public function getMaxConcurrentCdcTasks()
+  {
+    return $this->maxConcurrentCdcTasks;
+  }
+  /**
+   * @param StreamLargeObjects
+   */
+  public function setStreamLargeObjects(StreamLargeObjects $streamLargeObjects)
+  {
+    $this->streamLargeObjects = $streamLargeObjects;
+  }
+  /**
+   * @return StreamLargeObjects
+   */
+  public function getStreamLargeObjects()
+  {
+    return $this->streamLargeObjects;
   }
 }
 

@@ -19,6 +19,9 @@ namespace Google\Service\Datastream;
 
 class ConnectionProfile extends \Google\Model
 {
+  protected $bigqueryProfileType = BigQueryProfile::class;
+  protected $bigqueryProfileDataType = '';
+  public $bigqueryProfile;
   /**
    * @var string
    */
@@ -29,29 +32,52 @@ class ConnectionProfile extends \Google\Model
   public $displayName;
   protected $forwardSshConnectivityType = ForwardSshTunnelConnectivity::class;
   protected $forwardSshConnectivityDataType = '';
+  public $forwardSshConnectivity;
   protected $gcsProfileType = GcsProfile::class;
   protected $gcsProfileDataType = '';
+  public $gcsProfile;
   /**
    * @var string[]
    */
   public $labels;
   protected $mysqlProfileType = MysqlProfile::class;
   protected $mysqlProfileDataType = '';
+  public $mysqlProfile;
   /**
    * @var string
    */
   public $name;
   protected $oracleProfileType = OracleProfile::class;
   protected $oracleProfileDataType = '';
+  public $oracleProfile;
+  protected $postgresqlProfileType = PostgresqlProfile::class;
+  protected $postgresqlProfileDataType = '';
+  public $postgresqlProfile;
   protected $privateConnectivityType = PrivateConnectivity::class;
   protected $privateConnectivityDataType = '';
+  public $privateConnectivity;
   protected $staticServiceIpConnectivityType = StaticServiceIpConnectivity::class;
   protected $staticServiceIpConnectivityDataType = '';
+  public $staticServiceIpConnectivity;
   /**
    * @var string
    */
   public $updateTime;
 
+  /**
+   * @param BigQueryProfile
+   */
+  public function setBigqueryProfile(BigQueryProfile $bigqueryProfile)
+  {
+    $this->bigqueryProfile = $bigqueryProfile;
+  }
+  /**
+   * @return BigQueryProfile
+   */
+  public function getBigqueryProfile()
+  {
+    return $this->bigqueryProfile;
+  }
   /**
    * @param string
    */
@@ -163,6 +189,20 @@ class ConnectionProfile extends \Google\Model
   public function getOracleProfile()
   {
     return $this->oracleProfile;
+  }
+  /**
+   * @param PostgresqlProfile
+   */
+  public function setPostgresqlProfile(PostgresqlProfile $postgresqlProfile)
+  {
+    $this->postgresqlProfile = $postgresqlProfile;
+  }
+  /**
+   * @return PostgresqlProfile
+   */
+  public function getPostgresqlProfile()
+  {
+    return $this->postgresqlProfile;
   }
   /**
    * @param PrivateConnectivity

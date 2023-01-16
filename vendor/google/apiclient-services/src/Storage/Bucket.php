@@ -22,26 +22,36 @@ class Bucket extends \Google\Collection
   protected $collection_key = 'defaultObjectAcl';
   protected $aclType = BucketAccessControl::class;
   protected $aclDataType = 'array';
+  public $acl;
   protected $autoclassType = BucketAutoclass::class;
   protected $autoclassDataType = '';
+  public $autoclass;
   protected $billingType = BucketBilling::class;
   protected $billingDataType = '';
+  public $billing;
   protected $corsType = BucketCors::class;
   protected $corsDataType = 'array';
+  public $cors;
+  protected $customPlacementConfigType = BucketCustomPlacementConfig::class;
+  protected $customPlacementConfigDataType = '';
+  public $customPlacementConfig;
   /**
    * @var bool
    */
   public $defaultEventBasedHold;
   protected $defaultObjectAclType = ObjectAccessControl::class;
   protected $defaultObjectAclDataType = 'array';
+  public $defaultObjectAcl;
   protected $encryptionType = BucketEncryption::class;
   protected $encryptionDataType = '';
+  public $encryption;
   /**
    * @var string
    */
   public $etag;
   protected $iamConfigurationType = BucketIamConfiguration::class;
   protected $iamConfigurationDataType = '';
+  public $iamConfiguration;
   /**
    * @var string
    */
@@ -56,6 +66,7 @@ class Bucket extends \Google\Collection
   public $labels;
   protected $lifecycleType = BucketLifecycle::class;
   protected $lifecycleDataType = '';
+  public $lifecycle;
   /**
    * @var string
    */
@@ -66,6 +77,7 @@ class Bucket extends \Google\Collection
   public $locationType;
   protected $loggingType = BucketLogging::class;
   protected $loggingDataType = '';
+  public $logging;
   /**
    * @var string
    */
@@ -76,12 +88,14 @@ class Bucket extends \Google\Collection
   public $name;
   protected $ownerType = BucketOwner::class;
   protected $ownerDataType = '';
+  public $owner;
   /**
    * @var string
    */
   public $projectNumber;
   protected $retentionPolicyType = BucketRetentionPolicy::class;
   protected $retentionPolicyDataType = '';
+  public $retentionPolicy;
   /**
    * @var string
    */
@@ -108,8 +122,10 @@ class Bucket extends \Google\Collection
   public $updated;
   protected $versioningType = BucketVersioning::class;
   protected $versioningDataType = '';
+  public $versioning;
   protected $websiteType = BucketWebsite::class;
   protected $websiteDataType = '';
+  public $website;
 
   /**
    * @param BucketAccessControl[]
@@ -166,6 +182,20 @@ class Bucket extends \Google\Collection
   public function getCors()
   {
     return $this->cors;
+  }
+  /**
+   * @param BucketCustomPlacementConfig
+   */
+  public function setCustomPlacementConfig(BucketCustomPlacementConfig $customPlacementConfig)
+  {
+    $this->customPlacementConfig = $customPlacementConfig;
+  }
+  /**
+   * @return BucketCustomPlacementConfig
+   */
+  public function getCustomPlacementConfig()
+  {
+    return $this->customPlacementConfig;
   }
   /**
    * @param bool

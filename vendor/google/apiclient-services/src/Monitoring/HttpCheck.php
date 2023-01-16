@@ -17,10 +17,15 @@
 
 namespace Google\Service\Monitoring;
 
-class HttpCheck extends \Google\Model
+class HttpCheck extends \Google\Collection
 {
+  protected $collection_key = 'acceptedResponseStatusCodes';
+  protected $acceptedResponseStatusCodesType = ResponseStatusCode::class;
+  protected $acceptedResponseStatusCodesDataType = 'array';
+  public $acceptedResponseStatusCodes;
   protected $authInfoType = BasicAuthentication::class;
   protected $authInfoDataType = '';
+  public $authInfo;
   /**
    * @var string
    */
@@ -41,6 +46,9 @@ class HttpCheck extends \Google\Model
    * @var string
    */
   public $path;
+  protected $pingConfigType = PingConfig::class;
+  protected $pingConfigDataType = '';
+  public $pingConfig;
   /**
    * @var int
    */
@@ -58,6 +66,20 @@ class HttpCheck extends \Google\Model
    */
   public $validateSsl;
 
+  /**
+   * @param ResponseStatusCode[]
+   */
+  public function setAcceptedResponseStatusCodes($acceptedResponseStatusCodes)
+  {
+    $this->acceptedResponseStatusCodes = $acceptedResponseStatusCodes;
+  }
+  /**
+   * @return ResponseStatusCode[]
+   */
+  public function getAcceptedResponseStatusCodes()
+  {
+    return $this->acceptedResponseStatusCodes;
+  }
   /**
    * @param BasicAuthentication
    */
@@ -141,6 +163,20 @@ class HttpCheck extends \Google\Model
   public function getPath()
   {
     return $this->path;
+  }
+  /**
+   * @param PingConfig
+   */
+  public function setPingConfig(PingConfig $pingConfig)
+  {
+    $this->pingConfig = $pingConfig;
+  }
+  /**
+   * @return PingConfig
+   */
+  public function getPingConfig()
+  {
+    return $this->pingConfig;
   }
   /**
    * @param int

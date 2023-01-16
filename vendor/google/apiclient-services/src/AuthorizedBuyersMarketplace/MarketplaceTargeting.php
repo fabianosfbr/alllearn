@@ -21,18 +21,28 @@ class MarketplaceTargeting extends \Google\Model
 {
   protected $daypartTargetingType = DayPartTargeting::class;
   protected $daypartTargetingDataType = '';
+  public $daypartTargeting;
   protected $geoTargetingType = CriteriaTargeting::class;
   protected $geoTargetingDataType = '';
+  public $geoTargeting;
   protected $inventorySizeTargetingType = InventorySizeTargeting::class;
   protected $inventorySizeTargetingDataType = '';
+  public $inventorySizeTargeting;
+  protected $inventoryTypeTargetingType = InventoryTypeTargeting::class;
+  protected $inventoryTypeTargetingDataType = '';
+  public $inventoryTypeTargeting;
   protected $placementTargetingType = PlacementTargeting::class;
   protected $placementTargetingDataType = '';
+  public $placementTargeting;
   protected $technologyTargetingType = TechnologyTargeting::class;
   protected $technologyTargetingDataType = '';
+  public $technologyTargeting;
   protected $userListTargetingType = CriteriaTargeting::class;
   protected $userListTargetingDataType = '';
+  public $userListTargeting;
   protected $videoTargetingType = VideoTargeting::class;
   protected $videoTargetingDataType = '';
+  public $videoTargeting;
 
   /**
    * @param DayPartTargeting
@@ -75,6 +85,20 @@ class MarketplaceTargeting extends \Google\Model
   public function getInventorySizeTargeting()
   {
     return $this->inventorySizeTargeting;
+  }
+  /**
+   * @param InventoryTypeTargeting
+   */
+  public function setInventoryTypeTargeting(InventoryTypeTargeting $inventoryTypeTargeting)
+  {
+    $this->inventoryTypeTargeting = $inventoryTypeTargeting;
+  }
+  /**
+   * @return InventoryTypeTargeting
+   */
+  public function getInventoryTypeTargeting()
+  {
+    return $this->inventoryTypeTargeting;
   }
   /**
    * @param PlacementTargeting

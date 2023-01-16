@@ -22,6 +22,10 @@ class User extends \Google\Model
   /**
    * @var string
    */
+  public $dualPasswordType;
+  /**
+   * @var string
+   */
   public $etag;
   /**
    * @var string
@@ -45,17 +49,33 @@ class User extends \Google\Model
   public $password;
   protected $passwordPolicyType = UserPasswordValidationPolicy::class;
   protected $passwordPolicyDataType = '';
+  public $passwordPolicy;
   /**
    * @var string
    */
   public $project;
   protected $sqlserverUserDetailsType = SqlServerUserDetails::class;
   protected $sqlserverUserDetailsDataType = '';
+  public $sqlserverUserDetails;
   /**
    * @var string
    */
   public $type;
 
+  /**
+   * @param string
+   */
+  public function setDualPasswordType($dualPasswordType)
+  {
+    $this->dualPasswordType = $dualPasswordType;
+  }
+  /**
+   * @return string
+   */
+  public function getDualPasswordType()
+  {
+    return $this->dualPasswordType;
+  }
   /**
    * @param string
    */

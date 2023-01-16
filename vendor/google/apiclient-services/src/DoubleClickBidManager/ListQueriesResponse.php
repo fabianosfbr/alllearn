@@ -23,28 +23,11 @@ class ListQueriesResponse extends \Google\Collection
   /**
    * @var string
    */
-  public $kind;
-  /**
-   * @var string
-   */
   public $nextPageToken;
   protected $queriesType = Query::class;
   protected $queriesDataType = 'array';
+  public $queries;
 
-  /**
-   * @param string
-   */
-  public function setKind($kind)
-  {
-    $this->kind = $kind;
-  }
-  /**
-   * @return string
-   */
-  public function getKind()
-  {
-    return $this->kind;
-  }
   /**
    * @param string
    */

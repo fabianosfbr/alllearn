@@ -19,13 +19,14 @@ namespace Google\Service\DisplayVideo;
 
 class InventorySource extends \Google\Collection
 {
-  protected $collection_key = 'creativeConfigs';
+  protected $collection_key = 'readPartnerIds';
   /**
    * @var string
    */
   public $commitment;
   protected $creativeConfigsType = CreativeConfig::class;
   protected $creativeConfigsDataType = 'array';
+  public $creativeConfigs;
   /**
    * @var string
    */
@@ -45,7 +46,15 @@ class InventorySource extends \Google\Collection
   /**
    * @var string
    */
+  public $guaranteedOrderId;
+  /**
+   * @var string
+   */
   public $inventorySourceId;
+  /**
+   * @var string
+   */
+  public $inventorySourceProductType;
   /**
    * @var string
    */
@@ -60,10 +69,28 @@ class InventorySource extends \Google\Collection
   public $publisherName;
   protected $rateDetailsType = RateDetails::class;
   protected $rateDetailsDataType = '';
+  public $rateDetails;
+  /**
+   * @var string[]
+   */
+  public $readAdvertiserIds;
+  /**
+   * @var string[]
+   */
+  public $readPartnerIds;
+  protected $readWriteAccessorsType = InventorySourceAccessors::class;
+  protected $readWriteAccessorsDataType = '';
+  public $readWriteAccessors;
   protected $statusType = InventorySourceStatus::class;
   protected $statusDataType = '';
+  public $status;
+  /**
+   * @var string
+   */
+  public $subSitePropertyId;
   protected $timeRangeType = TimeRange::class;
   protected $timeRangeDataType = '';
+  public $timeRange;
   /**
    * @var string
    */
@@ -156,6 +183,20 @@ class InventorySource extends \Google\Collection
   /**
    * @param string
    */
+  public function setGuaranteedOrderId($guaranteedOrderId)
+  {
+    $this->guaranteedOrderId = $guaranteedOrderId;
+  }
+  /**
+   * @return string
+   */
+  public function getGuaranteedOrderId()
+  {
+    return $this->guaranteedOrderId;
+  }
+  /**
+   * @param string
+   */
   public function setInventorySourceId($inventorySourceId)
   {
     $this->inventorySourceId = $inventorySourceId;
@@ -166,6 +207,20 @@ class InventorySource extends \Google\Collection
   public function getInventorySourceId()
   {
     return $this->inventorySourceId;
+  }
+  /**
+   * @param string
+   */
+  public function setInventorySourceProductType($inventorySourceProductType)
+  {
+    $this->inventorySourceProductType = $inventorySourceProductType;
+  }
+  /**
+   * @return string
+   */
+  public function getInventorySourceProductType()
+  {
+    return $this->inventorySourceProductType;
   }
   /**
    * @param string
@@ -224,6 +279,48 @@ class InventorySource extends \Google\Collection
     return $this->rateDetails;
   }
   /**
+   * @param string[]
+   */
+  public function setReadAdvertiserIds($readAdvertiserIds)
+  {
+    $this->readAdvertiserIds = $readAdvertiserIds;
+  }
+  /**
+   * @return string[]
+   */
+  public function getReadAdvertiserIds()
+  {
+    return $this->readAdvertiserIds;
+  }
+  /**
+   * @param string[]
+   */
+  public function setReadPartnerIds($readPartnerIds)
+  {
+    $this->readPartnerIds = $readPartnerIds;
+  }
+  /**
+   * @return string[]
+   */
+  public function getReadPartnerIds()
+  {
+    return $this->readPartnerIds;
+  }
+  /**
+   * @param InventorySourceAccessors
+   */
+  public function setReadWriteAccessors(InventorySourceAccessors $readWriteAccessors)
+  {
+    $this->readWriteAccessors = $readWriteAccessors;
+  }
+  /**
+   * @return InventorySourceAccessors
+   */
+  public function getReadWriteAccessors()
+  {
+    return $this->readWriteAccessors;
+  }
+  /**
    * @param InventorySourceStatus
    */
   public function setStatus(InventorySourceStatus $status)
@@ -236,6 +333,20 @@ class InventorySource extends \Google\Collection
   public function getStatus()
   {
     return $this->status;
+  }
+  /**
+   * @param string
+   */
+  public function setSubSitePropertyId($subSitePropertyId)
+  {
+    $this->subSitePropertyId = $subSitePropertyId;
+  }
+  /**
+   * @return string
+   */
+  public function getSubSitePropertyId()
+  {
+    return $this->subSitePropertyId;
   }
   /**
    * @param TimeRange

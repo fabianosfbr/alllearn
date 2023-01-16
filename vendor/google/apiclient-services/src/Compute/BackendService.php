@@ -26,16 +26,26 @@ class BackendService extends \Google\Collection
   public $affinityCookieTtlSec;
   protected $backendsType = Backend::class;
   protected $backendsDataType = 'array';
+  public $backends;
   protected $cdnPolicyType = BackendServiceCdnPolicy::class;
   protected $cdnPolicyDataType = '';
+  public $cdnPolicy;
   protected $circuitBreakersType = CircuitBreakers::class;
   protected $circuitBreakersDataType = '';
+  public $circuitBreakers;
+  /**
+   * @var string
+   */
+  public $compressionMode;
   protected $connectionDrainingType = ConnectionDraining::class;
   protected $connectionDrainingDataType = '';
+  public $connectionDraining;
   protected $connectionTrackingPolicyType = BackendServiceConnectionTrackingPolicy::class;
   protected $connectionTrackingPolicyDataType = '';
+  public $connectionTrackingPolicy;
   protected $consistentHashType = ConsistentHashLoadBalancerSettings::class;
   protected $consistentHashDataType = '';
+  public $consistentHash;
   /**
    * @var string
    */
@@ -62,6 +72,7 @@ class BackendService extends \Google\Collection
   public $enableCDN;
   protected $failoverPolicyType = BackendServiceFailoverPolicy::class;
   protected $failoverPolicyDataType = '';
+  public $failoverPolicy;
   /**
    * @var string
    */
@@ -72,6 +83,7 @@ class BackendService extends \Google\Collection
   public $healthChecks;
   protected $iapType = BackendServiceIAP::class;
   protected $iapDataType = '';
+  public $iap;
   /**
    * @var string
    */
@@ -86,14 +98,17 @@ class BackendService extends \Google\Collection
   public $loadBalancingScheme;
   protected $localityLbPoliciesType = BackendServiceLocalityLoadBalancingPolicyConfig::class;
   protected $localityLbPoliciesDataType = 'array';
+  public $localityLbPolicies;
   /**
    * @var string
    */
   public $localityLbPolicy;
   protected $logConfigType = BackendServiceLogConfig::class;
   protected $logConfigDataType = '';
+  public $logConfig;
   protected $maxStreamDurationType = Duration::class;
   protected $maxStreamDurationDataType = '';
+  public $maxStreamDuration;
   /**
    * @var string
    */
@@ -104,6 +119,7 @@ class BackendService extends \Google\Collection
   public $network;
   protected $outlierDetectionType = OutlierDetection::class;
   protected $outlierDetectionDataType = '';
+  public $outlierDetection;
   /**
    * @var int
    */
@@ -126,6 +142,7 @@ class BackendService extends \Google\Collection
   public $securityPolicy;
   protected $securitySettingsType = SecuritySettings::class;
   protected $securitySettingsDataType = '';
+  public $securitySettings;
   /**
    * @var string
    */
@@ -140,6 +157,7 @@ class BackendService extends \Google\Collection
   public $sessionAffinity;
   protected $subsettingType = Subsetting::class;
   protected $subsettingDataType = '';
+  public $subsetting;
   /**
    * @var int
    */
@@ -200,6 +218,20 @@ class BackendService extends \Google\Collection
   public function getCircuitBreakers()
   {
     return $this->circuitBreakers;
+  }
+  /**
+   * @param string
+   */
+  public function setCompressionMode($compressionMode)
+  {
+    $this->compressionMode = $compressionMode;
+  }
+  /**
+   * @return string
+   */
+  public function getCompressionMode()
+  {
+    return $this->compressionMode;
   }
   /**
    * @param ConnectionDraining

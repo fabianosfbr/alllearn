@@ -24,7 +24,7 @@ use Google\Service\Clouderrorreporting\ListGroupStatsResponse;
  * Typical usage is:
  *  <code>
  *   $clouderrorreportingService = new Google\Service\Clouderrorreporting(...);
- *   $groupStats = $clouderrorreportingService->groupStats;
+ *   $groupStats = $clouderrorreportingService->projects_groupStats;
  *  </code>
  */
 class ProjectsGroupStats extends \Google\Service\Resource
@@ -36,7 +36,7 @@ class ProjectsGroupStats extends \Google\Service\Resource
    * Platform project. Written as `projects/{projectID}` or
    * `projects/{projectNumber}`, where `{projectID}` and `{projectNumber}` can be
    * found in the [Google Cloud
-   * Console](https://support.google.com/cloud/answer/6158840). Examples:
+   * console](https://support.google.com/cloud/answer/6158840). Examples:
    * `projects/my-project-123`, `projects/5551234`.
    * @param array $optParams Optional parameters.
    *

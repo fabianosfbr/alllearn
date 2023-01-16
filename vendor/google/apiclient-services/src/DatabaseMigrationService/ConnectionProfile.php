@@ -19,8 +19,12 @@ namespace Google\Service\DatabaseMigrationService;
 
 class ConnectionProfile extends \Google\Model
 {
+  protected $alloydbType = AlloyDbConnectionProfile::class;
+  protected $alloydbDataType = '';
+  public $alloydb;
   protected $cloudsqlType = CloudSqlConnectionProfile::class;
   protected $cloudsqlDataType = '';
+  public $cloudsql;
   /**
    * @var string
    */
@@ -31,18 +35,24 @@ class ConnectionProfile extends \Google\Model
   public $displayName;
   protected $errorType = Status::class;
   protected $errorDataType = '';
+  public $error;
   /**
    * @var string[]
    */
   public $labels;
   protected $mysqlType = MySqlConnectionProfile::class;
   protected $mysqlDataType = '';
+  public $mysql;
   /**
    * @var string
    */
   public $name;
+  protected $oracleType = OracleConnectionProfile::class;
+  protected $oracleDataType = '';
+  public $oracle;
   protected $postgresqlType = PostgreSqlConnectionProfile::class;
   protected $postgresqlDataType = '';
+  public $postgresql;
   /**
    * @var string
    */
@@ -56,6 +66,20 @@ class ConnectionProfile extends \Google\Model
    */
   public $updateTime;
 
+  /**
+   * @param AlloyDbConnectionProfile
+   */
+  public function setAlloydb(AlloyDbConnectionProfile $alloydb)
+  {
+    $this->alloydb = $alloydb;
+  }
+  /**
+   * @return AlloyDbConnectionProfile
+   */
+  public function getAlloydb()
+  {
+    return $this->alloydb;
+  }
   /**
    * @param CloudSqlConnectionProfile
    */
@@ -153,6 +177,20 @@ class ConnectionProfile extends \Google\Model
   public function getName()
   {
     return $this->name;
+  }
+  /**
+   * @param OracleConnectionProfile
+   */
+  public function setOracle(OracleConnectionProfile $oracle)
+  {
+    $this->oracle = $oracle;
+  }
+  /**
+   * @return OracleConnectionProfile
+   */
+  public function getOracle()
+  {
+    return $this->oracle;
   }
   /**
    * @param PostgreSqlConnectionProfile

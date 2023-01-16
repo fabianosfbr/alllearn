@@ -20,11 +20,20 @@ namespace Google\Service\CloudDataplex;
 class GoogleCloudDataplexV1SessionEvent extends \Google\Model
 {
   /**
+   * @var bool
+   */
+  public $eventSucceeded;
+  /**
+   * @var bool
+   */
+  public $fastStartupEnabled;
+  /**
    * @var string
    */
   public $message;
   protected $queryType = GoogleCloudDataplexV1SessionEventQueryDetail::class;
   protected $queryDataType = '';
+  public $query;
   /**
    * @var string
    */
@@ -36,8 +45,40 @@ class GoogleCloudDataplexV1SessionEvent extends \Google\Model
   /**
    * @var string
    */
+  public $unassignedDuration;
+  /**
+   * @var string
+   */
   public $userId;
 
+  /**
+   * @param bool
+   */
+  public function setEventSucceeded($eventSucceeded)
+  {
+    $this->eventSucceeded = $eventSucceeded;
+  }
+  /**
+   * @return bool
+   */
+  public function getEventSucceeded()
+  {
+    return $this->eventSucceeded;
+  }
+  /**
+   * @param bool
+   */
+  public function setFastStartupEnabled($fastStartupEnabled)
+  {
+    $this->fastStartupEnabled = $fastStartupEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getFastStartupEnabled()
+  {
+    return $this->fastStartupEnabled;
+  }
   /**
    * @param string
    */
@@ -93,6 +134,20 @@ class GoogleCloudDataplexV1SessionEvent extends \Google\Model
   public function getType()
   {
     return $this->type;
+  }
+  /**
+   * @param string
+   */
+  public function setUnassignedDuration($unassignedDuration)
+  {
+    $this->unassignedDuration = $unassignedDuration;
+  }
+  /**
+   * @return string
+   */
+  public function getUnassignedDuration()
+  {
+    return $this->unassignedDuration;
   }
   /**
    * @param string

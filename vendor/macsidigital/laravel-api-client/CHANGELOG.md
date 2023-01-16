@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-api-client` will be documented in this file
 
+## 3.3.0 - 2021-01-05
+
+- PHP 8.0
+
+## 3.1.0 - 2020-09-08
+
+- Laravel 8.0
+
 ## 3.0.4 - 2020-05-29
 
 - Bug fix, getKey function went into infinite loop

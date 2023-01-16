@@ -26,8 +26,10 @@ class ExternalDataConfiguration extends \Google\Collection
   public $autodetect;
   protected $avroOptionsType = AvroOptions::class;
   protected $avroOptionsDataType = '';
+  public $avroOptions;
   protected $bigtableOptionsType = BigtableOptions::class;
   protected $bigtableOptionsDataType = '';
+  public $bigtableOptions;
   /**
    * @var string
    */
@@ -38,14 +40,17 @@ class ExternalDataConfiguration extends \Google\Collection
   public $connectionId;
   protected $csvOptionsType = CsvOptions::class;
   protected $csvOptionsDataType = '';
+  public $csvOptions;
   /**
    * @var string[]
    */
   public $decimalTargetTypes;
   protected $googleSheetsOptionsType = GoogleSheetsOptions::class;
   protected $googleSheetsOptionsDataType = '';
+  public $googleSheetsOptions;
   protected $hivePartitioningOptionsType = HivePartitioningOptions::class;
   protected $hivePartitioningOptionsDataType = '';
+  public $hivePartitioningOptions;
   /**
    * @var bool
    */
@@ -54,10 +59,24 @@ class ExternalDataConfiguration extends \Google\Collection
    * @var int
    */
   public $maxBadRecords;
+  /**
+   * @var string
+   */
+  public $metadataCacheMode;
+  /**
+   * @var string
+   */
+  public $objectMetadata;
   protected $parquetOptionsType = ParquetOptions::class;
   protected $parquetOptionsDataType = '';
+  public $parquetOptions;
+  /**
+   * @var string
+   */
+  public $referenceFileSchemaUri;
   protected $schemaType = TableSchema::class;
   protected $schemaDataType = '';
+  public $schema;
   /**
    * @var string
    */
@@ -222,6 +241,34 @@ class ExternalDataConfiguration extends \Google\Collection
     return $this->maxBadRecords;
   }
   /**
+   * @param string
+   */
+  public function setMetadataCacheMode($metadataCacheMode)
+  {
+    $this->metadataCacheMode = $metadataCacheMode;
+  }
+  /**
+   * @return string
+   */
+  public function getMetadataCacheMode()
+  {
+    return $this->metadataCacheMode;
+  }
+  /**
+   * @param string
+   */
+  public function setObjectMetadata($objectMetadata)
+  {
+    $this->objectMetadata = $objectMetadata;
+  }
+  /**
+   * @return string
+   */
+  public function getObjectMetadata()
+  {
+    return $this->objectMetadata;
+  }
+  /**
    * @param ParquetOptions
    */
   public function setParquetOptions(ParquetOptions $parquetOptions)
@@ -234,6 +281,20 @@ class ExternalDataConfiguration extends \Google\Collection
   public function getParquetOptions()
   {
     return $this->parquetOptions;
+  }
+  /**
+   * @param string
+   */
+  public function setReferenceFileSchemaUri($referenceFileSchemaUri)
+  {
+    $this->referenceFileSchemaUri = $referenceFileSchemaUri;
+  }
+  /**
+   * @return string
+   */
+  public function getReferenceFileSchemaUri()
+  {
+    return $this->referenceFileSchemaUri;
   }
   /**
    * @param TableSchema

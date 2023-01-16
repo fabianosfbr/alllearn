@@ -22,6 +22,11 @@ class GkeNodeConfig extends \Google\Collection
   protected $collection_key = 'accelerators';
   protected $acceleratorsType = GkeNodePoolAcceleratorConfig::class;
   protected $acceleratorsDataType = 'array';
+  public $accelerators;
+  /**
+   * @var string
+   */
+  public $bootDiskKmsKey;
   /**
    * @var int
    */
@@ -56,6 +61,20 @@ class GkeNodeConfig extends \Google\Collection
   public function getAccelerators()
   {
     return $this->accelerators;
+  }
+  /**
+   * @param string
+   */
+  public function setBootDiskKmsKey($bootDiskKmsKey)
+  {
+    $this->bootDiskKmsKey = $bootDiskKmsKey;
+  }
+  /**
+   * @return string
+   */
+  public function getBootDiskKmsKey()
+  {
+    return $this->bootDiskKmsKey;
   }
   /**
    * @param int

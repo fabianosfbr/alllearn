@@ -21,8 +21,13 @@ class SourceConfig extends \Google\Model
 {
   protected $mysqlSourceConfigType = MysqlSourceConfig::class;
   protected $mysqlSourceConfigDataType = '';
+  public $mysqlSourceConfig;
   protected $oracleSourceConfigType = OracleSourceConfig::class;
   protected $oracleSourceConfigDataType = '';
+  public $oracleSourceConfig;
+  protected $postgresqlSourceConfigType = PostgresqlSourceConfig::class;
+  protected $postgresqlSourceConfigDataType = '';
+  public $postgresqlSourceConfig;
   /**
    * @var string
    */
@@ -55,6 +60,20 @@ class SourceConfig extends \Google\Model
   public function getOracleSourceConfig()
   {
     return $this->oracleSourceConfig;
+  }
+  /**
+   * @param PostgresqlSourceConfig
+   */
+  public function setPostgresqlSourceConfig(PostgresqlSourceConfig $postgresqlSourceConfig)
+  {
+    $this->postgresqlSourceConfig = $postgresqlSourceConfig;
+  }
+  /**
+   * @return PostgresqlSourceConfig
+   */
+  public function getPostgresqlSourceConfig()
+  {
+    return $this->postgresqlSourceConfig;
   }
   /**
    * @param string

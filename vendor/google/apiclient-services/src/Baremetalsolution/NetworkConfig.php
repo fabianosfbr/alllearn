@@ -37,6 +37,10 @@ class NetworkConfig extends \Google\Collection
    */
   public $id;
   /**
+   * @var bool
+   */
+  public $jumboFramesEnabled;
+  /**
    * @var string
    */
   public $name;
@@ -54,6 +58,7 @@ class NetworkConfig extends \Google\Collection
   public $userNote;
   protected $vlanAttachmentsType = IntakeVlanAttachment::class;
   protected $vlanAttachmentsDataType = 'array';
+  public $vlanAttachments;
   /**
    * @var bool
    */
@@ -114,6 +119,20 @@ class NetworkConfig extends \Google\Collection
   public function getId()
   {
     return $this->id;
+  }
+  /**
+   * @param bool
+   */
+  public function setJumboFramesEnabled($jumboFramesEnabled)
+  {
+    $this->jumboFramesEnabled = $jumboFramesEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getJumboFramesEnabled()
+  {
+    return $this->jumboFramesEnabled;
   }
   /**
    * @param string

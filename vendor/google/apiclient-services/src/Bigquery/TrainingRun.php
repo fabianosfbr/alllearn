@@ -22,20 +22,30 @@ class TrainingRun extends \Google\Collection
   protected $collection_key = 'results';
   protected $classLevelGlobalExplanationsType = GlobalExplanation::class;
   protected $classLevelGlobalExplanationsDataType = 'array';
+  public $classLevelGlobalExplanations;
   protected $dataSplitResultType = DataSplitResult::class;
   protected $dataSplitResultDataType = '';
+  public $dataSplitResult;
   protected $evaluationMetricsType = EvaluationMetrics::class;
   protected $evaluationMetricsDataType = '';
+  public $evaluationMetrics;
   protected $modelLevelGlobalExplanationType = GlobalExplanation::class;
   protected $modelLevelGlobalExplanationDataType = '';
+  public $modelLevelGlobalExplanation;
   protected $resultsType = IterationResult::class;
   protected $resultsDataType = 'array';
+  public $results;
   /**
    * @var string
    */
   public $startTime;
   protected $trainingOptionsType = TrainingOptions::class;
   protected $trainingOptionsDataType = '';
+  public $trainingOptions;
+  /**
+   * @var string
+   */
+  public $trainingStartTime;
   /**
    * @var string
    */
@@ -142,6 +152,20 @@ class TrainingRun extends \Google\Collection
   public function getTrainingOptions()
   {
     return $this->trainingOptions;
+  }
+  /**
+   * @param string
+   */
+  public function setTrainingStartTime($trainingStartTime)
+  {
+    $this->trainingStartTime = $trainingStartTime;
+  }
+  /**
+   * @return string
+   */
+  public function getTrainingStartTime()
+  {
+    return $this->trainingStartTime;
   }
   /**
    * @param string

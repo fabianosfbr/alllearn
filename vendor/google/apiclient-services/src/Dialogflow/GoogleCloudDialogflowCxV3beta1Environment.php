@@ -34,12 +34,17 @@ class GoogleCloudDialogflowCxV3beta1Environment extends \Google\Collection
   public $name;
   protected $testCasesConfigType = GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig::class;
   protected $testCasesConfigDataType = '';
+  public $testCasesConfig;
   /**
    * @var string
    */
   public $updateTime;
   protected $versionConfigsType = GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig::class;
   protected $versionConfigsDataType = 'array';
+  public $versionConfigs;
+  protected $webhookConfigType = GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig::class;
+  protected $webhookConfigDataType = '';
+  public $webhookConfig;
 
   /**
    * @param string
@@ -124,6 +129,20 @@ class GoogleCloudDialogflowCxV3beta1Environment extends \Google\Collection
   public function getVersionConfigs()
   {
     return $this->versionConfigs;
+  }
+  /**
+   * @param GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig
+   */
+  public function setWebhookConfig(GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig $webhookConfig)
+  {
+    $this->webhookConfig = $webhookConfig;
+  }
+  /**
+   * @return GoogleCloudDialogflowCxV3beta1EnvironmentWebhookConfig
+   */
+  public function getWebhookConfig()
+  {
+    return $this->webhookConfig;
   }
 }
 

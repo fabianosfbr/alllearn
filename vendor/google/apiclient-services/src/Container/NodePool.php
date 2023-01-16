@@ -22,10 +22,17 @@ class NodePool extends \Google\Collection
   protected $collection_key = 'locations';
   protected $autoscalingType = NodePoolAutoscaling::class;
   protected $autoscalingDataType = '';
+  public $autoscaling;
   protected $conditionsType = StatusCondition::class;
   protected $conditionsDataType = 'array';
+  public $conditions;
   protected $configType = NodeConfig::class;
   protected $configDataType = '';
+  public $config;
+  /**
+   * @var string
+   */
+  public $etag;
   /**
    * @var int
    */
@@ -40,14 +47,20 @@ class NodePool extends \Google\Collection
   public $locations;
   protected $managementType = NodeManagement::class;
   protected $managementDataType = '';
+  public $management;
   protected $maxPodsConstraintType = MaxPodsConstraint::class;
   protected $maxPodsConstraintDataType = '';
+  public $maxPodsConstraint;
   /**
    * @var string
    */
   public $name;
   protected $networkConfigType = NodeNetworkConfig::class;
   protected $networkConfigDataType = '';
+  public $networkConfig;
+  protected $placementPolicyType = PlacementPolicy::class;
+  protected $placementPolicyDataType = '';
+  public $placementPolicy;
   /**
    * @var int
    */
@@ -64,8 +77,12 @@ class NodePool extends \Google\Collection
    * @var string
    */
   public $statusMessage;
+  protected $updateInfoType = UpdateInfo::class;
+  protected $updateInfoDataType = '';
+  public $updateInfo;
   protected $upgradeSettingsType = UpgradeSettings::class;
   protected $upgradeSettingsDataType = '';
+  public $upgradeSettings;
   /**
    * @var string
    */
@@ -112,6 +129,20 @@ class NodePool extends \Google\Collection
   public function getConfig()
   {
     return $this->config;
+  }
+  /**
+   * @param string
+   */
+  public function setEtag($etag)
+  {
+    $this->etag = $etag;
+  }
+  /**
+   * @return string
+   */
+  public function getEtag()
+  {
+    return $this->etag;
   }
   /**
    * @param int
@@ -212,6 +243,20 @@ class NodePool extends \Google\Collection
     return $this->networkConfig;
   }
   /**
+   * @param PlacementPolicy
+   */
+  public function setPlacementPolicy(PlacementPolicy $placementPolicy)
+  {
+    $this->placementPolicy = $placementPolicy;
+  }
+  /**
+   * @return PlacementPolicy
+   */
+  public function getPlacementPolicy()
+  {
+    return $this->placementPolicy;
+  }
+  /**
    * @param int
    */
   public function setPodIpv4CidrSize($podIpv4CidrSize)
@@ -266,6 +311,20 @@ class NodePool extends \Google\Collection
   public function getStatusMessage()
   {
     return $this->statusMessage;
+  }
+  /**
+   * @param UpdateInfo
+   */
+  public function setUpdateInfo(UpdateInfo $updateInfo)
+  {
+    $this->updateInfo = $updateInfo;
+  }
+  /**
+   * @return UpdateInfo
+   */
+  public function getUpdateInfo()
+  {
+    return $this->updateInfo;
   }
   /**
    * @param UpgradeSettings

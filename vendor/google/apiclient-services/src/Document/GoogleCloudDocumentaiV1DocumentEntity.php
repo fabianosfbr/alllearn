@@ -36,24 +36,25 @@ class GoogleCloudDocumentaiV1DocumentEntity extends \Google\Collection
    * @var string
    */
   public $mentionText;
-  /**
-   * @var bool
-   */
-  public $nonPresent;
   protected $normalizedValueType = GoogleCloudDocumentaiV1DocumentEntityNormalizedValue::class;
   protected $normalizedValueDataType = '';
+  public $normalizedValue;
   protected $pageAnchorType = GoogleCloudDocumentaiV1DocumentPageAnchor::class;
   protected $pageAnchorDataType = '';
+  public $pageAnchor;
   protected $propertiesType = GoogleCloudDocumentaiV1DocumentEntity::class;
   protected $propertiesDataType = 'array';
+  public $properties;
   protected $provenanceType = GoogleCloudDocumentaiV1DocumentProvenance::class;
   protected $provenanceDataType = '';
+  public $provenance;
   /**
    * @var bool
    */
   public $redacted;
   protected $textAnchorType = GoogleCloudDocumentaiV1DocumentTextAnchor::class;
   protected $textAnchorDataType = '';
+  public $textAnchor;
   /**
    * @var string
    */
@@ -114,20 +115,6 @@ class GoogleCloudDocumentaiV1DocumentEntity extends \Google\Collection
   public function getMentionText()
   {
     return $this->mentionText;
-  }
-  /**
-   * @param bool
-   */
-  public function setNonPresent($nonPresent)
-  {
-    $this->nonPresent = $nonPresent;
-  }
-  /**
-   * @return bool
-   */
-  public function getNonPresent()
-  {
-    return $this->nonPresent;
   }
   /**
    * @param GoogleCloudDocumentaiV1DocumentEntityNormalizedValue

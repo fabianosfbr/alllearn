@@ -31,6 +31,13 @@ class Space extends \Google\Model
    * @var bool
    */
   public $singleUserBotDm;
+  protected $spaceDetailsType = SpaceDetails::class;
+  protected $spaceDetailsDataType = '';
+  public $spaceDetails;
+  /**
+   * @var string
+   */
+  public $spaceThreadingState;
   /**
    * @var bool
    */
@@ -81,6 +88,34 @@ class Space extends \Google\Model
   public function getSingleUserBotDm()
   {
     return $this->singleUserBotDm;
+  }
+  /**
+   * @param SpaceDetails
+   */
+  public function setSpaceDetails(SpaceDetails $spaceDetails)
+  {
+    $this->spaceDetails = $spaceDetails;
+  }
+  /**
+   * @return SpaceDetails
+   */
+  public function getSpaceDetails()
+  {
+    return $this->spaceDetails;
+  }
+  /**
+   * @param string
+   */
+  public function setSpaceThreadingState($spaceThreadingState)
+  {
+    $this->spaceThreadingState = $spaceThreadingState;
+  }
+  /**
+   * @return string
+   */
+  public function getSpaceThreadingState()
+  {
+    return $this->spaceThreadingState;
   }
   /**
    * @param bool

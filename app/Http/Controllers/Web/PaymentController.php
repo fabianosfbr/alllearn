@@ -19,6 +19,8 @@ use App\Models\TicketUser;
 use App\PaymentChannels\ChannelManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Services\CoraBank\Credentials;
+use Illuminate\Support\Facades\Http;
 
 use MercadoPago\SDK as Mercado;
 use MercadoPago\Preference as MercadoPreference;
@@ -113,6 +115,7 @@ class PaymentController extends Controller
         ]);
 
 
+
         // Credit payment All Learn
         if ($dataValidate['payment_option'] === 'credit') {
 
@@ -200,6 +203,30 @@ class PaymentController extends Controller
                 'status_detail' => $payment->status_detail,
                 'id' => $payment->id
             ); */
+        }
+
+
+
+        if($data['payment_option'] == 'gateway' and $data['payment_type'] == 'boleto'){
+
+/*
+            $url = Credentials::getCredentials('/invoices');
+            $response = Http::withHeaders([
+                         'Authorization' =>  'Bearer ' . config('CORA_BANK_CLIENT_ID'),
+                         'Content-Type' => 'application/json'
+                     ])->post($url); */
+
+
+
+
+            $url = Credentials::getUrl('/invoices');
+
+            $response = Http::withHeaders([
+                'Authorization' =>  'Bearer ' . config('CORA_BANK_CLIENT_ID'),
+                'Content-Type' => 'application/json'
+            ])->post($url, []);
+
+            dd($response);
         }
 
         if (isset($data['boleto']) and $data['boleto'] == 'on') {

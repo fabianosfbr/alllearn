@@ -19,9 +19,10 @@ namespace Google\Service\SecurityCommandCenter;
 
 class Finding extends \Google\Collection
 {
-  protected $collection_key = 'iamBindings';
+  protected $collection_key = 'processes';
   protected $accessType = Access::class;
   protected $accessDataType = '';
+  public $access;
   /**
    * @var string
    */
@@ -30,12 +31,25 @@ class Finding extends \Google\Collection
    * @var string
    */
   public $category;
+  protected $compliancesType = Compliance::class;
+  protected $compliancesDataType = 'array';
+  public $compliances;
   protected $connectionsType = Connection::class;
   protected $connectionsDataType = 'array';
+  public $connections;
+  protected $contactsType = ContactDetails::class;
+  protected $contactsDataType = 'map';
+  public $contacts;
+  protected $containersType = Container::class;
+  protected $containersDataType = 'array';
+  public $containers;
   /**
    * @var string
    */
   public $createTime;
+  protected $databaseType = Database::class;
+  protected $databaseDataType = '';
+  public $database;
   /**
    * @var string
    */
@@ -44,22 +58,38 @@ class Finding extends \Google\Collection
    * @var string
    */
   public $eventTime;
+  protected $exfiltrationType = Exfiltration::class;
+  protected $exfiltrationDataType = '';
+  public $exfiltration;
   protected $externalSystemsType = GoogleCloudSecuritycenterV1ExternalSystem::class;
   protected $externalSystemsDataType = 'map';
+  public $externalSystems;
   /**
    * @var string
    */
   public $externalUri;
+  protected $filesType = SecuritycenterFile::class;
+  protected $filesDataType = 'array';
+  public $files;
   /**
    * @var string
    */
   public $findingClass;
   protected $iamBindingsType = IamBinding::class;
   protected $iamBindingsDataType = 'array';
+  public $iamBindings;
   protected $indicatorType = Indicator::class;
   protected $indicatorDataType = '';
+  public $indicator;
+  protected $kernelRootkitType = KernelRootkit::class;
+  protected $kernelRootkitDataType = '';
+  public $kernelRootkit;
+  protected $kubernetesType = Kubernetes::class;
+  protected $kubernetesDataType = '';
+  public $kubernetes;
   protected $mitreAttackType = MitreAttack::class;
   protected $mitreAttackDataType = '';
+  public $mitreAttack;
   /**
    * @var string
    */
@@ -87,9 +117,17 @@ class Finding extends \Google\Collection
   /**
    * @var string
    */
+  public $parentDisplayName;
+  protected $processesType = Process::class;
+  protected $processesDataType = 'array';
+  public $processes;
+  /**
+   * @var string
+   */
   public $resourceName;
   protected $securityMarksType = SecurityMarks::class;
   protected $securityMarksDataType = '';
+  public $securityMarks;
   /**
    * @var string
    */
@@ -104,6 +142,7 @@ class Finding extends \Google\Collection
   public $state;
   protected $vulnerabilityType = Vulnerability::class;
   protected $vulnerabilityDataType = '';
+  public $vulnerability;
 
   /**
    * @param Access
@@ -148,6 +187,20 @@ class Finding extends \Google\Collection
     return $this->category;
   }
   /**
+   * @param Compliance[]
+   */
+  public function setCompliances($compliances)
+  {
+    $this->compliances = $compliances;
+  }
+  /**
+   * @return Compliance[]
+   */
+  public function getCompliances()
+  {
+    return $this->compliances;
+  }
+  /**
    * @param Connection[]
    */
   public function setConnections($connections)
@@ -162,6 +215,34 @@ class Finding extends \Google\Collection
     return $this->connections;
   }
   /**
+   * @param ContactDetails[]
+   */
+  public function setContacts($contacts)
+  {
+    $this->contacts = $contacts;
+  }
+  /**
+   * @return ContactDetails[]
+   */
+  public function getContacts()
+  {
+    return $this->contacts;
+  }
+  /**
+   * @param Container[]
+   */
+  public function setContainers($containers)
+  {
+    $this->containers = $containers;
+  }
+  /**
+   * @return Container[]
+   */
+  public function getContainers()
+  {
+    return $this->containers;
+  }
+  /**
    * @param string
    */
   public function setCreateTime($createTime)
@@ -174,6 +255,20 @@ class Finding extends \Google\Collection
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * @param Database
+   */
+  public function setDatabase(Database $database)
+  {
+    $this->database = $database;
+  }
+  /**
+   * @return Database
+   */
+  public function getDatabase()
+  {
+    return $this->database;
   }
   /**
    * @param string
@@ -204,6 +299,20 @@ class Finding extends \Google\Collection
     return $this->eventTime;
   }
   /**
+   * @param Exfiltration
+   */
+  public function setExfiltration(Exfiltration $exfiltration)
+  {
+    $this->exfiltration = $exfiltration;
+  }
+  /**
+   * @return Exfiltration
+   */
+  public function getExfiltration()
+  {
+    return $this->exfiltration;
+  }
+  /**
    * @param GoogleCloudSecuritycenterV1ExternalSystem[]
    */
   public function setExternalSystems($externalSystems)
@@ -230,6 +339,20 @@ class Finding extends \Google\Collection
   public function getExternalUri()
   {
     return $this->externalUri;
+  }
+  /**
+   * @param SecuritycenterFile[]
+   */
+  public function setFiles($files)
+  {
+    $this->files = $files;
+  }
+  /**
+   * @return SecuritycenterFile[]
+   */
+  public function getFiles()
+  {
+    return $this->files;
   }
   /**
    * @param string
@@ -272,6 +395,34 @@ class Finding extends \Google\Collection
   public function getIndicator()
   {
     return $this->indicator;
+  }
+  /**
+   * @param KernelRootkit
+   */
+  public function setKernelRootkit(KernelRootkit $kernelRootkit)
+  {
+    $this->kernelRootkit = $kernelRootkit;
+  }
+  /**
+   * @return KernelRootkit
+   */
+  public function getKernelRootkit()
+  {
+    return $this->kernelRootkit;
+  }
+  /**
+   * @param Kubernetes
+   */
+  public function setKubernetes(Kubernetes $kubernetes)
+  {
+    $this->kubernetes = $kubernetes;
+  }
+  /**
+   * @return Kubernetes
+   */
+  public function getKubernetes()
+  {
+    return $this->kubernetes;
   }
   /**
    * @param MitreAttack
@@ -370,6 +521,34 @@ class Finding extends \Google\Collection
   public function getParent()
   {
     return $this->parent;
+  }
+  /**
+   * @param string
+   */
+  public function setParentDisplayName($parentDisplayName)
+  {
+    $this->parentDisplayName = $parentDisplayName;
+  }
+  /**
+   * @return string
+   */
+  public function getParentDisplayName()
+  {
+    return $this->parentDisplayName;
+  }
+  /**
+   * @param Process[]
+   */
+  public function setProcesses($processes)
+  {
+    $this->processes = $processes;
+  }
+  /**
+   * @return Process[]
+   */
+  public function getProcesses()
+  {
+    return $this->processes;
   }
   /**
    * @param string

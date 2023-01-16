@@ -23,16 +23,15 @@ class ReportMetadata extends \Google\Model
    * @var string
    */
   public $googleCloudStoragePath;
-  /**
-   * @var string
-   */
-  public $reportDataEndTimeMs;
-  /**
-   * @var string
-   */
-  public $reportDataStartTimeMs;
+  protected $reportDataEndDateType = Date::class;
+  protected $reportDataEndDateDataType = '';
+  public $reportDataEndDate;
+  protected $reportDataStartDateType = Date::class;
+  protected $reportDataStartDateDataType = '';
+  public $reportDataStartDate;
   protected $statusType = ReportStatus::class;
   protected $statusDataType = '';
+  public $status;
 
   /**
    * @param string
@@ -49,32 +48,32 @@ class ReportMetadata extends \Google\Model
     return $this->googleCloudStoragePath;
   }
   /**
-   * @param string
+   * @param Date
    */
-  public function setReportDataEndTimeMs($reportDataEndTimeMs)
+  public function setReportDataEndDate(Date $reportDataEndDate)
   {
-    $this->reportDataEndTimeMs = $reportDataEndTimeMs;
+    $this->reportDataEndDate = $reportDataEndDate;
   }
   /**
-   * @return string
+   * @return Date
    */
-  public function getReportDataEndTimeMs()
+  public function getReportDataEndDate()
   {
-    return $this->reportDataEndTimeMs;
+    return $this->reportDataEndDate;
   }
   /**
-   * @param string
+   * @param Date
    */
-  public function setReportDataStartTimeMs($reportDataStartTimeMs)
+  public function setReportDataStartDate(Date $reportDataStartDate)
   {
-    $this->reportDataStartTimeMs = $reportDataStartTimeMs;
+    $this->reportDataStartDate = $reportDataStartDate;
   }
   /**
-   * @return string
+   * @return Date
    */
-  public function getReportDataStartTimeMs()
+  public function getReportDataStartDate()
   {
-    return $this->reportDataStartTimeMs;
+    return $this->reportDataStartDate;
   }
   /**
    * @param ReportStatus

@@ -21,6 +21,7 @@ class Job extends \Google\Model
 {
   protected $configType = JobConfig::class;
   protected $configDataType = '';
+  public $config;
   /**
    * @var string
    */
@@ -31,10 +32,15 @@ class Job extends \Google\Model
   public $endTime;
   protected $errorType = Status::class;
   protected $errorDataType = '';
+  public $error;
   /**
    * @var string
    */
   public $inputUri;
+  /**
+   * @var string[]
+   */
+  public $labels;
   /**
    * @var string
    */
@@ -129,6 +135,20 @@ class Job extends \Google\Model
   public function getInputUri()
   {
     return $this->inputUri;
+  }
+  /**
+   * @param string[]
+   */
+  public function setLabels($labels)
+  {
+    $this->labels = $labels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getLabels()
+  {
+    return $this->labels;
   }
   /**
    * @param string

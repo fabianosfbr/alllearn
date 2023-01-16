@@ -20,6 +20,9 @@ namespace Google\Service\Dns;
 class RRSetRoutingPolicyWrrPolicyWrrPolicyItem extends \Google\Collection
 {
   protected $collection_key = 'signatureRrdatas';
+  protected $healthCheckedTargetsType = RRSetRoutingPolicyHealthCheckTargets::class;
+  protected $healthCheckedTargetsDataType = '';
+  public $healthCheckedTargets;
   /**
    * @var string
    */
@@ -34,6 +37,20 @@ class RRSetRoutingPolicyWrrPolicyWrrPolicyItem extends \Google\Collection
   public $signatureRrdatas;
   public $weight;
 
+  /**
+   * @param RRSetRoutingPolicyHealthCheckTargets
+   */
+  public function setHealthCheckedTargets(RRSetRoutingPolicyHealthCheckTargets $healthCheckedTargets)
+  {
+    $this->healthCheckedTargets = $healthCheckedTargets;
+  }
+  /**
+   * @return RRSetRoutingPolicyHealthCheckTargets
+   */
+  public function getHealthCheckedTargets()
+  {
+    return $this->healthCheckedTargets;
+  }
   /**
    * @param string
    */

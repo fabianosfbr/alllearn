@@ -30,6 +30,7 @@ class GoogleCloudApigeeV1ApiProduct extends \Google\Collection
   public $approvalType;
   protected $attributesType = GoogleCloudApigeeV1Attribute::class;
   protected $attributesDataType = 'array';
+  public $attributes;
   /**
    * @var string
    */
@@ -48,6 +49,7 @@ class GoogleCloudApigeeV1ApiProduct extends \Google\Collection
   public $environments;
   protected $graphqlOperationGroupType = GoogleCloudApigeeV1GraphQLOperationGroup::class;
   protected $graphqlOperationGroupDataType = '';
+  public $graphqlOperationGroup;
   /**
    * @var string
    */
@@ -58,6 +60,7 @@ class GoogleCloudApigeeV1ApiProduct extends \Google\Collection
   public $name;
   protected $operationGroupType = GoogleCloudApigeeV1OperationGroup::class;
   protected $operationGroupDataType = '';
+  public $operationGroup;
   /**
    * @var string[]
    */
@@ -66,6 +69,10 @@ class GoogleCloudApigeeV1ApiProduct extends \Google\Collection
    * @var string
    */
   public $quota;
+  /**
+   * @var string
+   */
+  public $quotaCounterScope;
   /**
    * @var string
    */
@@ -260,6 +267,20 @@ class GoogleCloudApigeeV1ApiProduct extends \Google\Collection
   public function getQuota()
   {
     return $this->quota;
+  }
+  /**
+   * @param string
+   */
+  public function setQuotaCounterScope($quotaCounterScope)
+  {
+    $this->quotaCounterScope = $quotaCounterScope;
+  }
+  /**
+   * @return string
+   */
+  public function getQuotaCounterScope()
+  {
+    return $this->quotaCounterScope;
   }
   /**
    * @param string

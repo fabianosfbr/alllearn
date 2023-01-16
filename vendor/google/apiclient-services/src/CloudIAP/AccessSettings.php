@@ -19,17 +19,39 @@ namespace Google\Service\CloudIAP;
 
 class AccessSettings extends \Google\Model
 {
+  protected $allowedDomainsSettingsType = AllowedDomainsSettings::class;
+  protected $allowedDomainsSettingsDataType = '';
+  public $allowedDomainsSettings;
   protected $corsSettingsType = CorsSettings::class;
   protected $corsSettingsDataType = '';
+  public $corsSettings;
   protected $gcipSettingsType = GcipSettings::class;
   protected $gcipSettingsDataType = '';
+  public $gcipSettings;
   protected $oauthSettingsType = OAuthSettings::class;
   protected $oauthSettingsDataType = '';
+  public $oauthSettings;
   protected $policyDelegationSettingsType = PolicyDelegationSettings::class;
   protected $policyDelegationSettingsDataType = '';
+  public $policyDelegationSettings;
   protected $reauthSettingsType = ReauthSettings::class;
   protected $reauthSettingsDataType = '';
+  public $reauthSettings;
 
+  /**
+   * @param AllowedDomainsSettings
+   */
+  public function setAllowedDomainsSettings(AllowedDomainsSettings $allowedDomainsSettings)
+  {
+    $this->allowedDomainsSettings = $allowedDomainsSettings;
+  }
+  /**
+   * @return AllowedDomainsSettings
+   */
+  public function getAllowedDomainsSettings()
+  {
+    return $this->allowedDomainsSettings;
+  }
   /**
    * @param CorsSettings
    */

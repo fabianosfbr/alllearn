@@ -26,20 +26,24 @@ class UptimeCheckConfig extends \Google\Collection
   public $checkerType;
   protected $contentMatchersType = ContentMatcher::class;
   protected $contentMatchersDataType = 'array';
+  public $contentMatchers;
   /**
    * @var string
    */
   public $displayName;
   protected $httpCheckType = HttpCheck::class;
   protected $httpCheckDataType = '';
+  public $httpCheck;
   protected $internalCheckersType = InternalChecker::class;
   protected $internalCheckersDataType = 'array';
+  public $internalCheckers;
   /**
    * @var bool
    */
   public $isInternal;
   protected $monitoredResourceType = MonitoredResource::class;
   protected $monitoredResourceDataType = '';
+  public $monitoredResource;
   /**
    * @var string
    */
@@ -50,16 +54,22 @@ class UptimeCheckConfig extends \Google\Collection
   public $period;
   protected $resourceGroupType = ResourceGroup::class;
   protected $resourceGroupDataType = '';
+  public $resourceGroup;
   /**
    * @var string[]
    */
   public $selectedRegions;
   protected $tcpCheckType = TcpCheck::class;
   protected $tcpCheckDataType = '';
+  public $tcpCheck;
   /**
    * @var string
    */
   public $timeout;
+  /**
+   * @var string[]
+   */
+  public $userLabels;
 
   /**
    * @param string
@@ -242,6 +252,20 @@ class UptimeCheckConfig extends \Google\Collection
   public function getTimeout()
   {
     return $this->timeout;
+  }
+  /**
+   * @param string[]
+   */
+  public function setUserLabels($userLabels)
+  {
+    $this->userLabels = $userLabels;
+  }
+  /**
+   * @return string[]
+   */
+  public function getUserLabels()
+  {
+    return $this->userLabels;
   }
 }
 

@@ -21,6 +21,14 @@ class BuildStep extends \Google\Collection
 {
   protected $collection_key = 'waitFor';
   /**
+   * @var int[]
+   */
+  public $allowExitCodes;
+  /**
+   * @var bool
+   */
+  public $allowFailure;
+  /**
    * @var string[]
    */
   public $args;
@@ -37,6 +45,10 @@ class BuildStep extends \Google\Collection
    */
   public $env;
   /**
+   * @var int
+   */
+  public $exitCode;
+  /**
    * @var string
    */
   public $id;
@@ -46,6 +58,7 @@ class BuildStep extends \Google\Collection
   public $name;
   protected $pullTimingType = TimeSpan::class;
   protected $pullTimingDataType = '';
+  public $pullTiming;
   /**
    * @var string
    */
@@ -64,13 +77,43 @@ class BuildStep extends \Google\Collection
   public $timeout;
   protected $timingType = TimeSpan::class;
   protected $timingDataType = '';
+  public $timing;
   protected $volumesType = Volume::class;
   protected $volumesDataType = 'array';
+  public $volumes;
   /**
    * @var string[]
    */
   public $waitFor;
 
+  /**
+   * @param int[]
+   */
+  public function setAllowExitCodes($allowExitCodes)
+  {
+    $this->allowExitCodes = $allowExitCodes;
+  }
+  /**
+   * @return int[]
+   */
+  public function getAllowExitCodes()
+  {
+    return $this->allowExitCodes;
+  }
+  /**
+   * @param bool
+   */
+  public function setAllowFailure($allowFailure)
+  {
+    $this->allowFailure = $allowFailure;
+  }
+  /**
+   * @return bool
+   */
+  public function getAllowFailure()
+  {
+    return $this->allowFailure;
+  }
   /**
    * @param string[]
    */
@@ -126,6 +169,20 @@ class BuildStep extends \Google\Collection
   public function getEnv()
   {
     return $this->env;
+  }
+  /**
+   * @param int
+   */
+  public function setExitCode($exitCode)
+  {
+    $this->exitCode = $exitCode;
+  }
+  /**
+   * @return int
+   */
+  public function getExitCode()
+  {
+    return $this->exitCode;
   }
   /**
    * @param string

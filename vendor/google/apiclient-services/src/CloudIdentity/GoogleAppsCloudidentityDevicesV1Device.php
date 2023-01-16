@@ -22,6 +22,7 @@ class GoogleAppsCloudidentityDevicesV1Device extends \Google\Collection
   protected $collection_key = 'wifiMacAddresses';
   protected $androidSpecificAttributesType = GoogleAppsCloudidentityDevicesV1AndroidAttributes::class;
   protected $androidSpecificAttributesDataType = '';
+  public $androidSpecificAttributes;
   /**
    * @var string
    */
@@ -50,6 +51,10 @@ class GoogleAppsCloudidentityDevicesV1Device extends \Google\Collection
    * @var string
    */
   public $createTime;
+  /**
+   * @var string
+   */
+  public $deviceId;
   /**
    * @var string
    */
@@ -242,6 +247,20 @@ class GoogleAppsCloudidentityDevicesV1Device extends \Google\Collection
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * @param string
+   */
+  public function setDeviceId($deviceId)
+  {
+    $this->deviceId = $deviceId;
+  }
+  /**
+   * @return string
+   */
+  public function getDeviceId()
+  {
+    return $this->deviceId;
   }
   /**
    * @param string

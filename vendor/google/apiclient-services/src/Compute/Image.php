@@ -23,6 +23,10 @@ class Image extends \Google\Collection
   /**
    * @var string
    */
+  public $architecture;
+  /**
+   * @var string
+   */
   public $archiveSizeBytes;
   /**
    * @var string
@@ -30,6 +34,7 @@ class Image extends \Google\Collection
   public $creationTimestamp;
   protected $deprecatedType = DeprecationStatus::class;
   protected $deprecatedDataType = '';
+  public $deprecated;
   /**
    * @var string
    */
@@ -44,12 +49,14 @@ class Image extends \Google\Collection
   public $family;
   protected $guestOsFeaturesType = GuestOsFeature::class;
   protected $guestOsFeaturesDataType = 'array';
+  public $guestOsFeatures;
   /**
    * @var string
    */
   public $id;
   protected $imageEncryptionKeyType = CustomerEncryptionKey::class;
   protected $imageEncryptionKeyDataType = '';
+  public $imageEncryptionKey;
   /**
    * @var string
    */
@@ -76,6 +83,7 @@ class Image extends \Google\Collection
   public $name;
   protected $rawDiskType = ImageRawDisk::class;
   protected $rawDiskDataType = '';
+  public $rawDisk;
   /**
    * @var bool
    */
@@ -86,12 +94,14 @@ class Image extends \Google\Collection
   public $selfLink;
   protected $shieldedInstanceInitialStateType = InitialStateConfig::class;
   protected $shieldedInstanceInitialStateDataType = '';
+  public $shieldedInstanceInitialState;
   /**
    * @var string
    */
   public $sourceDisk;
   protected $sourceDiskEncryptionKeyType = CustomerEncryptionKey::class;
   protected $sourceDiskEncryptionKeyDataType = '';
+  public $sourceDiskEncryptionKey;
   /**
    * @var string
    */
@@ -102,6 +112,7 @@ class Image extends \Google\Collection
   public $sourceImage;
   protected $sourceImageEncryptionKeyType = CustomerEncryptionKey::class;
   protected $sourceImageEncryptionKeyDataType = '';
+  public $sourceImageEncryptionKey;
   /**
    * @var string
    */
@@ -112,6 +123,7 @@ class Image extends \Google\Collection
   public $sourceSnapshot;
   protected $sourceSnapshotEncryptionKeyType = CustomerEncryptionKey::class;
   protected $sourceSnapshotEncryptionKeyDataType = '';
+  public $sourceSnapshotEncryptionKey;
   /**
    * @var string
    */
@@ -129,6 +141,20 @@ class Image extends \Google\Collection
    */
   public $storageLocations;
 
+  /**
+   * @param string
+   */
+  public function setArchitecture($architecture)
+  {
+    $this->architecture = $architecture;
+  }
+  /**
+   * @return string
+   */
+  public function getArchitecture()
+  {
+    return $this->architecture;
+  }
   /**
    * @param string
    */

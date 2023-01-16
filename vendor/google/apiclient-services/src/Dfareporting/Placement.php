@@ -25,27 +25,30 @@ class Placement extends \Google\Collection
    */
   public $accountId;
   /**
+   * @var string
+   */
+  public $activeStatus;
+  /**
    * @var bool
    */
   public $adBlockingOptOut;
   protected $additionalSizesType = Size::class;
   protected $additionalSizesDataType = 'array';
+  public $additionalSizes;
   /**
    * @var string
    */
   public $advertiserId;
   protected $advertiserIdDimensionValueType = DimensionValue::class;
   protected $advertiserIdDimensionValueDataType = '';
-  /**
-   * @var bool
-   */
-  public $archived;
+  public $advertiserIdDimensionValue;
   /**
    * @var string
    */
   public $campaignId;
   protected $campaignIdDimensionValueType = DimensionValue::class;
   protected $campaignIdDimensionValueDataType = '';
+  public $campaignIdDimensionValue;
   /**
    * @var string
    */
@@ -60,12 +63,14 @@ class Placement extends \Google\Collection
   public $contentCategoryId;
   protected $createInfoType = LastModifiedInfo::class;
   protected $createInfoDataType = '';
+  public $createInfo;
   /**
    * @var string
    */
   public $directorySiteId;
   protected $directorySiteIdDimensionValueType = DimensionValue::class;
   protected $directorySiteIdDimensionValueDataType = '';
+  public $directorySiteIdDimensionValue;
   /**
    * @var string
    */
@@ -76,6 +81,7 @@ class Placement extends \Google\Collection
   public $id;
   protected $idDimensionValueType = DimensionValue::class;
   protected $idDimensionValueDataType = '';
+  public $idDimensionValue;
   /**
    * @var string
    */
@@ -86,14 +92,17 @@ class Placement extends \Google\Collection
   public $kind;
   protected $lastModifiedInfoType = LastModifiedInfo::class;
   protected $lastModifiedInfoDataType = '';
+  public $lastModifiedInfo;
   protected $lookbackConfigurationType = LookbackConfiguration::class;
   protected $lookbackConfigurationDataType = '';
+  public $lookbackConfiguration;
   /**
    * @var string
    */
   public $name;
   protected $partnerWrappingDataType = MeasurementPartnerWrappingData::class;
   protected $partnerWrappingDataDataType = '';
+  public $partnerWrappingData;
   /**
    * @var bool
    */
@@ -108,26 +117,31 @@ class Placement extends \Google\Collection
   public $placementGroupId;
   protected $placementGroupIdDimensionValueType = DimensionValue::class;
   protected $placementGroupIdDimensionValueDataType = '';
+  public $placementGroupIdDimensionValue;
   /**
    * @var string
    */
   public $placementStrategyId;
   protected $pricingScheduleType = PricingSchedule::class;
   protected $pricingScheduleDataType = '';
+  public $pricingSchedule;
   /**
    * @var bool
    */
   public $primary;
   protected $publisherUpdateInfoType = LastModifiedInfo::class;
   protected $publisherUpdateInfoDataType = '';
+  public $publisherUpdateInfo;
   /**
    * @var string
    */
   public $siteId;
   protected $siteIdDimensionValueType = DimensionValue::class;
   protected $siteIdDimensionValueDataType = '';
+  public $siteIdDimensionValue;
   protected $sizeType = Size::class;
   protected $sizeDataType = '';
+  public $size;
   /**
    * @var bool
    */
@@ -146,12 +160,14 @@ class Placement extends \Google\Collection
   public $tagFormats;
   protected $tagSettingType = TagSetting::class;
   protected $tagSettingDataType = '';
+  public $tagSetting;
   /**
    * @var bool
    */
   public $videoActiveViewOptOut;
   protected $videoSettingsType = VideoSettings::class;
   protected $videoSettingsDataType = '';
+  public $videoSettings;
   /**
    * @var string
    */
@@ -174,6 +190,20 @@ class Placement extends \Google\Collection
   public function getAccountId()
   {
     return $this->accountId;
+  }
+  /**
+   * @param string
+   */
+  public function setActiveStatus($activeStatus)
+  {
+    $this->activeStatus = $activeStatus;
+  }
+  /**
+   * @return string
+   */
+  public function getActiveStatus()
+  {
+    return $this->activeStatus;
   }
   /**
    * @param bool
@@ -230,20 +260,6 @@ class Placement extends \Google\Collection
   public function getAdvertiserIdDimensionValue()
   {
     return $this->advertiserIdDimensionValue;
-  }
-  /**
-   * @param bool
-   */
-  public function setArchived($archived)
-  {
-    $this->archived = $archived;
-  }
-  /**
-   * @return bool
-   */
-  public function getArchived()
-  {
-    return $this->archived;
   }
   /**
    * @param string

@@ -19,47 +19,20 @@ namespace Google\Service\DoubleClickBidManager;
 
 class Query extends \Google\Model
 {
-  /**
-   * @var string
-   */
-  public $kind;
   protected $metadataType = QueryMetadata::class;
   protected $metadataDataType = '';
+  public $metadata;
   protected $paramsType = Parameters::class;
   protected $paramsDataType = '';
+  public $params;
   /**
    * @var string
    */
   public $queryId;
-  /**
-   * @var string
-   */
-  public $reportDataEndTimeMs;
-  /**
-   * @var string
-   */
-  public $reportDataStartTimeMs;
   protected $scheduleType = QuerySchedule::class;
   protected $scheduleDataType = '';
-  /**
-   * @var string
-   */
-  public $timezoneCode;
+  public $schedule;
 
-  /**
-   * @param string
-   */
-  public function setKind($kind)
-  {
-    $this->kind = $kind;
-  }
-  /**
-   * @return string
-   */
-  public function getKind()
-  {
-    return $this->kind;
-  }
   /**
    * @param QueryMetadata
    */
@@ -103,34 +76,6 @@ class Query extends \Google\Model
     return $this->queryId;
   }
   /**
-   * @param string
-   */
-  public function setReportDataEndTimeMs($reportDataEndTimeMs)
-  {
-    $this->reportDataEndTimeMs = $reportDataEndTimeMs;
-  }
-  /**
-   * @return string
-   */
-  public function getReportDataEndTimeMs()
-  {
-    return $this->reportDataEndTimeMs;
-  }
-  /**
-   * @param string
-   */
-  public function setReportDataStartTimeMs($reportDataStartTimeMs)
-  {
-    $this->reportDataStartTimeMs = $reportDataStartTimeMs;
-  }
-  /**
-   * @return string
-   */
-  public function getReportDataStartTimeMs()
-  {
-    return $this->reportDataStartTimeMs;
-  }
-  /**
    * @param QuerySchedule
    */
   public function setSchedule(QuerySchedule $schedule)
@@ -143,20 +88,6 @@ class Query extends \Google\Model
   public function getSchedule()
   {
     return $this->schedule;
-  }
-  /**
-   * @param string
-   */
-  public function setTimezoneCode($timezoneCode)
-  {
-    $this->timezoneCode = $timezoneCode;
-  }
-  /**
-   * @return string
-   */
-  public function getTimezoneCode()
-  {
-    return $this->timezoneCode;
   }
 }
 

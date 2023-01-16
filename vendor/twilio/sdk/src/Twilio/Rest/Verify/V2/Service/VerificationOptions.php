@@ -18,8 +18,8 @@ abstract class VerificationOptions {
      * @param string $customMessage The text of a custom message to use for the
      *                              verification
      * @param string $sendDigits The digits to send after a phone call is answered
-     * @param string $locale The locale to use for the verification SMS, WhatsApp
-     *                       or call
+     * @param string $locale The override locale to use for the verification SMS,
+     *                       WhatsApp or call
      * @param string $customCode A pre-generated code
      * @param string $amount The amount of the associated PSD2 compliant
      *                       transaction.
@@ -29,7 +29,7 @@ abstract class VerificationOptions {
      * @param array $channelConfiguration Channel specific configuration in json
      *                                    format.
      * @param string $appHash Your App Hash to be appended at the end of an SMS.
-     * @param string $templateSid The verification template SMS messages.
+     * @param string $templateSid The verification template SMS or Voice message.
      * @param string $templateCustomSubstitutions The values of the special
      *                                            variables declared on the message
      *                                            template.
@@ -46,8 +46,8 @@ class CreateVerificationOptions extends Options {
      * @param string $customMessage The text of a custom message to use for the
      *                              verification
      * @param string $sendDigits The digits to send after a phone call is answered
-     * @param string $locale The locale to use for the verification SMS, WhatsApp
-     *                       or call
+     * @param string $locale The override locale to use for the verification SMS,
+     *                       WhatsApp or call
      * @param string $customCode A pre-generated code
      * @param string $amount The amount of the associated PSD2 compliant
      *                       transaction.
@@ -57,7 +57,7 @@ class CreateVerificationOptions extends Options {
      * @param array $channelConfiguration Channel specific configuration in json
      *                                    format.
      * @param string $appHash Your App Hash to be appended at the end of an SMS.
-     * @param string $templateSid The verification template SMS messages.
+     * @param string $templateSid The verification template SMS or Voice message.
      * @param string $templateCustomSubstitutions The values of the special
      *                                            variables declared on the message
      *                                            template.
@@ -112,10 +112,10 @@ class CreateVerificationOptions extends Options {
     }
 
     /**
-     * The locale to use for the verification SMS, WhatsApp or call. Can be: `af`, `ar`, `ca`, `cs`, `da`, `de`, `el`, `en`, `en-GB`, `es`, `fi`, `fr`, `he`, `hi`, `hr`, `hu`, `id`, `it`, `ja`, `ko`, `ms`, `nb`, `nl`, `pl`, `pt`, `pr-BR`, `ro`, `ru`, `sv`, `th`, `tl`, `tr`, `vi`, `zh`, `zh-CN`, or `zh-HK.`
+     * Locale will automatically resolve based on phone number country code for SMS, WhatsApp, and call channel verifications. It will fallback to English or the template’s default translation if the selected translation is not available. This parameter will override the automatic locale resolution. [See supported languages and more information here](https://www.twilio.com/docs/verify/supported-languages).
      *
-     * @param string $locale The locale to use for the verification SMS, WhatsApp
-     *                       or call
+     * @param string $locale The override locale to use for the verification SMS,
+     *                       WhatsApp or call
      * @return $this Fluent Builder
      */
     public function setLocale(string $locale): self {
@@ -193,9 +193,9 @@ class CreateVerificationOptions extends Options {
     }
 
     /**
-     * The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS channel only.
+     * The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS and Voice channels only.
      *
-     * @param string $templateSid The verification template SMS messages.
+     * @param string $templateSid The verification template SMS or Voice message.
      * @return $this Fluent Builder
      */
     public function setTemplateSid(string $templateSid): self {

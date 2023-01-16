@@ -20,6 +20,12 @@ namespace Google\Service\AndroidManagement;
 class Command extends \Google\Collection
 {
   protected $collection_key = 'resetPasswordFlags';
+  protected $clearAppsDataParamsType = ClearAppsDataParams::class;
+  protected $clearAppsDataParamsDataType = '';
+  public $clearAppsDataParams;
+  protected $clearAppsDataStatusType = ClearAppsDataStatus::class;
+  protected $clearAppsDataStatusDataType = '';
+  public $clearAppsDataStatus;
   /**
    * @var string
    */
@@ -49,6 +55,34 @@ class Command extends \Google\Collection
    */
   public $userName;
 
+  /**
+   * @param ClearAppsDataParams
+   */
+  public function setClearAppsDataParams(ClearAppsDataParams $clearAppsDataParams)
+  {
+    $this->clearAppsDataParams = $clearAppsDataParams;
+  }
+  /**
+   * @return ClearAppsDataParams
+   */
+  public function getClearAppsDataParams()
+  {
+    return $this->clearAppsDataParams;
+  }
+  /**
+   * @param ClearAppsDataStatus
+   */
+  public function setClearAppsDataStatus(ClearAppsDataStatus $clearAppsDataStatus)
+  {
+    $this->clearAppsDataStatus = $clearAppsDataStatus;
+  }
+  /**
+   * @return ClearAppsDataStatus
+   */
+  public function getClearAppsDataStatus()
+  {
+    return $this->clearAppsDataStatus;
+  }
   /**
    * @param string
    */

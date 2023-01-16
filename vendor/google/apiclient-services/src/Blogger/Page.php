@@ -21,8 +21,10 @@ class Page extends \Google\Model
 {
   protected $authorType = PageAuthor::class;
   protected $authorDataType = '';
+  public $author;
   protected $blogType = PageBlog::class;
   protected $blogDataType = '';
+  public $blog;
   /**
    * @var string
    */
@@ -55,6 +57,10 @@ class Page extends \Google\Model
    * @var string
    */
   public $title;
+  /**
+   * @var string
+   */
+  public $trashed;
   /**
    * @var string
    */
@@ -203,6 +209,20 @@ class Page extends \Google\Model
   public function getTitle()
   {
     return $this->title;
+  }
+  /**
+   * @param string
+   */
+  public function setTrashed($trashed)
+  {
+    $this->trashed = $trashed;
+  }
+  /**
+   * @return string
+   */
+  public function getTrashed()
+  {
+    return $this->trashed;
   }
   /**
    * @param string

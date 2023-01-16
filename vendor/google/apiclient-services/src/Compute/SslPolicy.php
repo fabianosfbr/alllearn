@@ -63,9 +63,14 @@ class SslPolicy extends \Google\Collection
   /**
    * @var string
    */
+  public $region;
+  /**
+   * @var string
+   */
   public $selfLink;
   protected $warningsType = SslPolicyWarnings::class;
   protected $warningsDataType = 'array';
+  public $warnings;
 
   /**
    * @param string
@@ -206,6 +211,20 @@ class SslPolicy extends \Google\Collection
   public function getProfile()
   {
     return $this->profile;
+  }
+  /**
+   * @param string
+   */
+  public function setRegion($region)
+  {
+    $this->region = $region;
+  }
+  /**
+   * @return string
+   */
+  public function getRegion()
+  {
+    return $this->region;
   }
   /**
    * @param string

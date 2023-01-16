@@ -164,9 +164,9 @@ return [
             'description' => 'payment using paypal',
         ],
         'payping' => [
-            'apiPurchaseUrl' => 'https://api.payping.ir/v1/pay/',
-            'apiPaymentUrl' => 'https://api.payping.ir/v1/pay/gotoipg/',
-            'apiVerificationUrl' => 'https://api.payping.ir/v1/pay/verify/',
+            'apiPurchaseUrl' => 'https://api.payping.ir/v2/pay/',
+            'apiPaymentUrl' => 'https://api.payping.ir/v2/pay/gotoipg/',
+            'apiVerificationUrl' => 'https://api.payping.ir/v2/pay/verify/',
             'merchantId' => '',
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using payping',
@@ -188,7 +188,7 @@ return [
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using poolam',
         ],
-        'sadad' => [
+          'sadad' => [
             'apiPaymentByIdentityUrl' => 'https://sadad.shaparak.ir/api/v0/PaymentByIdentity/PaymentRequest',
             'apiPaymentUrl' => 'https://sadad.shaparak.ir/api/v0/Request/PaymentRequest',
             'apiPurchaseByIdentityUrl' => 'https://sadad.shaparak.ir/vpg/api/v0/Request/PaymentRequest',
@@ -209,6 +209,14 @@ return [
             'merchantId' => '',
             'callbackUrl' => '',
             'description' => 'payment using saman',
+        ],
+        'sep' => [
+            'apiGetToken' => 'https://sep.shaparak.ir/onlinepg/onlinepg',
+            'apiPaymentUrl' => 'https://sep.shaparak.ir/OnlinePG/OnlinePG',
+            'apiVerificationUrl' => 'https://sep.shaparak.ir/verifyTxnRandomSessionkey/ipg/VerifyTransaction',
+            'terminalId' => '',
+            'callbackUrl' => '',
+            'description' => 'Saman Electronic Payment for Saderat & Keshavarzi',
         ],
         'sepehr' => [
             'apiGetToken' => 'https://mabna.shaparak.ir:8081/V1/PeymentApi/GetToken',
@@ -308,7 +316,28 @@ return [
             'callbackUrl' => '',
             'merchantId' => '',
             'description' => 'payment using Vandar',
-        ]
+        ],
+        'aqayepardakht' => [
+            'apiPurchaseUrl' => 'https://panel.aqayepardakht.ir/api/v2/create',
+            'apiPaymentUrl' => 'https://panel.aqayepardakht.ir/startpay/',
+            'apiPaymentUrlSandbox' => 'https://panel.aqayepardakht.ir/startpay/sandbox/',
+            'apiVerificationUrl' => 'https://panel.aqayepardakht.ir/api/v2/verify',
+            'mode' => 'normal' , //normal | sandbox
+            'callbackUrl' => '',
+            'pin' => '',
+            'invoice_id' => '',
+            'mobile' => '',
+            'email' => '',
+            'description' => 'payment using Aqayepardakht',
+        ],
+        'azki' => [
+            'apiPaymentUrl'   => 'https://api.azkivam.com',
+            'callbackUrl'     => 'http://yoursite.com/path/to',
+            'fallbackUrl'     => 'http://yoursite.com/path/to',
+            'merchantId'      => '',
+            'key'             => '',
+            'description'     => 'payment using azki',
+        ],
     ],
 
     /*
@@ -343,6 +372,7 @@ return [
         'poolam' => \Shetabit\Multipay\Drivers\Poolam\Poolam::class,
         'sadad' => \Shetabit\Multipay\Drivers\Sadad\Sadad::class,
         'saman' => \Shetabit\Multipay\Drivers\Saman\Saman::class,
+        'sep' => \Shetabit\Multipay\Drivers\SEP\SEP::class,
         'sepehr' => \Shetabit\Multipay\Drivers\Sepehr\Sepehr::class,
         'walleta' => \Shetabit\Multipay\Drivers\Walleta\Walleta::class,
         'yekpay' => \Shetabit\Multipay\Drivers\Yekpay\Yekpay::class,
@@ -351,6 +381,8 @@ return [
         'sepordeh' => \Shetabit\Multipay\Drivers\Sepordeh\Sepordeh::class,
         'rayanpay' => \Shetabit\Multipay\Drivers\Rayanpay\Rayanpay::class,
         'sizpay' => \Shetabit\Multipay\Drivers\Sizpay\Sizpay::class,
-        'vandar' => \Shetabit\Multipay\Drivers\Vandar\Vandar::class
+        'vandar' => \Shetabit\Multipay\Drivers\Vandar\Vandar::class,
+        'aqayepardakht' => \Shetabit\Multipay\Drivers\Aqayepardakht\Aqayepardakht::class,
+        'azki' => \Shetabit\Multipay\Drivers\Azki\Azki::class,
     ]
 ];

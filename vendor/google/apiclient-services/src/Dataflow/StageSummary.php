@@ -26,8 +26,10 @@ class StageSummary extends \Google\Collection
   public $endTime;
   protected $metricsType = MetricUpdate::class;
   protected $metricsDataType = 'array';
+  public $metrics;
   protected $progressType = ProgressTimeseries::class;
   protected $progressDataType = '';
+  public $progress;
   /**
    * @var string
    */
@@ -40,6 +42,9 @@ class StageSummary extends \Google\Collection
    * @var string
    */
   public $state;
+  protected $stragglerSummaryType = StragglerSummary::class;
+  protected $stragglerSummaryDataType = '';
+  public $stragglerSummary;
 
   /**
    * @param string
@@ -124,6 +129,20 @@ class StageSummary extends \Google\Collection
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param StragglerSummary
+   */
+  public function setStragglerSummary(StragglerSummary $stragglerSummary)
+  {
+    $this->stragglerSummary = $stragglerSummary;
+  }
+  /**
+   * @return StragglerSummary
+   */
+  public function getStragglerSummary()
+  {
+    return $this->stragglerSummary;
   }
 }
 

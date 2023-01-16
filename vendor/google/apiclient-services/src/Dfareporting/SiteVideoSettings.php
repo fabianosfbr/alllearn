@@ -21,6 +21,7 @@ class SiteVideoSettings extends \Google\Model
 {
   protected $companionSettingsType = SiteCompanionSetting::class;
   protected $companionSettingsDataType = '';
+  public $companionSettings;
   /**
    * @var string
    */
@@ -31,14 +32,21 @@ class SiteVideoSettings extends \Google\Model
   public $obaEnabled;
   protected $obaSettingsType = ObaIcon::class;
   protected $obaSettingsDataType = '';
+  public $obaSettings;
   /**
    * @var string
    */
   public $orientation;
+  /**
+   * @var string
+   */
+  public $publisherSpecificationId;
   protected $skippableSettingsType = SiteSkippableSetting::class;
   protected $skippableSettingsDataType = '';
+  public $skippableSettings;
   protected $transcodeSettingsType = SiteTranscodeSetting::class;
   protected $transcodeSettingsDataType = '';
+  public $transcodeSettings;
 
   /**
    * @param SiteCompanionSetting
@@ -109,6 +117,20 @@ class SiteVideoSettings extends \Google\Model
   public function getOrientation()
   {
     return $this->orientation;
+  }
+  /**
+   * @param string
+   */
+  public function setPublisherSpecificationId($publisherSpecificationId)
+  {
+    $this->publisherSpecificationId = $publisherSpecificationId;
+  }
+  /**
+   * @return string
+   */
+  public function getPublisherSpecificationId()
+  {
+    return $this->publisherSpecificationId;
   }
   /**
    * @param SiteSkippableSetting

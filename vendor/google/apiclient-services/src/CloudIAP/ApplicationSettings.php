@@ -21,12 +21,17 @@ class ApplicationSettings extends \Google\Model
 {
   protected $accessDeniedPageSettingsType = AccessDeniedPageSettings::class;
   protected $accessDeniedPageSettingsDataType = '';
+  public $accessDeniedPageSettings;
+  protected $attributePropagationSettingsType = AttributePropagationSettings::class;
+  protected $attributePropagationSettingsDataType = '';
+  public $attributePropagationSettings;
   /**
    * @var string
    */
   public $cookieDomain;
   protected $csmSettingsType = CsmSettings::class;
   protected $csmSettingsDataType = '';
+  public $csmSettings;
 
   /**
    * @param AccessDeniedPageSettings
@@ -41,6 +46,20 @@ class ApplicationSettings extends \Google\Model
   public function getAccessDeniedPageSettings()
   {
     return $this->accessDeniedPageSettings;
+  }
+  /**
+   * @param AttributePropagationSettings
+   */
+  public function setAttributePropagationSettings(AttributePropagationSettings $attributePropagationSettings)
+  {
+    $this->attributePropagationSettings = $attributePropagationSettings;
+  }
+  /**
+   * @return AttributePropagationSettings
+   */
+  public function getAttributePropagationSettings()
+  {
+    return $this->attributePropagationSettings;
   }
   /**
    * @param string
