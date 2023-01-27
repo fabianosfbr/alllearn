@@ -122,7 +122,18 @@
                         <label class="js-organization-label font-weight-500 text-dark-blue {{ !$isOrganizationRole ? 'd-none' : '' }}">{{ trans('update.organization_extra_information') }}</label>
                         <textarea name="description" rows="6" class="form-control">{{ !empty($lastRequest) ? $lastRequest->description : old('description') }}</textarea>
                     </div>
-                    
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="term" value="1" {{ (!empty(old('term')) and old('term') == '1') ? 'checked' : '' }} class="custom-control-input @error('term') is-invalid @enderror" id="term">
+                        <label class="custom-control-label font-14" for="term">Eu li e estou de acordo com os
+                            <a href="https://drive.google.com/file/d/1WEi_W8ZGod7aq0eZmQUlmz8_JbIfTEtB/view?usp=share_link" target="_blank" class="text-secondary font-weight-bold font-14">Termos de Parceria</a>
+                        </label>
+
+                        @error('term')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
                     <div>
                         <p class="js-instructor-label font-weight-500" style="font-size: 16px">
                         <span class="font-weight-bold" style="color: red; font-size: 16px;">Atenção:</span>

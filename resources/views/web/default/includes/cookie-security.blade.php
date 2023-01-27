@@ -4,7 +4,7 @@
 
 <div class="cookie-security-dialog p-20 bg-gray rounded-lg">
     <h3 class="font-14 font-weight-bold text-white">{{ trans('update.your_privacy') }}</h3>
-    <p class="mt-5 text-white font-12">{{ trans('update.your_privacy_hint') }}</p>
+    <p class="mt-5 text-white font-12">{{ trans('update.your_privacy_hint') }} <a style="color: #FFF;" href="https://drive.google.com/file/d/1XOGyDMf1eL9gHVNj3AJmo5nE2jE6DbfD/view?usp=share_link" target="_blank" class="font-weight-bold font-14">Nossa Política de cookies</a></p>
 
     <div class="mt-10 d-flex flex-wrap align-items-center">
         <button type="button" class="js-accept-all-cookies btn btn-primary btn-sm flex-grow-1 mr-0 mr-md-5">{{ trans('update.accept_all_cookies') }}</button>
