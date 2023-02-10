@@ -166,7 +166,16 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
+                        <label class="input-label">Complemento</label>
+                        <input  id="complement" type="text" name="complement" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->complement : old('complement') }}" />
+                        @error('complement')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-2">
                         <label class="input-label">Bairro</label>
                         <input  id="neigborhood" type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ (!empty($user)) ? $user->neigborhood : old('neigborhood') }}" />
                         @error('neigborhood')
@@ -184,7 +193,7 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <label class="input-label">Estado</label>
                         <select  class="form-control @error('federal_unit')  is-invalid @enderror"" id="federal_unit" name="federal_unit"  >
                             <option value="" selected disabled hidden>Selecione</option>
