@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Accounting;
 use App\Models\BecomeInstructor;
 use App\Models\Cart;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentChannel;
@@ -16,6 +17,7 @@ use App\Models\Reward;
 use App\Models\RewardAccounting;
 use App\Models\Sale;
 use App\Models\TicketUser;
+use App\Models\Webinar;
 use App\PaymentChannels\ChannelManager;
 use App\Service\AsaasBank\Asaas;
 use Illuminate\Http\Request;
@@ -213,6 +215,20 @@ class PaymentController extends Controller
             $asaas = new Asaas(env('ASSAS_SECRET_KEY'),
             'producao');
 
+            $courses = $order->orderItems->pluck('webinar_id')->toArray();
+
+            $webinars = Webinar::whereIn('id',$courses)->get()->toArray();
+
+            $description ="\n";
+
+            foreach($webinars as $webinar){
+
+                $description .= $webinar['title'] . ",  R$ " . $webinar['price'] . "\n" ;
+
+            }
+
+
+
             // Cria um novo cliente no Assas
            if(empty($user->assas_id)){
 
@@ -223,7 +239,7 @@ class PaymentController extends Controller
                 "cpfCnpj"=> $data['docNumber'],
                 "postalCode"=> $data['zip_code'],
                 "addressNumber"=> $data['street_number'],
-                "complement"=> "",
+                "complement"=> $data['complement']??'',
                 "externalReference"=> $user->id,
                 "notificationDisabled"=> false,
             ];
@@ -239,12 +255,16 @@ class PaymentController extends Controller
 
            }
 
+
+
+          // dd($data);
             $dadosCobranca = [
             "customer" => $user->assas_id,
             "billingType"=> "BOLETO",
             "dueDate"=> "2023-03-10",
-            "value"=> 150,
-            "description"=> "Curso All Learn",
+            "installmentCount"=> $data['invoiceParcelNumber'],
+            "installmentValue" => $data['total']/$data['invoiceParcelNumber'],
+            "description"=> $description,
             "externalReference"=> "056984",
             "fine"=> [
               "value"=> 1
@@ -255,12 +275,28 @@ class PaymentController extends Controller
             "postalService"=> false
            ];
 
-          // $cobranca = $asaas->Cobranca()->create($dadosCobranca);
+          //$cobranca = $asaas->Cobranca()->create($dadosCobranca);
 
+          $invoces = $asaas->Cobranca()->getByCustomer($user->assas_id);
 
-           // dd($cobranca);
+          foreach($invoces->data as $data){
+            $user->invoice->create([
+                "date_end" => $data->dateCreated,
+                "value" => $data->value,
+                "installment_number" => $data->installment_number,
+                "code_bar" => "asdfasdfasdf",
+                "invoice_url" => $data->invoiceUrl,
+                "bank_slip_url" => $data->bankSlipUrl,
+                "description" => $data->description,
+                "fine" => $data->fine->value,
+                "interest" => $data->interest->value,
+            ]);
 
-           dd('cheguei');
+          }
+
+           dd($invoces);
+
+           //dd('cheguei');
         }
 
 

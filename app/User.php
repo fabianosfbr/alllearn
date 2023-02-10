@@ -111,6 +111,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Role', 'role_id', 'id');
     }
 
+    public function invoice()
+    {
+        return $this->belongsTo('App\Models\Invoice', 'user_id', 'id');
+    }
+
     public function getAvatar($size = 40)
     {
         if (!empty($this->avatar)) {

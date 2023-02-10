@@ -31,7 +31,7 @@
 
             {{-- Botão para pagar com saldo All Learn --}}
             <div class="col-6 col-lg-4 mb-40 charge-account-radio">
-                <input type="radio" name="payment_option" id="alllearn" value="credit" @click="showForm=true, showPaymentMethod=false, creditCardForm=false">
+                <input type="radio" name="payment_option" id="alllearn" value="credit" @click="showForm=true, showPaymentMethod=false, creditCardForm=false, invoiceForm=false">
                 <label for="alllearn" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                     <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
@@ -239,15 +239,15 @@
             <div class="form-group pt-3" x-show="showPaymentMethod">
                 <div class="mt-2 d-flex">
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="boleto" class="custom-control-input" type="radio" name="payment_type" value="boleto" @click="creditCardForm = false">
+                        <input id="boleto" class="custom-control-input" type="radio" name="payment_type" value="boleto" @click="creditCardForm = false, invoiceForm=true">
                         <label for="boleto" class="custom-control-label">Boleto</label>
                     </div>
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="pix" class="custom-control-input" type="radio" name="payment_type" value="pix" @click="creditCardForm = false">
+                        <input id="pix" class="custom-control-input" type="radio" name="payment_type" value="pix" @click="creditCardForm = false, invoiceForm=false">
                         <label for="pix" class="custom-control-label">Pix</label>
                     </div>
                     <div class="custom-control custom-radio col-lg-3">
-                        <input id="crédito" class="custom-control-input" type="radio" name="payment_type" value="cartao" @click="creditCardForm = true">
+                        <input id="crédito" class="custom-control-input" type="radio" name="payment_type" value="cartao" @click="creditCardForm = true, invoiceForm=false">
                         <label for="crédito" class="custom-control-label">Cartão de Crédito</label>
                     </div>
                 </div>
@@ -302,6 +302,33 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Pagamento com boleto --}}
+            <div class="pt-3" x-show="invoiceForm">
+                <h3 class="mb-2 mt-3">Quantidade de parcelas</h3>
+                <div>
+                    <div class="row mb-2">
+
+                        <div class="col-lg-3">
+
+                            <select name="invoiceParcelNumber" class="form-control">
+                                <option disabled selected>Selecione ...</option>
+                                @foreach ($invoiceInstallment as $parcel )
+                                <option value="{{$parcel}}">{{$parcel}} parcelas</option>
+                                @endforeach
+
+
+                            </select>
+
+                            <input type="hidden" name="total" value="{{$total}}" />
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
         </div>
         <div class=" d-flex align-items-center justify-content-between mt-45">
             <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} {{ addCurrencyToPrice($total) }}</span>
@@ -317,6 +344,7 @@
         return {
             showForm: false,
             creditCardForm: false,
+            invoiceForm: false,
             showPaymentMethod: true,
         };
 
