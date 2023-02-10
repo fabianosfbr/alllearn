@@ -17,6 +17,7 @@ use App\Models\RewardAccounting;
 use App\Models\Sale;
 use App\Models\TicketUser;
 use App\PaymentChannels\ChannelManager;
+use App\Service\AsaasBank\Asaas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\CoraBank\Credentials;
@@ -209,29 +210,64 @@ class PaymentController extends Controller
 
         if($data['payment_option'] == 'gateway' and $data['payment_type'] == 'boleto'){
 
-/*
-            $url = Credentials::getCredentials('/invoices');
-            $response = Http::withHeaders([
-                         'Authorization' =>  'Bearer ' . config('CORA_BANK_CLIENT_ID'),
-                         'Content-Type' => 'application/json'
-                     ])->post($url); */
+            $asaas = new Asaas(env('ASSAS_SECRET_KEY'),
+            'producao');
+
+            // Cria um novo cliente no Assas
+           if(empty($user->assas_id)){
+
+              $dadosCliente = [
+                "name" => $data['full_name'],
+                "email"=> $data['email'],
+                "mobilePhone"=> $data['code_zone'].$data['phone_number'],
+                "cpfCnpj"=> $data['docNumber'],
+                "postalCode"=> $data['zip_code'],
+                "addressNumber"=> $data['street_number'],
+                "complement"=> "",
+                "externalReference"=> $user->id,
+                "notificationDisabled"=> false,
+            ];
 
 
+            $cliente = $asaas->Cliente()->create($dadosCliente);
+
+            $parts = explode ("_",  $cliente->id);
+
+            $user->update([
+                'assas_id' => intval($parts[1]),
+            ]);
+
+           }
+
+            $dadosCobranca = [
+            "customer" => $user->assas_id,
+            "billingType"=> "BOLETO",
+            "dueDate"=> "2023-03-10",
+            "value"=> 150,
+            "description"=> "Curso All Learn",
+            "externalReference"=> "056984",
+            "fine"=> [
+              "value"=> 1
+            ],
+            "interest"=> [
+              "value"=> 2
+            ],
+            "postalService"=> false
+           ];
+
+          // $cobranca = $asaas->Cobranca()->create($dadosCobranca);
 
 
-            $url = Credentials::getUrl('/invoices');
+           // dd($cobranca);
 
-            $response = Http::withHeaders([
-                'Authorization' =>  'Bearer ' . config('CORA_BANK_CLIENT_ID'),
-                'Content-Type' => 'application/json'
-            ])->post($url, []);
-
-            dd($response);
+           dd('cheguei');
         }
 
-        if (isset($data['boleto']) and $data['boleto'] == 'on') {
-        }
+
     }
+
+
+
 
 
     public function makePaymentCreditCard($request)
