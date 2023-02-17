@@ -258,29 +258,28 @@
             {{-- Pagamento com cartão de crédito --}}
             <div class="pt-3" x-show="creditCardForm">
                 <h3 class="mb-2 mt-3">Detalhes do pagamento</h3>
-                <div>
+                <div class="form-group pt-3">
                     <div class="row mb-2">
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <label class="input-label" for="cardholderName">Titular do cartão</label>
-                            <input type="text" name="cardholderName" id="form-checkout__cardholderName"/>
+                            <input class="form-control" type="text" name="cardholderName" id="form-checkout__cardholderName"/>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <label class="input-label" class="input-label" for="cardNumber">Número do cartão</label>
                             <div class="d-flex align-items-center">
-                                <input type="text" name="cardNumber" id="form-checkout__cardNumber" />
+                                <input class="form-control" type="text" name="cardNumber" id="form-checkout__cardNumber" />
                                 <div class="brand mx-1"></div>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="row">
                         <div class="col-lg-2">
                             <label class="input-label" for="securityCode">Data de vencimento</label>
-                            <input type="text" name="expirationDate" id="form-checkout__expirationDate" />
+                            <input class="form-control" type="text" name="expirationDate" id="form-checkout__expirationDate" />
                         </div>
+                    </div>
+                    <div class="row">
                         <div id="issuerInput" class="col-lg-2">
                             <label class="input-label" for="issuer">Código de segurança</label>
-                            <input type="text" name="securityCode" id="form-checkout__securityCode" />
+                            <input class="form-control" type="text" name="securityCode" id="form-checkout__securityCode" />
                         </div>
 
                     </div>
@@ -353,7 +352,7 @@
                         id: 'form-checkout',
                         cardholderName: {
                             id: 'form-checkout__cardholderName',
-                            placeholder: 'Nome do titular como aparece no cartão',
+                            placeholder: 'Nome do titular como está no cartão',
                         },
                         cardholderEmail: {
                             id: 'form-checkout__cardholderEmail',
