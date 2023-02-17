@@ -17684,6 +17684,11 @@ p {
   background-color: #fff;
   border: 1px solid #f1f1f1;
 }
+
+.cardInvalid {
+  border-color: #f63c3c !important;
+}
+
 .webinar-form .table-responsive {
   overflow: visible;
 }

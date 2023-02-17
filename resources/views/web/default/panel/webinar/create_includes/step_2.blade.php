@@ -10,7 +10,7 @@
         <div>
             <p class="font-12 text-gray">- Através dela que seus compradores encontrarão seu curso com mais facilidade.</p><br>
         </div>
-            <select id="categories" class="custom-select @error('category_id')  is-invalid @enderror" name="category_id" required>
+            <select id="categories" class="custom-select @error('category_id') is-invalid @enderror" name="category_id" required>
             <option {{ (!empty($webinar) and !empty($webinar->category_id)) ? '' : 'selected' }} disabled>{{ trans('public.choose_category') }}</option>
             @foreach($categories as $category)
             @if(!empty($category->subCategories) and $category->subCategories->count() > 0)
@@ -44,7 +44,7 @@
         @if(!empty($webinarCategoryFilters) and count($webinarCategoryFilters))
         @foreach($webinarCategoryFilters as $filter)
         <div class="col-12 col-md-3">
-            <div class="webinar-category-filters">
+            <div class="webinar-category-filters @error('filters') is-invalid cardInvalid @enderror">
                 <strong class="category-filter-title d-block">{{ $filter->title }}</strong>
                 <div class="py-10"></div>
 
@@ -66,6 +66,11 @@
                 </div>
                 @endforeach
             </div>
+            @error('filters')
+                <div class="invalid-feedback">
+                    É necessário marcar os filtros
+                </div>
+            @enderror
         </div>
         @endforeach
         @endif

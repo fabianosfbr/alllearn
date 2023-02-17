@@ -293,6 +293,7 @@ class WebinarController extends Controller
             'thumbnail' => 'required',
             'image_cover' => 'required',
             'description' => 'required',
+
         ];
 
         $this->validate($request, $rules);
@@ -541,6 +542,8 @@ class WebinarController extends Controller
                 'category_id' => 'required',
                 'duration' => 'required',
                 'partners' => 'required_if:partner_instructor,on',
+                'filters' => 'required'
+
             ];
 
             if ($webinar->isWebinar()) {
