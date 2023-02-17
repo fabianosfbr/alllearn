@@ -39,7 +39,7 @@ class PaymentController extends Controller
     {
 
 
-
+        dd($request->all());
         $rules = [
             'payment_option' => 'required|in:gateway,credit',
             'payment_type' => 'required_if:payment_option,gateway',

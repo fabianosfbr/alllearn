@@ -7,10 +7,10 @@
     <span class="payment-hint font-20 text-white d-block">{{$currency . $total . ' ' .  trans('cart.for_items',['count' => $count]) }}</span>
 </section>
 
-<section x-data="init()" class="container mt-45">
+<section x-data="payment()" class="container mt-45" x-init="mpOptions">
     <h2 class="section-title">{{ trans('financial.select_a_payment_gateway') }}</h2>
 
-    <form action="/payments/payment-request" method="post" id="paymentForm" class=" mt-25">
+    <form action="/payments/payment-request" method="post" id="form-checkout" class=" mt-25">
         {{ csrf_field() }}
         <input type="hidden" name="order_id" value="{{ $order->id }}">
 
@@ -75,22 +75,23 @@
 
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-4">
-                        <label class="input-label" for="docType">Tipo de documento</label>
-                        <select class="form-control" id="docType" name="docType" data-checkout="docType" type="text" value="{{ (!empty($user)) ? $user->docType : old('docType') }}"></select>
-                        @error('docType')
+                        <label class="input-label" for="form-checkout__identificationType">Tipo de documento</label>
+
+                        <select name="identificationType" id="form-checkout__identificationType" class="form-control"></select>
+
+                        @error('identificationType')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
                     <div class="col-lg-4">
-                        <label class="input-label" for="docNumber">Número do documento</label>
-                        <input class="form-control @error('docNumber')  is-invalid @enderror"" id="docNumber" name="docNumber" data-checkout="docNumber" type="text" value="{{ (!empty($user)) ? $user->docNumber : old('docNumber') }}" />
-                        @error('docNumber')
+                        <label class="input-label" for="form-checkout__identificationNumber">Número do documento</label>
+                        <input type="text" name="identificationNumber" id="form-checkout__identificationNumber" class="form-control"/>
+                        @error('identificationNumber')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
@@ -98,12 +99,14 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-8">
                         <label class="input-label" for="email">E-mail</label>
-                        <input class="form-control @error('email')  is-invalid @enderror" id="email" name="email" type="text" value="{{ (!empty($user)) ? $user->email : old('email') }}"  />
-                        @error('email')
+                        <input type="email" class="form-control @error('cardholderEmail') value="{{ (!empty($user)) ? $user->email : old('cardholderEmail') }}"  is-invalid @enderror" name="cardholderEmail" id="form-checkout__cardholderEmail"/>
+                        @error('cardholderEmail')
                         <div class="invalid-feedback d-flex">
                             {{ $message }}
                         </div>
@@ -257,49 +260,39 @@
                 <h3 class="mb-2 mt-3">Detalhes do pagamento</h3>
                 <div>
                     <div class="row mb-2">
-                        <div class="col-lg-3">
+                        <div class="col-lg-6">
                             <label class="input-label" for="cardholderName">Titular do cartão</label>
-                            <input class="form-control" id="cardholderName" data-checkout="cardholderName" type="text">
+                            <input type="text" name="cardholderName" id="form-checkout__cardholderName"/>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-6">
                             <label class="input-label" class="input-label" for="cardNumber">Número do cartão</label>
                             <div class="d-flex align-items-center">
-                                <input class="form-control" type="text" id="cardNumber" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                                <input type="text" name="cardNumber" id="form-checkout__cardNumber" />
                                 <div class="brand mx-1"></div>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <label class="input-label" for="">Data de vencimento</label>
-                            <div class="d-flex align-items-center">
-                                <input class="form-control" type="text" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
-                                <span class="date-separator p-1">/</span>
-                                <input class="form-control" type="text" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
-                            </div>
-                        </div>
-                    </div>
 
+                    </div>
                     <div class="row">
                         <div class="col-lg-2">
-                            <label class="input-label" for="securityCode">Código de segurança</label>
-                            <input class="form-control" id="securityCode" data-checkout="securityCode" type="text" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off>
+                            <label class="input-label" for="securityCode">Data de vencimento</label>
+                            <input type="text" name="expirationDate" id="form-checkout__expirationDate" />
                         </div>
                         <div id="issuerInput" class="col-lg-2">
-                            <label class="input-label" for="issuer">Banco emissor</label>
-                            <select class="form-control" id="issuer" name="issuer" data-checkout="issuer"></select>
+                            <label class="input-label" for="issuer">Código de segurança</label>
+                            <input type="text" name="securityCode" id="form-checkout__securityCode" />
                         </div>
-                        <div id="installments_number" class="col-lg-4 d-none">
-                            <label class="input-label" for="installments">Parcelas</label>
-                            <select class="form-control" type="text" id="installments" name="installments"></select>
-                        </div>
+
                     </div>
-                    <div>
-                        <input type="hidden" name="creditCardForm" id="creditCardForm" x-model="creditCardForm" />
-                        <input type="hidden" name="transactionAmount" id="transactionAmount" value="{{$total}}" />
-                        <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
-                        <input type="hidden" name="description" id="description" />
-                        <input type="hidden" name="creditCardInstallment" id="creditCardInstallment" value="{{$creditCardInstallment}}" />
-                        <br>
-                    </div>
+
+                    <select id="form-checkout__installments" name="installments" x-show='showInstallments'></select>
+
+
+                    <select name="issuer" id="form-checkout__issuer" x-show='false'></select>
+
+
+
+
                 </div>
             </div>
 
@@ -340,12 +333,146 @@
 </section>
 
 <script>
-    function init() {
+    function payment() {
         return {
             showForm: false,
             creditCardForm: false,
             invoiceForm: false,
             showPaymentMethod: true,
+            showInstallments: false,
+            mpOptions() {
+                const mp = new MercadoPago('{{ env('MERCADO_PAGO_ACCESS_TOKEN') }}', {
+                    locale: 'pt-BR'
+                });
+
+                const cardForm = mp.cardForm({
+                    amount: '{{$total}}',
+                    autoMount: true,
+                    processingMode: 'aggregator',
+                    form: {
+                        id: 'form-checkout',
+                        cardholderName: {
+                            id: 'form-checkout__cardholderName',
+                            placeholder: 'Nome do titular como aparece no cartão',
+                        },
+                        cardholderEmail: {
+                            id: 'form-checkout__cardholderEmail',
+                            placeholder: 'E-mail',
+                        },
+                        cardNumber: {
+                            id: 'form-checkout__cardNumber',
+                            placeholder: 'Número do cartão',
+                        },
+                        expirationDate: {
+                            id: 'form-checkout__expirationDate',
+                            placeholder: 'MM/YY'
+                        },
+                        securityCode: {
+                            id: 'form-checkout__securityCode',
+                            placeholder: 'CVV',
+                        },
+                        installments: {
+                            id: 'form-checkout__installments',
+                            placeholder: 'Parcelas'
+                        },
+                        identificationType: {
+                            id: 'form-checkout__identificationType',
+                            placeholder: 'Tipo de documento'
+                        },
+                        identificationNumber: {
+                            id: 'form-checkout__identificationNumber',
+                            placeholder: 'Número do documento'
+                        },
+                        issuer: {
+                            id: 'form-checkout__issuer',
+                            placeholder: 'Banco'
+                        }
+                    },
+                    callbacks: {
+                        onFormMounted: error => {
+                            if (error) return console.warn('Form Mounted handling error: ', error)
+                           // console.log('Form mounted')
+                        },
+                        onFormUnmounted: error => {
+                            if (error) return console.warn('Form Unmounted handling error: ', error)
+                          //  console.log('Form unmounted')
+                        },
+                        onIdentificationTypesReceived: (error, identificationTypes) => {
+                            if (error) return console.warn('identificationTypes handling error: ', error)
+                          //  console.log('Identification types available: ', identificationTypes)
+                        },
+                        onPaymentMethodsReceived: (error, paymentMethods) => {
+                            if (error) return console.warn('paymentMethods handling error: ', error)
+                           // console.log('Payment Methods available: ', paymentMethods)
+                           document.querySelector('.brand').innerHTML = "<img src='" + paymentMethods[0].thumbnail + "' alt='bandeira do cartão'>";
+                        },
+                        onIssuersReceived: (error, issuers) => {
+                            if (error) return console.warn('issuers handling error: ', error)
+                           // console.log('Issuers available: ', issuers)
+                        },
+                        onInstallmentsReceived: (error, installments) => {
+                            if (error) return console.warn('installments handling error: ', error)
+
+                            const installmentOptions = installments.payer_costs;
+                            document.getElementById('form-checkout__installments').options.length = 0;
+
+                            let maxInstallments = {{$creditCardInstallment}};
+                            for (let i = 0; i < maxInstallments; i++) {
+                                let opt = document.createElement('option');
+                                opt.text = installmentOptions[i].recommended_message;
+                                opt.value = installmentOptions[i].installments;
+                                document.getElementById('form-checkout__installments').appendChild(opt);
+                            }
+
+                            this.showInstallments = true;
+
+
+                            //console.log('Installments available: ', installments.payer_costs)
+                        },
+                        onCardTokenReceived: (error, token) => {
+                            if (error) return console.warn('Token handling error: ', error)
+                            console.log('Token available: ', token)
+                        },
+                        onSubmit: (event) => {
+                           event.preventDefault();
+                            const cardData = cardForm.getCardFormData();
+                           // console.log('CardForm data available: ', cardData)
+                            this.submitionCreditCardForm();
+                        },
+                        onFetching:(resource) => {
+                            /* console.log('Fetching resource: ', resource)
+
+                            // Animate progress bar
+                            const progressBar = document.querySelector('.progress-bar')
+                            progressBar.removeAttribute('value')
+
+                            return () => {
+                                progressBar.setAttribute('value', '0')
+                            }
+                            */
+                        },
+                        onError: (error, event) => {
+                            console.log(event, error);
+                        },
+                        onValidityChange: (error, field) => {
+
+                            if (error) return error.forEach(e => console.log(`${field}: ${e.message}`));
+                            console.log(`${field} is valid`);
+                        },
+                        onReady: () => {
+                          //  console.log("CardForm ready");
+                        }
+                    }
+                })
+
+            },
+
+            submitionCreditCardForm(){
+                let form = document.getElementById('form-checkout');
+                doSubmit = true;
+                form.submit();
+            },
+
         };
 
     }
@@ -354,10 +481,9 @@
 @endsection
 
 @push('scripts_bottom')
-<script src="/assets/default/js/payment.js"></script>
-<script src="/assets/default/js/mercado-pago.js"></script>
+
 <script src="/assets/default/js/busca-cep.js"></script>
-<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <!-- <script src="/assets/default/js/parts/payment.min.js"></script> -->
 @endpush
