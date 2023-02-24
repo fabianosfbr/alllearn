@@ -320,36 +320,14 @@
                         <select name="issuer" id="form-checkout__issuer" x-show='false'></select>
                     </div>
                 </div>
-
-                {{-- Pagamento com boleto --}}
-                <div class="pt-3" x-show="invoiceForm">
-                    <h3 class="mb-2 mt-3">Quantidade de parcelas</h3>
-                    <div>
-                        <div class="row mb-2">
-                            <div class="col-lg-3">
-                                <select name="invoiceParcelNumber" class="form-control">
-                                    <option disabled selected>Selecione ...</option>
-                                    @foreach ($invoiceInstallment as $k => $parcel)
-                                        <option value="{{ $parcel }}">{{ $parcel }}
-                                            {{ $parcel > 1 ? 'parcelas' : 'parcela' }} de R$
-                                            {{ handlePriceFormat($total / $parcel, 2, ',', '.') }} - (R$
-                                            {{ handlePriceFormat($total, 2, ',', '.') }})</option>
-                                    @endforeach
-                                </select>
-
-                                <input type="hidden" name="total" value="{{ $total }}" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class=" d-flex align-items-center justify-content-between mt-45">
                 <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} R$
                     {{ handlePriceFormat($total, 2, ',', '.') }}</span>
                 <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
             </div>
-
         </form>
+
         <form x-show="showForm == 1" action="/payments/payment-request-invoice" method="post" id="form-invoce" class=" mt-25">
             {{ csrf_field() }}
             <input type="hidden" name="order_id" value="{{ $order->id }}">
@@ -614,21 +592,9 @@
                                 <input class="form-control" type="text" name="securityCode"
                                     id="form-checkout__securityCode" />
                             </div>
-                            <div class="col-lg-3" x-show='showInstallments'>
-                                <label class="input-label" for="installments">Quantidade de parcelas</label>
-                                <select class="form-control" id="form-checkout__installments"
-                                    name="installments"></select>
-                            </div>
-
                         </div>
 
-
-
-                        <select name="issuer" id="form-checkout__issuer" x-show='false'></select>
-
-
-
-
+                       <select name="issuer" id="form-checkout__issuer" x-show='false'></select>
                     </div>
                 </div>
 
