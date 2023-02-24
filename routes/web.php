@@ -163,6 +163,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['check_mobile_app', 'impers
 
     Route::group(['prefix' => 'payments'], function () {
         Route::post('/payment-request', 'PaymentController@paymentRequest')->name('payment-request');
+        Route::post('/payment-request-creditcard', 'PaymentController@paymentRequestCreditCard')->name('payment-request-creditcard');
         Route::get('/verify/{gateway}', ['as' => 'payment_verify', 'uses' => 'PaymentController@paymentVerify']);
         Route::post('/verify/{gateway}', ['as' => 'payment_verify_post', 'uses' => 'PaymentController@paymentVerify']);
         Route::get('/status', 'PaymentController@payStatus');
