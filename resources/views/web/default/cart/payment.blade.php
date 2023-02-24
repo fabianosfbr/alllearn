@@ -63,7 +63,7 @@
 
 
 
-        <form x-show="showForm == 2" action="/payments/payment-request" method="post" id="form-credicard" class=" mt-25">
+        <form x-show="showForm == 2" action="/payments/payment-request-credicard" method="post" id="form-credicard" class=" mt-25">
             {{ csrf_field() }}
             <input type="hidden" name="order_id" value="{{ $order->id }}">
 
@@ -280,29 +280,8 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- Dados do pagamento --}}
-                <div class="form-group pt-3" x-show="showPaymentMethod">
-                    <div class="mt-2 d-flex">
-                        <div class="custom-control custom-radio col-lg-3">
-                            <input id="boleto" class="custom-control-input" type="radio" name="payment_type"
-                                value="boleto" @click="creditCardForm = false, invoiceForm=true">
-                            <label for="boleto" class="custom-control-label">Boleto</label>
-                        </div>
-                        <div class="custom-control custom-radio col-lg-3">
-                            <input id="pix" class="custom-control-input" type="radio" name="payment_type"
-                                value="pix" @click="creditCardForm = false, invoiceForm=false">
-                            <label for="pix" class="custom-control-label">Pix</label>
-                        </div>
-                        <div class="custom-control custom-radio col-lg-3">
-                            <input id="crédito" class="custom-control-input" type="radio" name="payment_type"
-                                value="cartao" @click="creditCardForm = true, invoiceForm=false">
-                            <label for="crédito" class="custom-control-label">Cartão de Crédito</label>
-                        </div>
-                    </div>
-                </div>
                 {{-- Pagamento com cartão de crédito --}}
-                <div class="pt-3" x-show="creditCardForm">
+                <div class="pt-3">
                     <h3 class="mb-2 mt-3">Detalhes do pagamento</h3>
                     <div class="form-group pt-3">
                         <div class="row mb-3">
