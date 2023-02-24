@@ -228,6 +228,7 @@ class PaymentController extends Controller
             $asaas = new Asaas(env('ASSAS_SECRET_KEY'),
             'producao');
 
+            dd($request->all);
             $courses = $order->orderItems->pluck('webinar_id')->toArray();
 
             $webinars = Webinar::whereIn('id',$courses)->get()->toArray();
