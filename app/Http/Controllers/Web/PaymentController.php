@@ -156,16 +156,16 @@ class PaymentController extends Controller
                 'payment_method' => 'payment_channel'
             ]);
 
-            dump($request->all());
+           // dump($request->all());
 
             $description = $this->getDescriptionCourse($order);
 
             // Mercado
-            $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
+            $access_token = env('MERCADO_PAGO_ACCESS_TOKEN_ID');
+
             Mercado::setAccessToken($access_token);
 
             $payment = new MercadoPayment();
-
 
 
             $payment->transaction_amount = $data['MPHiddenInputAmount'];
@@ -184,22 +184,23 @@ class PaymentController extends Controller
 
             $payment->payer = $payer;
 
-
             $payment->save();
 
-            dd($payment->status);
-
             if ($payment->status !== "approved") {
+               // dd($payment->status);
                 $order->update([
                     'status' => Order::$fail,
                     'payment_data' => serialize($payment),
                 ]);
+
+
                 $toastData = [
                     'title' => "Erro",
                     'msg' => "Erro ao processar pagamento, consulte a administradora do cartão de crédito",
                     'status' => 'error'
                 ];
                 return back()->with(['toast' => $toastData]);
+
             } elseif ($payment->status == "approved") {
                 // dd("aprovado");
                 $this->setPaymentAccounting($order);

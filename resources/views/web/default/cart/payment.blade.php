@@ -302,11 +302,13 @@
                     <div class="row mb-2">
 
                         <div class="col-lg-3">
+                            @php
 
+                            @endphp
                             <select name="invoiceParcelNumber" class="form-control">
                                 <option disabled selected>Selecione ...</option>
-                                @foreach ($invoiceInstallment as $parcel )
-                                <option value="{{$parcel}}">{{$parcel}} parcelas</option>
+                                @foreach ($invoiceInstallment as $k=> $parcel )
+                                <option value="{{$parcel}}">{{$parcel}} {{$parcel > 1 ? 'parcelas' : 'parcela'}} de  R$ {{handlePriceFormat(($total/$parcel), 2, ',', '.')}} - (R$ {{ handlePriceFormat($total, 2, ',', '.') }})</option>
                                 @endforeach
 
 
@@ -340,7 +342,7 @@
             showPaymentMethod: true,
             showInstallments: false,
             mpOptions() {
-                const mp = new MercadoPago('{{ env('MERCADO_PAGO_ACCESS_TOKEN') }}', {
+                const mp = new MercadoPago('{{ env('MERCADO_PAGO_PUBLIC_KEY') }}', {
                     locale: 'pt-BR'
                 });
 
@@ -429,13 +431,24 @@
                             //console.log('Installments available: ', installments.payer_costs)
                         },
                         onCardTokenReceived: (error, token) => {
-                            if (error) return console.warn('Token handling error: ', error)
-                            console.log('Token available: ', token)
+                            if (error) {
+                                $.toast({
+                                        heading: 'Ops, tivemos um problema',
+                                        text: 'Verifique os dados do cartão',
+                                        position: 'top-right',
+                                        icon: 'error'
+                                    });
+                                //console.log('Token available: ', token)
+                                return ;
+                            }
+
                         },
                         onSubmit: (event) => {
                            event.preventDefault();
                             const cardData = cardForm.getCardFormData();
-                           // console.log('CardForm data available: ', cardData)
+
+
+                           //console.log('CardForm data available: ', cardData)
                             this.submitionCreditCardForm();
                         },
                         onFetching:(resource) => {
@@ -454,8 +467,31 @@
                             console.log(event, error);
                         },
                         onValidityChange: (error, field) => {
+                            if(error){
+                                if(field == 'cardholderName'){
+                                    $.toast({
+                                        heading: 'Ops, tivemos um problema',
+                                        text: 'Verifique o nome do titular do cartão',
+                                        position: 'top-right',
+                                        icon: 'error'
+                                    });
+                                }
 
-                            if (error) return error.forEach(e => console.log(`${field}: ${e.message}`));
+                                if(field == 'cardNumber'){
+                                    $.toast({
+                                        heading: 'Ops, tivemos um problema',
+                                        text: 'Verifique o número do cartão',
+                                        position: 'top-right',
+                                        icon: 'error'
+                                    });
+                                }
+
+
+                            }
+
+                            if (error) return error.forEach(
+                                e => console.log(`${field}: ${e.message}`)
+                                );
                             console.log(`${field} is valid`);
                         },
                         onReady: () => {
