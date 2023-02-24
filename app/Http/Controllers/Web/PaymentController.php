@@ -39,15 +39,15 @@ class PaymentController extends Controller
     {
 
 
-        dd($request->all());
+
         $rules = [
             'payment_option' => 'required|in:gateway,credit',
             'payment_type' => 'required_if:payment_option,gateway',
             'order_id' => 'required',
             'full_name' => 'required',
-            'docType' => 'required',
-            'docNumber' => 'required',
-            'email' => 'required',
+            'identificationType' => 'required',
+            'identificationNumber' => 'required',
+            'cardholderEmail' => 'required',
             'code_zone' => 'required',
             'phone_number' => 'required',
             'zip_code' => 'required',
@@ -63,9 +63,9 @@ class PaymentController extends Controller
         $errorMessages = [
             'payment_option.required' => 'Você deve selecionar a forma de pagamento',
             'full_name.required' => 'O nome é obrigatório.',
-            'docType.required' => 'O tipo de documento é obrigatório.',
-            'docNumber.required' => 'O número do documento é obrigatório.',
-            'email.required' => 'O email é obrigatório.',
+            'identificationType.required' => 'O tipo de documento é obrigatório.',
+            'identificationNumber.required' => 'O número do documento é obrigatório.',
+            'cardholderEmail.required' => 'O email é obrigatório.',
             'code_zone.required' => 'O DDD é obrigatório.',
             'phone_number.required' => 'O número de telefone é obrigatório.',
             'zip_code.required' => 'O CEP é obrigatório.',
@@ -81,7 +81,7 @@ class PaymentController extends Controller
 
         ];
 
-
+       // dd($request->all());
 
 
         $dataValidate = $this->validate($request, $rules, $errorMessages);
@@ -95,6 +95,8 @@ class PaymentController extends Controller
             ->where('user_id', $user->id)
             ->first();
 
+
+
         if ($order->type === Order::$meeting) {
             $orderItem = OrderItem::where('order_id', $order->id)->first();
             $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
@@ -104,10 +106,10 @@ class PaymentController extends Controller
 
         $user->update([
             'full_name' => $dataValidate['full_name'],
-            'docType' => $dataValidate['docType'],
-            'docNumber' => $dataValidate['docNumber'],
-            'email' => $dataValidate['email'],
-            'code_zone' => $dataValidate['code_zone'],
+            'docType' => $dataValidate['identificationType'],
+            'docNumber' => $dataValidate['identificationNumber'],
+            'email' => $dataValidate['cardholderEmail'],
+            'mobile_code_area' => $dataValidate['code_zone'],
             'mobile' => $dataValidate['phone_number'],
             'zip_code' => $dataValidate['zip_code'],
             'street_name' => $dataValidate['street_name'],
@@ -154,28 +156,38 @@ class PaymentController extends Controller
                 'payment_method' => 'payment_channel'
             ]);
 
+            dump($request->all());
+
+            $description = $this->getDescriptionCourse($order);
+
             // Mercado
             $access_token = env('MERCADO_PAGO_ACCESS_TOKEN');
             Mercado::setAccessToken($access_token);
 
             $payment = new MercadoPayment();
 
-            $payment->transaction_amount = $data['transactionAmount'];
-            $payment->token = $data['token'];
-            $payment->description = "Curso All Learn";
+
+
+            $payment->transaction_amount = $data['MPHiddenInputAmount'];
+            $payment->token = $data['MPHiddenInputToken'];
+            $payment->description = trim($description);
             $payment->installments = $data['installments'];
-            $payment->payment_method_id = $data['paymentMethodId'];
+            $payment->payment_method_id = $data['MPHiddenInputPaymentMethod'];
+
 
             $payer = new MercadoPagoPayer();
-            $payer->email = $data['email'];
+            $payer->email = $data['cardholderEmail'];
             $payer->identification = array(
-                "type" => $data['docType'],
-                "number" => $data['docNumber']
+                "type" => $data['identificationType'],
+                "number" => $data['identificationNumber']
             );
 
             $payment->payer = $payer;
+
+
             $payment->save();
 
+            dd($payment->status);
 
             if ($payment->status !== "approved") {
                 $order->update([
@@ -300,6 +312,25 @@ class PaymentController extends Controller
         }
 
 
+    }
+
+
+    private function getDescriptionCourse($order)
+    {
+
+        $courses = $order->orderItems->pluck('webinar_id')->toArray();
+
+        $webinars = Webinar::whereIn('id',$courses)->get()->toArray();
+
+        $description ="\n";
+
+        foreach($webinars as $webinar){
+
+            $description .= $webinar['title'] . ",  R$ " . $webinar['price'] . "\n" ;
+
+        }
+
+        return $description;
     }
 
 
