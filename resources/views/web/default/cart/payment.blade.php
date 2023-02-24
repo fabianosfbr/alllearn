@@ -402,7 +402,7 @@
                         },
                         onPaymentMethodsReceived: (error, paymentMethods) => {
                             if (error) return console.warn('paymentMethods handling error: ', error)
-                           // console.log('Payment Methods available: ', paymentMethods)
+                           console.log('Payment Methods available: ', paymentMethods)
                            document.querySelector('.brand').innerHTML = "<img src='" + paymentMethods[0].thumbnail + "' alt='bandeira do cartão'>";
                         },
                         onIssuersReceived: (error, issuers) => {
