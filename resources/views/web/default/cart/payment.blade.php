@@ -8,8 +8,8 @@
             class="payment-hint font-20 text-white d-block">{{ $currency . $total . ' ' . trans('cart.for_items', ['count' => $count]) }}</span>
     </section>
 
-    <section x-data="payment()" class="container mt-45" x-init="mpOptions">
-        <h2 class="section-title">{{ trans('financial.select_a_payment_gateway') }}</h2>
+    <section x-data="payment()" class="container mt-45">
+        <h2 class="section-title mb-2">{{ trans('financial.select_a_payment_gateway') }}</h2>
 
 
         <div class="row">
@@ -19,11 +19,10 @@
                     @click="showForm=1, showPaymentMethod=true">
                 <label for="gateway"
                     class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
-                    <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
-
+                    <img src="/assets/default/img/activity/invoice.svg" width="120" height="60" alt="">
                     <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
                     <div class="text-center">Pagar com</div>
-                    <span class="font-weight-bold">Boleto</span>
+                    <span class="font-weight-bold">Boleto/Pix</span>
                     </p>
                 </label>
             </div>
@@ -38,7 +37,7 @@
 
                 <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
                 <div class="text-center">Pagar com</div>
-                <span class="font-weight-bold">Cartão</span>
+                <span class="font-weight-bold">Cartão de Crédito</span>
                 </p>
             </label>
         </div>
@@ -63,7 +62,7 @@
 
 
 
-        <form x-show="showForm == 2" action="/payments/payment-request-credicard" method="post" id="form-credicard" class=" mt-25">
+        <form x-show="showForm == 2" x-init="mpOptions" action="/payments/payment-request-credicard" method="post" id="form-credicard" class=" mt-25">
             {{ csrf_field() }}
             <input type="hidden" name="order_id" value="{{ $order->id }}">
 
@@ -80,7 +79,7 @@
 
             <div class="col-12" x-show="showForm">
                 {{-- Dados do comprador --}}
-                <h3>Dados do comprador cartão</h3>
+                <h3>Dados do comprador</h3>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-8">
@@ -318,35 +317,7 @@
 
                         </div>
 
-
-
                         <select name="issuer" id="form-checkout__issuer" x-show='false'></select>
-
-
-
-
-                    </div>
-                </div>
-
-                {{-- Pagamento com boleto --}}
-                <div class="pt-3" x-show="invoiceForm">
-                    <h3 class="mb-2 mt-3">Quantidade de parcelas</h3>
-                    <div>
-                        <div class="row mb-2">
-                            <div class="col-lg-3">
-                                <select name="invoiceParcelNumber" class="form-control">
-                                    <option disabled selected>Selecione ...</option>
-                                    @foreach ($invoiceInstallment as $k => $parcel)
-                                        <option value="{{ $parcel }}">{{ $parcel }}
-                                            {{ $parcel > 1 ? 'parcelas' : 'parcela' }} de R$
-                                            {{ handlePriceFormat($total / $parcel, 2, ',', '.') }} - (R$
-                                            {{ handlePriceFormat($total, 2, ',', '.') }})</option>
-                                    @endforeach
-                                </select>
-
-                                <input type="hidden" name="total" value="{{ $total }}" />
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -355,9 +326,9 @@
                     {{ handlePriceFormat($total, 2, ',', '.') }}</span>
                 <button type="submit" id="paymentSubmit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
             </div>
-
         </form>
-        <form x-show="showForm == 1" action="/payments/payment-request" method="post" id="form-invoce" class=" mt-25">
+
+        <form x-show="showForm == 1" action="/payments/payment-request-invoice" method="post" id="form-invoce" class=" mt-25">
             {{ csrf_field() }}
             <input type="hidden" name="order_id" value="{{ $order->id }}">
 
@@ -374,7 +345,7 @@
 
             <div class="col-12">
                 {{-- Dados do comprador --}}
-                <h3>Dados do comprador boleto</h3>
+                <h3>Dados do comprador</h3>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-8">
@@ -589,11 +560,6 @@
                                 value="pix" @click="creditCardForm = false, invoiceForm=false">
                             <label for="pix" class="custom-control-label">Pix</label>
                         </div>
-                        <div class="custom-control custom-radio col-lg-3">
-                            <input id="crédito" class="custom-control-input" type="radio" name="payment_type"
-                                value="cartao" @click="creditCardForm = true, invoiceForm=false">
-                            <label for="crédito" class="custom-control-label">Cartão de Crédito</label>
-                        </div>
                     </div>
                 </div>
                 {{-- Pagamento com cartão de crédito --}}
@@ -626,21 +592,9 @@
                                 <input class="form-control" type="text" name="securityCode"
                                     id="form-checkout__securityCode" />
                             </div>
-                            <div class="col-lg-3" x-show='showInstallments'>
-                                <label class="input-label" for="installments">Quantidade de parcelas</label>
-                                <select class="form-control" id="form-checkout__installments"
-                                    name="installments"></select>
-                            </div>
-
                         </div>
 
-
-
-                        <select name="issuer" id="form-checkout__issuer" x-show='false'></select>
-
-
-
-
+                       <select name="issuer" id="form-checkout__issuer" x-show='false'></select>
                     </div>
                 </div>
 
@@ -674,7 +628,7 @@
 
         </form>
 
-        <form x-show="showForm == 3" action="/payments/payment-request" method="post" id="form-creditAllLearn"
+        <form x-show="showForm == 3" action="/payments/payment-request-creditalllearn" method="post" id="form-creditAllLearn"
             class=" mt-25">
             {{ csrf_field() }}
             <input type="hidden" name="order_id" value="{{ $order->id }}">
@@ -692,7 +646,7 @@
 
             <div class="col-12" x-show="showForm">
                 {{-- Dados do comprador --}}
-                <h3>Dados do comprador crédito all learn</h3>
+                <h3>Dados do comprador</h3>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-lg-8">
