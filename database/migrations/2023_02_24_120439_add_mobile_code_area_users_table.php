@@ -14,7 +14,7 @@ class AddMobileCodeAreaUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('mobile_code_area', 5)->nullable()->after('organ_id');
+           // $table->string('mobile_code_area', 5)->nullable()->after('organ_id');
 
         });
     }

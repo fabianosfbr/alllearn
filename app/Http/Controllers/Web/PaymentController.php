@@ -224,7 +224,7 @@ class PaymentController extends Controller
 
         ];
 
-        // dd($request->all());
+
 
 
         $dataValidate = $this->validate($request, $rules, $errorMessages);
@@ -265,14 +265,25 @@ class PaymentController extends Controller
 
 
 
+       $clients =  Http::withHeaders([
+            'access_token' =>  env('ASSAS_SECRET_KEY'),
+            'Content-Type' => 'application/json'
+       ])->get('https://www.asaas.com/api/v3/customers');
+
+
+       dd($clients);
+
         $asaas = new Asaas(
             env('ASSAS_SECRET_KEY'),
             'producao'
         );
 
-        dump('invoice');
 
-        dd($asaas->MinhaConta()->get());
+
+
+        $clientes = $asaas->Cliente()->getById(50036522);
+
+        dd($clientes);
 
 
         $description = $this->getDescriptionCourse($order);
