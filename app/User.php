@@ -19,6 +19,7 @@ use App\Models\ReserveMeeting;
 use App\Models\RewardAccounting;
 use App\Models\Role;
 use App\Models\Follow;
+use App\Models\Invoice;
 use App\Models\Sale;
 use App\Models\Section;
 use App\Models\Webinar;
@@ -111,9 +112,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Role', 'role_id', 'id');
     }
 
-    public function invoice()
+    public function invoices()
     {
-        return $this->belongsTo('App\Models\Invoice', 'user_id', 'id');
+
+        return $this->hasMany('App\Models\Invoice', 'user_id', 'id');
     }
 
     public function getAvatar($size = 40)

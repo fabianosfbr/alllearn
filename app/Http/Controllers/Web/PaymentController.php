@@ -265,25 +265,10 @@ class PaymentController extends Controller
 
 
 
-       $clients =  Http::withHeaders([
-            'access_token' =>  env('ASSAS_SECRET_KEY'),
-            'Content-Type' => 'application/json'
-       ])->get('https://www.asaas.com/api/v3/customers');
-
-
-       dd($clients);
-
         $asaas = new Asaas(
             env('ASSAS_SECRET_KEY'),
             'producao'
         );
-
-
-
-
-        $clientes = $asaas->Cliente()->getById(50036522);
-
-        dd($clientes);
 
 
         $description = $this->getDescriptionCourse($order);
@@ -305,7 +290,7 @@ class PaymentController extends Controller
 
 
             $cliente = $asaas->Cliente()->create($dadosCliente);
-            dd($cliente);
+
             $parts = explode("_",  $cliente->id);
 
             $user->update([
@@ -331,25 +316,41 @@ class PaymentController extends Controller
             "postalService" => false
         ];
 
-        $cobranca = $asaas->Cobranca()->create($dadosCobranca);
+        $asaas->Cobranca()->create($dadosCobranca);
 
-        $invoces = $asaas->Cobranca()->getByCustomer($user->assas_id);
+        $invoices = $asaas->Cobranca()->getByCustomer($user->assas_id);
 
-        foreach ($invoces->data as $data) {
-            $user->invoice->create([
+        foreach ($invoices->data as $data) {
+           $infoBoleto = $asaas->Cobranca()->getInfoBoleto($data->id);
+            $params = [
                 "date_end" => $data->dateCreated,
+                "payment_id" => $data->id,
                 "value" => $data->value,
-                "installment_number" => $data->installment_number,
-                "code_bar" => "asdfasdfasdf",
+                "installment_number" => $data->installmentNumber,
                 "invoice_url" => $data->invoiceUrl,
                 "bank_slip_url" => $data->bankSlipUrl,
+                "code_bar" => $infoBoleto->barCode,
                 "description" => $data->description,
                 "fine" => $data->fine->value,
                 "interest" => $data->interest->value,
-            ]);
+            ];
+
+            $params['user_id'] = $user->id;
+            $invoice = new Invoice($params);
+            $invoice->save();
+
+
         }
 
-        dd($invoces);
+        $this->setPaymentAccounting($order);
+        $order->update([
+            'status' => Order::$pending,
+            'payment_method' => 'invoice',
+            'payment_data' => serialize($invoices),
+        ]);
+
+        session()->put('payment_confirm', $order->id);
+        return redirect('/payments/status');
     }
 
     public function paymentRequestCredit(Request $request)

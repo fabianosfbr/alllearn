@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -18,7 +19,7 @@ class Invoice extends Model
 
     public function user()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsTo(User::class, 'invoice_id', 'id');
 
     }
 
