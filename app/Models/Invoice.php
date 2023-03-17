@@ -14,7 +14,7 @@ class Invoice extends Model
     ];
 
     static $statuses = [
-        'PENDING', 'RECEIVED', 'CONFIRMED', 'OVERDUE', 'REFUNDED', 'PAID'
+        'Pendente', 'Recebido', 'Confirmado', 'Vencido', 'Recusado', 'Pago', 'Cancelado'
     ];
 
     public function user()

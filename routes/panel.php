@@ -205,6 +205,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
     Route::group(['prefix' => 'financial'], function () {
         Route::get('/sales', 'SaleController@index');
         Route::get('/summary', 'AccountingController@index');
+        Route::get('/invoice', 'InvoiceController@index');
         Route::get('/payout', 'PayoutController@index');
         Route::post('/request-payout', 'PayoutController@requestPayout');
         Route::get('/account', 'AccountingController@account');

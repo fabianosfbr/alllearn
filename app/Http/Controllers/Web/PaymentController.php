@@ -350,6 +350,7 @@ class PaymentController extends Controller
         ]);
 
         session()->put('payment_confirm', $order->id);
+
         return redirect('/payments/status');
     }
 
