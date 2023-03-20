@@ -9,8 +9,16 @@
                 <div class="col-12 col-md-9 col-lg-7">
                     <div class="top-search-categories-form">
                         <h1 class="text-white font-30 mb-15">{{ $pageTitle }}</h1>
-                        <span class="course-count-badge py-5 px-10 text-white rounded">{{ $blogCount }} {{ trans('site.posts') }}</span>
-
+                        <div class="d-flex flex-column align-items-center">
+                            <span class="course-count-badge py-5 px-10 text-white rounded mb-3">Esse conteúdo é oferecido por <b>People academy</b> um marca do grupo LMSE. Quer saber mais sobre, 
+                                <a href="https://peopleacademy.com.br/" 
+                                style="text-transform: uppercase; color: #fff; font-weight: 600;" 
+                                target="_blank" rel="noopener noreferrer">
+                                Clique aqui
+                                </a>
+                            </span>
+                            <span class="course-count-badge py-5 px-10 text-white rounded">{{ $blogCount }} {{ trans('site.posts') }}</span>
+                        </div>
                         <div class="search-input bg-white p-10 flex-grow-1">
                             <form action="/blog" method="get">
                                 <div class="form-group d-flex align-items-center m-0">
