@@ -18,6 +18,7 @@
                                         <th>Data vencimento</th>
                                         <th>Valor</th>
                                         <th>Status</th>
+                                        <th>Código de barras</th>
                                         <th>Ação</th>
                                     </tr>
                                 </thead>
@@ -55,9 +56,18 @@
                                             </td>
                                             <td class="text-left">
                                                 <div class="d-flex flex-column">
-                                                    <span class="font-12 font-weight-500">
-                                                        {{ $invoice->id }}
-                                                        <a target="_blank" href="{{ $invoice->bank_slip_url }}">Imprimir</a>
+                                                    <span id="code-bar" class="font-12 font-weight-500">
+                                                        {{  $invoice->code_bar }}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td class="text-left">
+                                                <div class="d-flex flex-column">
+                                                    <span class="font-12 d-flex font-weight-500">
+                                                            <ion-icon onclick="copyText()" name="copy-outline" data-toggle="tooltip" data-placement="top" title="Copiar código de barras"></ion-icon>
+                                                        <a target="_blank" href="{{ $invoice->bank_slip_url }}">
+                                                            <ion-icon name="document-text-outline" data-toggle="tooltip" data-placement="top" title="Imprimir boleto"></ion-icon>
+                                                        </a>
                                                     </span>
                                                 </div>
                                             </td>
@@ -84,6 +94,20 @@
     <div class="my-30">
         {{ $invoices->appends(request()->input())->links('vendor.pagination.panel') }}
     </div>
+
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img src="..." class="rounded mr-2" alt="...">
+          <strong class="mr-auto">Bootstrap</strong>
+          <small>11 mins ago</small>
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+          Hello, world! This is a toast message.
+        </div>
+      </div>
 
 
 @endsection
