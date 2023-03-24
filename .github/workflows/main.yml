@@ -1,8 +1,8 @@
-on: push
 name: CI -> Deploy to Hostgator Service
 on:
+  workflow_dispatch:
   push:
-    branches: [ dev ]
+    branches: [dev]
 jobs:
   build:
     runs-on: ubuntu-latest
