@@ -1,0 +1,19 @@
+on: push
+name: CI -> Deploy to Hostgator Service
+on:
+  push:
+    branches: [ dev ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Here is the deployment action
+      - name: Upload to repositories folder via FTP
+        uses: airvzxf/ftp-deployment-action@latest
+        with:
+          server: ftp.leandromorilhas.com.br
+          user: github@alllearn.com.br
+          password: ${{ secrets.PWD_HOSTGATOR }}
+          local_dir: "./repositories"
+          delete: "false"
