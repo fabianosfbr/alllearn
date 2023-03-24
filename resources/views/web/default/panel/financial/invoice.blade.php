@@ -18,7 +18,6 @@
                                         <th>Data vencimento</th>
                                         <th>Valor</th>
                                         <th>Status</th>
-                                        <th>Código de barras</th>
                                         <th>Ação</th>
                                     </tr>
                                 </thead>
@@ -54,7 +53,7 @@
 
                                                 </div>
                                             </td>
-                                            <td class="text-left">
+                                            <td class="text-left d-none">
                                                 <div class="d-flex flex-column">
                                                     <span id="code-bar" class="font-12 font-weight-500">
                                                         {{  $invoice->code_bar }}

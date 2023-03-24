@@ -14,7 +14,9 @@
                                 @if($post->author->isTeacher())
                                     <a href="{{ $post->author->getProfileUrl() }}" target="_blank" class="text-white text-decoration-underline">{{ $post->author->full_name }}</a>
                                 @elseif(!empty($post->author->full_name))
-                                    <span class="text-white text-decoration-underline">People Academy</span>
+                                    <span class="text-white text-decoration-underline">
+                                        <a href="https://peopleacademy.com.br/" target="_blank" class="text-white text-decoration-underline">People Academy</a>
+                                    </span>
                                 @endif
                         </span>
                         @endif
