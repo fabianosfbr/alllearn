@@ -23,6 +23,7 @@ use App\Service\AsaasBank\Asaas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Services\CoraBank\Credentials;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 use MercadoPago\SDK as Mercado;
@@ -859,6 +860,55 @@ class PaymentController extends Controller
 
             return response()->json($data, 200);
         }
+    }
+
+    public function paymentAsaasVerify(Request $request)
+    {
+
+        $data = $request->all();
+        $payment_id = null;
+
+        if($data['event'] == 'PAYMENT_DELETED'){
+            $payment = $data['payment'];
+            $payment_id = $payment['id'];
+            $invoice = Invoice::where('payment_id', $payment_id  )->first();
+
+            $invoice->status = 'Cancelado';
+            $invoice->deleted = 1;
+            $invoice->save();
+           // dd($invoice);
+
+        }
+
+        if($data['event'] == 'PAYMENT_UPDATED'){
+            $payment = $data['payment'];
+            $payment_id = $payment['id'];
+            $invoice = Invoice::where('payment_id', $payment_id  )->first();
+
+            $invoice->date_end = $data['dueDate'];
+            $invoice->value = $data['value'];
+            $invoice->save();
+           // dd($invoice);
+
+        }
+
+        if($data['event'] == 'PAYMENT_RECEIVED'){
+            $payment = $data['payment'];
+            $payment_id = $payment['id'];
+            $invoice = Invoice::where('payment_id', $payment_id  )->first();
+
+            $invoice->status = 'Pago';
+            $invoice->save();
+           // dd($invoice);
+
+        }
+
+       // dd($payment_id);
+
+       $serializeData = json_encode($data);
+       DB::insert('insert into log_asaas_notification (payment_id, event) values (?, ?)', [ $payment_id , $serializeData]);
+
+        return response()->json($data, 200);
     }
 
     /*
