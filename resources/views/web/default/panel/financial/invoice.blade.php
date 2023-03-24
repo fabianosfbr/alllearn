@@ -62,12 +62,20 @@
                                             </td>
                                             <td class="text-left">
                                                 <div class="d-flex flex-column">
+                                                    @if( $invoice->status == 'Vencido' || $invoice->status == 'Cancelado' || $invoice->status == 'Recusado' ) 
+                                                    
+                                                    <span class="font-12 d-flex font-weight-500">
+                                                        <ion-icon style="margin-left: 10px" name="ban-outline" data-toggle="tooltip" data-placement="top" title="Boleto Cancelado"></ion-icon>
+                                                    </a>
+                                                </span>
+                                                    @else
                                                     <span class="font-12 d-flex font-weight-500">
                                                             <ion-icon onclick="copyText()" name="copy-outline" data-toggle="tooltip" data-placement="top" title="Copiar código de barras"></ion-icon>
                                                         <a target="_blank" href="{{ $invoice->bank_slip_url }}">
                                                             <ion-icon name="document-text-outline" data-toggle="tooltip" data-placement="top" title="Imprimir boleto"></ion-icon>
                                                         </a>
                                                     </span>
+                                                    @endif                                   
                                                 </div>
                                             </td>
                                         </tr>
