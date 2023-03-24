@@ -15,5 +15,5 @@ jobs:
           server: ftp.leandromorilhas.com.br
           user: github@alllearn.com.br
           password: ${{ secrets.PWD_HOSTGATOR }}
-          local_dir: "./repositories"
+          remote_dir: "./repositories"
           delete: "false"
