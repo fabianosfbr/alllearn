@@ -54,6 +54,59 @@ class UserController extends Controller
         return view('admin.users.staffs', $data);
     }
 
+    public function business(Request $request, $is_export_excel = false)
+    {
+        $this->authorize('admin_organizations_list');
+
+
+
+        $query = User::where('role_name', Role::$business);
+
+        $totalBusiness = deepClone($query)->count();
+        //dd($totalBusiness);
+
+        $verifiedBusiness = deepClone($query)->where('verified', true)
+            ->count();
+        $totalBusinessTeachers = User::where('role_name', Role::$teacher)
+            ->whereNotNull('organ_id')
+            ->count();
+        $totalBusinessStudents = User::where('role_name', Role::$user)
+            ->whereNotNull('organ_id')
+            ->count();
+        $userGroups = Group::where('status', 'active')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+
+        $query = $this->filters($query, $request);
+
+        if ($is_export_excel) {
+            $users = $query->orderBy('created_at', 'desc')->get();
+        } else {
+            $users = $query->orderBy('created_at', 'desc')
+                ->paginate(10);
+        }
+
+
+        $users = $this->addUsersExtraInfo($users);
+
+        if ($is_export_excel) {
+            return $users;
+        }
+
+        $data = [
+            'pageTitle' => trans('admin/main.organizations'),
+            'users' => $users,
+            'totalBusiness' => $totalBusiness,
+            'verifiedBusiness' => $verifiedBusiness,
+            'totalBusinessTeachers' => $totalBusinessTeachers,
+            'totalBusinessStudents' => $totalBusinessStudents,
+            'userGroups' => $userGroups,
+        ];
+
+        return view('admin.users.business', $data);
+    }
+
     public function organizations(Request $request, $is_export_excel = false)
     {
         $this->authorize('admin_organizations_list');

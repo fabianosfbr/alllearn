@@ -343,6 +343,12 @@
                             </li>
                         @endcan()
 
+                        @can('admin_organizations_list')
+                            <li class="{{ (request()->is('admin/business')) ? 'active' : '' }}">
+                                <a class="nav-link" href="/admin/business">Empresas</a>
+                            </li>
+                        @endcan()
+
                         @can('admin_users_create')
                             <li class="{{ (request()->is('admin/users/create')) ? 'active' : '' }}">
                                 <a class="nav-link" href="/admin/users/create">{{ trans('admin/main.new') }}</a>
