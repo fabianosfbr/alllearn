@@ -423,7 +423,9 @@ class UserController extends Controller
 
     public function manageUsers(Request $request, $user_type)
     {
-        $valid_type = ['instructors', 'students'];
+
+
+        $valid_type = ['instructors', 'students', 'employeer'];
         $organization = auth()->user();
 
         if ($organization->isOrganization() and in_array($user_type, $valid_type)) {
@@ -494,12 +496,84 @@ class UserController extends Controller
             return view(getTemplate() . '.panel.manage.' . $user_type, $data);
         }
 
+        if ($organization->isBusiness() and in_array($user_type, $valid_type)) {
+
+
+            $query = $organization->getBusinessEmployeers();
+
+            $activeCount = deepClone($query)->where('status', 'active')->count();
+
+
+            $verifiedCount = deepClone($query)->where('verified', true)->count();
+
+            $inActiveCount = deepClone($query)->where('status', 'inactive')->count();
+
+            $from = $request->get('from', null);
+            $to = $request->get('to', null);
+            $name = $request->get('name', null);
+            $email = $request->get('email', null);
+            $type = request()->get('type', null);
+
+            if (!empty($from) and !empty($to)) {
+                $from = strtotime($from);
+                $to = strtotime($to);
+
+                $query->whereBetween('created_at', [$from, $to]);
+            } else {
+                if (!empty($from)) {
+                    $from = strtotime($from);
+
+                    $query->where('created_at', '>=', $from);
+                }
+
+                if (!empty($to)) {
+                    $to = strtotime($to);
+
+                    $query->where('created_at', '<', $to);
+                }
+            }
+
+            if (!empty($name)) {
+                $query->where('full_name', 'like', "%$name%");
+            }
+
+            if (!empty($email)) {
+                $query->where('email', $email);
+            }
+
+            if (!empty($type)) {
+                if (in_array($type, ['active', 'inactive'])) {
+                    $query->where('status', $type);
+                } elseif ($type == 'verified') {
+                    $query->where('verified', true);
+                }
+            }
+
+            $users = $query->orderBy('created_at', 'desc')
+                ->paginate(10);
+
+               // dd($users);
+
+            $data = [
+                'pageTitle' => trans('public.' . $user_type),
+                'user_type' => $user_type,
+                'organization' => $organization,
+                'users' => $users,
+                'activeCount' => $activeCount,
+                'inActiveCount' => $inActiveCount,
+                'verifiedCount' => $verifiedCount,
+            ];
+
+            return view(getTemplate() . '.panel.manage.' . $user_type, $data);
+        }
+
         abort(404);
     }
 
     public function createUser($user_type)
     {
-        $valid_type = ['instructors', 'students'];
+
+        $valid_type = ['instructors', 'students', 'employeer'];
         $organization = auth()->user();
 
         if ($organization->isOrganization() and in_array($user_type, $valid_type)) {
@@ -537,12 +611,39 @@ class UserController extends Controller
             return view(getTemplate() . '.panel.setting.index', $data);
         }
 
+
+        if ($organization->isBusiness() and in_array($user_type, $valid_type)) {
+
+            $categories = Category::where('parent_id', null)
+            ->with('subCategories')
+            ->get();
+
+            $userLanguages = getGeneralSettings('user_languages');
+            if (!empty($userLanguages) and is_array($userLanguages)) {
+                $userLanguages = getLanguages($userLanguages);
+            }
+
+            $data = [
+                'pageTitle' => 'Novo Colaborador',
+                'new_user' => true,
+                'user_type' => $user_type,
+                'user' => $organization,
+                'categories' => $categories,
+                'organization_id' => $organization->id,
+                'userLanguages' => $userLanguages,
+                'currentStep' => 1,
+            ];
+
+            return view(getTemplate() . '.panel.setting.index', $data);
+
+        }
+
         abort(404);
     }
 
     public function storeUser(Request $request, $user_type)
     {
-        $valid_type = ['instructors', 'students'];
+        $valid_type = ['instructors', 'students', 'employeer'];
         $organization = auth()->user();
 
         if ($organization->isOrganization() and in_array($user_type, $valid_type)) {
@@ -568,6 +669,41 @@ class UserController extends Controller
                 'password' => Hash::make($data['password']),
                 'full_name' => $data['full_name'],
                 'mobile' => $data['mobile'],
+                'verified' => 1,
+                'language' => $data['language'],
+                'affiliate' => $usersAffiliateStatus,
+                'newsletter' => (!empty($data['join_newsletter']) and $data['join_newsletter'] == 'on'),
+                'public_message' => (!empty($data['public_messages']) and $data['public_messages'] == 'on'),
+                'created_at' => time()
+            ]);
+
+            return redirect('/panel/manage/' . $user_type . '/' . $user->id . '/edit');
+        }
+
+        if ($organization->isBusiness() and in_array($user_type, $valid_type)) {
+            $this->validate($request, [
+                'email' => 'required|string|email|max:255|unique:users',
+                'full_name' => 'required|string',
+                'mobile' => 'required|numeric',
+                'password' => 'required|confirmed|min:6',
+            ]);
+
+            $data = $request->all();
+            $role_name = Role::$user;
+            $role_id =  Role::getUserRoleId();
+
+            $referralSettings = getReferralSettings();
+            $usersAffiliateStatus = (!empty($referralSettings) and !empty($referralSettings['users_affiliate_status']));
+
+            $user = User::create([
+                'role_name' => $role_name,
+                'role_id' => $role_id,
+                'email' => $data['email'],
+                'organ_id' => $organization->id,
+                'password' => Hash::make($data['password']),
+                'full_name' => $data['full_name'],
+                'mobile' => $data['mobile'],
+                'verified' => 1,
                 'language' => $data['language'],
                 'affiliate' => $usersAffiliateStatus,
                 'newsletter' => (!empty($data['join_newsletter']) and $data['join_newsletter'] == 'on'),
@@ -583,7 +719,7 @@ class UserController extends Controller
 
     public function editUser($user_type, $user_id, $step = 1)
     {
-        $valid_type = ['instructors', 'students'];
+        $valid_type = ['instructors', 'students', 'employeer'];
         $organization = auth()->user();
 
         if ($organization->isOrganization() and in_array($user_type, $valid_type)) {
@@ -622,12 +758,48 @@ class UserController extends Controller
             }
         }
 
+        if ($organization->isBusiness() and in_array($user_type, $valid_type)) {
+            $user = User::where('id', $user_id)
+                ->where('organ_id', $organization->id)
+                ->first();
+
+            if (!empty($user)) {
+                $categories = Category::where('parent_id', null)
+                    ->with('subCategories')
+                    ->get();
+                $userMetas = $user->userMetas;
+
+                $occupations = $user->occupations->pluck('category_id')->toArray();
+
+                $userLanguages = getGeneralSettings('user_languages');
+                if (!empty($userLanguages) and is_array($userLanguages)) {
+                    $userLanguages = getLanguages($userLanguages);
+                }
+
+                $data = [
+                    'organization_id' => $organization->id,
+                    'edit_new_user' => true,
+                    'user' => $user,
+                    'user_type' => $user_type,
+                    'categories' => $categories,
+                    'educations' => $userMetas->where('name', 'education'),
+                    'experiences' => $userMetas->where('name', 'experience'),
+                    'pageTitle' => 'Editar colaborador',
+                    'occupations' => $occupations,
+                    'userLanguages' => $userLanguages,
+                    'currentStep' => $step,
+                ];
+
+                return view(getTemplate() . '.panel.setting.index', $data);
+            }
+        }
+
         abort(404);
     }
 
     public function deleteUser($user_type, $user_id)
     {
-        $valid_type = ['instructors', 'students'];
+        $valid_type = ['instructors', 'students', 'employeer'];
         $organization = auth()->user();
 
         if ($organization->isOrganization() and in_array($user_type, $valid_type)) {

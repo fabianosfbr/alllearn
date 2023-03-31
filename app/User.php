@@ -95,6 +95,11 @@ class User extends Authenticatable
         return $this->role_name === Role::$organization;
     }
 
+    public function isBusiness()
+    {
+        return $this->role_name === Role::$business;
+    }
+
     public function hasPermission($section_name)
     {
         if (self::isAdmin()) {
@@ -325,6 +330,11 @@ class User extends Authenticatable
     public function getOrganizationTeachers()
     {
         return $this->hasMany($this, 'organ_id', 'id')->where('role_name', Role::$teacher);
+    }
+
+    public function getBusinessEmployeers()
+    {
+        return $this->hasMany($this, 'organ_id', 'id')->where('role_name', Role::$user);
     }
 
     public function getOrganizationStudents()

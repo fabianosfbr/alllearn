@@ -66,5 +66,14 @@ class Role extends Model
         return !empty($role) ? $role->id : $id;
     }
 
+    public static function getBusinessRoleId()
+    {
+        $id = 13; // teacher role id
+
+        $role = self::where('name', self::$business)->first();
+
+        return !empty($role) ? $role->id : $id;
+    }
+
 
 }
