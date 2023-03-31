@@ -208,6 +208,7 @@ Route::group(['namespace' => 'Panel', 'prefix' => 'panel', 'middleware' => ['che
         Route::get('/invoice', 'InvoiceController@index');
         Route::get('/payout', 'PayoutController@index');
         Route::get('/document', 'DocumentController@index');
+        Route::get('/users', 'DocumentController@selectSearch');
         Route::post('/request-payout', 'PayoutController@requestPayout');
         Route::get('/account', 'AccountingController@account');
         Route::post('/charge', 'AccountingController@charge');

@@ -1,5 +1,7 @@
 @extends(getTemplate() .'.panel.layouts.panel_layout')
 
+
+
 @push('styles_top')
     <link rel="stylesheet" href="/assets/default/vendors/daterangepicker/daterangepicker.min.css">
 @endpush
@@ -16,8 +18,7 @@
 
                 <div class="form-group">
                     <label class="input-label d-block">{{ trans('admin/main.user') }}</label>
-                    <select name="user_id" class="form-control search-user-select2 @error('user_id') is-invalid @enderror" data-placeholder="{{ trans('public.search_user') }}">
-
+                    <select class="livesearch form-control" name="livesearch"></select>
                     </select>
 
                     @error('user_id')
@@ -75,5 +76,29 @@
 @push('scripts_bottom')
     <script src="/assets/default/vendors/moment.min.js"></script>
     <script src="/assets/default/vendors/daterangepicker/daterangepicker.min.js"></script>
-    <script src="/assets/default/vendors/select2/select2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    <script type="text/javascript">
+        $('.livesearch').select2({
+            placeholder: 'Selecione um colaborador',
+            ajax: {
+                url: '/panel/financial/document/search',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+    </script>
 @endpush
