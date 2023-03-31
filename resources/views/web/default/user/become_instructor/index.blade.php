@@ -22,12 +22,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="js-instructor-label font-weight-500 text-dark-blue {{ !$isInstructorRole ? 'd-none' : '' }}">{{ trans('update.instructor_select_role') }}</label>
-                        <label class="js-organization-label font-weight-500 text-dark-blue {{ !$isOrganizationRole ? 'd-none' : '' }}">{{ trans('update.organization_select_role') }}</label>
-
+                        <label class="font-weight-500 text-dark-blue">Tipo de conta</label>
                         <select name="role" class="form-control @error('role')  is-invalid @enderror">
                             <option selected disabled>{{ trans('update.select_role') }}</option>
-
+                            <option value="{{ \App\Models\Role::$business }}" {{ $isBusinessRole ? 'selected' : '' }}>Empresa</option>
                             <option value="{{ \App\Models\Role::$teacher }}" {{ $isInstructorRole ? 'selected' : '' }}>{{ trans('panel.teacher') }}</option>
                             <option value="{{ \App\Models\Role::$organization }}" {{ $isOrganizationRole ? 'selected' : '' }}>{{ trans('home.organization') }}</option>
                         </select>

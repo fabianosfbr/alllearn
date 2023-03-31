@@ -28,8 +28,23 @@ class BecomeInstructorController extends Controller
                 ->where('status', 'pending')
                 ->first();
 
-            $isOrganizationRole = (!empty($lastRequest) and $lastRequest->role == Role::$organization);
-            $isInstructorRole = (empty($lastRequest) or $lastRequest->role == Role::$teacher);
+            $isOrganizationRole = false;
+            $isInstructorRole = false;
+            $isBusinessRole = false;
+
+            if(!empty($lastRequest)){
+
+                if($lastRequest->role == Role::$organization){
+                    $isOrganizationRole = true;
+                }
+                if($lastRequest->role == Role::$teacher){
+                    $isInstructorRole = true;
+                }
+                if($lastRequest->role == Role::$business){
+                    $isBusinessRole = true;
+                }
+
+            }
 
             $data = [
                 'pageTitle' => trans('site.become_instructor'),
@@ -39,9 +54,10 @@ class BecomeInstructorController extends Controller
                 'occupations' => $occupations,
                 'isOrganizationRole' => $isOrganizationRole,
                 'isInstructorRole' => $isInstructorRole,
+                'isBusinessRole' => $isBusinessRole,
             ];
 
-            //dd($data);
+           // dd($data);
 
             return view('web.default.user.become_instructor.index', $data);
         }
@@ -51,6 +67,7 @@ class BecomeInstructorController extends Controller
 
     public function store(Request $request)
     {
+       // dd($request->all());
         $user = auth()->user();
 
         $this->validate($request, [
@@ -63,9 +80,10 @@ class BecomeInstructorController extends Controller
                     'account_id' => 'required',
                     'identity_scan' => 'required',
                     'description' => 'nullable|string',
-                ]); 
+                ]);
 
-        $data = $request->all();        
+        $data = $request->all();
+
 
         if ($user->isUser()) {
             $lastRequest = BecomeInstructor::where('user_id', $user->id)
@@ -74,7 +92,7 @@ class BecomeInstructorController extends Controller
 
 
             if (empty($lastRequest)) {
-      
+
                 BecomeInstructor::create([
                     'user_id' => $user->id,
                     'role' => $data['role'],
@@ -82,6 +100,8 @@ class BecomeInstructorController extends Controller
                     'description' => $data['description'],
                     'created_at' => time()
                 ]);
+
+
 
                 $user->update([
                     'account_type' => $data['account_type'],
@@ -91,6 +111,8 @@ class BecomeInstructorController extends Controller
                     'identity_scan' => $data['identity_scan'],
                     'certificate' => $data['certificate'],
                 ]);
+
+
 
                 if (!empty($data['occupations'])) {
                     UserOccupation::where('user_id', $user->id)->delete();
@@ -103,7 +125,7 @@ class BecomeInstructorController extends Controller
                     }
                 }
             }else{
-              
+
                 $lastRequest->update([
                     'user_id' => $user->id,
                     'role' => $data['role'],
@@ -130,7 +152,7 @@ class BecomeInstructorController extends Controller
                         ]);
                     }
                 }
- 
+
             }
 
 
@@ -143,9 +165,9 @@ class BecomeInstructorController extends Controller
 
             $notifyOptions = [
                 '[student.name]' => $user->full_name,
-             
+
             ];
-            sendNotification('instructor_request', $notifyOptions, $user->id);  
+            sendNotification('instructor_request', $notifyOptions, $user->id);
 
 
             $toastData = [

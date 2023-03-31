@@ -11,6 +11,7 @@ class Role extends Model
     static $user = 'user';
     static $teacher = 'teacher';
     static $organization = 'organization';
+    static $business = 'business';
 
     protected $guarded = ['id'];
 
@@ -35,7 +36,7 @@ class Role extends Model
 
     public function isDefaultRole()
     {
-        return in_array($this->name, [self::$admin, self::$user, self::$organization, self::$teacher]);
+        return in_array($this->name, [self::$admin, self::$user, self::$organization, self::$teacher, self::$business]);
     }
 
     public static function getUserRoleId()
@@ -64,4 +65,6 @@ class Role extends Model
 
         return !empty($role) ? $role->id : $id;
     }
+
+
 }
