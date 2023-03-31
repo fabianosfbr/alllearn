@@ -18,7 +18,9 @@ class BecomeInstructorController extends Controller
 
         if ($page == 'organizations') {
             $role = Role::$organization;
-        } else {
+        } else if($page == 'business') {
+            $role = Role::$business;
+        }else {
             $role = Role::$teacher;
         }
 

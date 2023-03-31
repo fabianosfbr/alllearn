@@ -440,6 +440,12 @@
                                 <span>{{ trans('admin/main.organizations') }}</span>
                             </a>
                         </li>
+
+                        <li class="{{ (request()->is('admin/users/become-instructors/business')) ? 'active' : '' }}">
+                            <a class="nav-link" href="/admin/users/become-instructors/business">
+                                <span>Empresas</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             @endcan()

@@ -14,7 +14,7 @@ return [
     'Thu' => 'Quinta',
     'Fri' => 'Sexta',
     'teacher' => 'Professor',
-    'organization' => 'Organização',        
+    'organization' => 'Organização',
 
 
 
@@ -440,7 +440,7 @@ return [
     'learning_page' => 'Página do curso',
     'disabled_add_to_cart' => 'Aula ao vivo já iniciou',
     'file_type_mp4' => 'Vídeo',
-    'video' => 'Vídeo',    
+    'video' => 'Vídeo',
 
 
 
@@ -963,7 +963,7 @@ return [
     'active_members' => 'Membros ativos',
     'statistics' => 'Estatísticas',
     'learning_page_empty_content_title_hint' => 'Nenhum tópico no fórum do curso!',
-    
+
 
     // Blog
     'blog_statistics' => 'Estatísticas de artigos',
@@ -1190,5 +1190,7 @@ return [
     'unlimited_time' => 'Tempo Ilimitado',
     'preview' => 'Visualizar',
     'registration_form_options' => 'Opções do formulário de registro',
+
+    'business' => 'Empresa',
 
 ];

@@ -516,6 +516,8 @@ class UserController extends Controller
     {
         $this->authorize('admin_users_edit');
 
+
+
         $user = User::where('id', $id)
             ->with([
                 'customBadges' => function ($query) {
@@ -796,6 +798,8 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
+
+
         $this->validate($request, [
             'full_name' => 'required|min:3|max:128',
             'role_id' => 'required|exists:roles,id',
@@ -1019,9 +1023,13 @@ class UserController extends Controller
     {
         $this->authorize('admin_users_edit');
 
+
+
         $user = User::findOrFail($id);
 
         $becomeInstructors = BecomeInstructor::where('user_id', $user->id)->first();
+
+
 
         if (!empty($becomeInstructors)) {
             $role = Role::where('name', $becomeInstructors->role)->first();
@@ -1039,9 +1047,9 @@ class UserController extends Controller
 
             $notifyOptions = [
                 '[u.name]' => $user->full_name,
-             
+
             ];
-            sendNotification('instructor_confirmation', $notifyOptions, $user->id);             
+            sendNotification('instructor_confirmation', $notifyOptions, $user->id);
 
             return redirect('/admin/users/' . $user->id . '/edit')->with(['msg' => trans('admin/pages/users.user_role_updated')]);
         }
