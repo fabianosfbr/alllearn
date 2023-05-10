@@ -3,11 +3,15 @@
 @push('styles_top')
     <link rel="stylesheet" href="/assets/default/vendors/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="/assets/default/vendors/owl-carousel2/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/default/css/glide.core.min.css">
+    <link rel="stylesheet" href="/assets/default/css/glide.theme.min.css">
 @endpush
 
 @section('content')
-
-    @if(!empty($heroSectionData))
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        @if(!empty($heroSectionData))
 
         @if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1")
             @push('scripts_bottom')
@@ -15,7 +19,7 @@
             @endpush
         @endif
 
-        <section class="slider-container  {{ ($heroSection == "2") ? 'slider-hero-section2' : '' }}" @if(empty($heroSectionData['is_video_background'])) style="background-image: url('{{ $heroSectionData['hero_background'] }}')" @endif>
+        <section class="slider-container  {{ ($heroSection == "2") ? 'slider-hero-section2' : '' }}" @if(empty($heroSectionData['is_video_background'])) style="background-image: url('/store/1/default_images/home1.jpg')" @endif>
 
             @if($heroSection == "1")
                 @if(!empty($heroSectionData['is_video_background']))
@@ -32,8 +36,8 @@
                 @if($heroSection == "2")
                     <div class="row slider-content align-items-center hero-section2 flex-column-reverse flex-md-row">
                         <div class="col-12 col-md-7 col-lg-6">
-                            <h1 class="text-secondary font-weight-bold">{{ $heroSectionData['title'] }}</h1>
-                            <p class="slide-hint text-gray mt-20">{!! nl2br($heroSectionData['description']) !!}</p>
+                            <h1 class="text-secondary font-weight-bold">Alegria de aprender e ensinar...</h1>
+                            <p class="slide-hint text-gray mt-20">A All Learn é uma plataforma educacional completa que ajuda as instituições de ensino, escolas, profissionais liberais a criar e publicar cursos em vídeo, aulas ao vivo e ganhar dinheiro, além de ajudar os alunos a aprender de maneira fácil.</p>
 
                             <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-30 w-100">
                                 <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
@@ -52,10 +56,10 @@
                     </div>
                 @else
                     <div class="text-center slider-content">
-                        <h1>{{ $heroSectionData['title'] }}</h1>
+                        <h1>Alegria de aprender e ensinar...</h1>
                         <div class="row h-100 align-items-center justify-content-center text-center">
                             <div class="col-12 col-md-9 col-lg-7">
-                                <p class="mt-30 slide-hint">{!! nl2br($heroSectionData['description']) !!}</p>
+                                <p class="mt-30 slide-hint">A All Learn é uma plataforma educacional completa que ajuda as instituições de ensino, escolas, profissionais liberais a criar e publicar cursos em vídeo, aulas ao vivo e ganhar dinheiro, além de ajudar os alunos a aprender de maneira fácil.</p>
 
                                 <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
                                     <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
@@ -70,6 +74,147 @@
             </div>
         </section>
     @endif
+      </div>
+      <div class="carousel-item">
+        @if(!empty($heroSectionData))
+
+        @if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1")
+            @push('scripts_bottom')
+                <script src="/assets/default/vendors/lottie/lottie-player.js"></script>
+            @endpush
+        @endif
+
+        <section class="slider-container  {{ ($heroSection == "2") ? 'slider-hero-section2' : '' }}" @if(empty($heroSectionData['is_video_background'])) style="background-image: url('/store/1/default_images/home2.jpg')" @endif>
+
+            @if($heroSection == "1")
+                @if(!empty($heroSectionData['is_video_background']))
+                    <video playsinline autoplay muted loop id="homeHeroVideoBackground" class="img-cover">
+                        <source src="{{ $heroSectionData['hero_background'] }}" type="video/mp4">
+                    </video>
+                @endif
+
+                <div class="mask"></div>
+            @endif
+
+            <div class="container user-select-none">
+
+                @if($heroSection == "2")
+                    <div class="row slider-content align-items-center hero-section2 flex-column-reverse flex-md-row">
+                        <div class="col-12 col-md-7 col-lg-6">
+                            <h1 class="text-secondary font-weight-bold">Alegria de aprender e ensinar...</h1>
+                            <p class="slide-hint text-gray mt-20">A All Learn é uma plataforma educacional completa que ajuda as instituições de ensino, escolas, profissionais liberais a criar e publicar cursos em vídeo, aulas ao vivo e ganhar dinheiro, além de ajudar os alunos a aprender de maneira fácil.</p>
+
+                            <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-30 w-100">
+                                <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
+                                    <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="{{ trans('home.slider_search_placeholder') }}"/>
+                                    <button type="submit" class="btn btn-primary rounded-pill">{{ trans('home.find') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-12 col-md-5 col-lg-6">
+                            @if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1")
+                                <lottie-player src="{{ $heroSectionData['hero_vector'] }}" background="transparent" speed="1" class="w-100" loop autoplay></lottie-player>
+                            @else
+                                <img src="{{ $heroSectionData['hero_vector'] }}" alt="{{ $heroSectionData['title'] }}" class="img-cover">
+                            @endif
+                        </div>
+                    </div>
+                @else
+                    <div class="text-center slider-content">
+                        <h1>Alegria de aprender e ensinar...</h1>
+                        <div class="row h-100 align-items-center justify-content-center text-center">
+                            <div class="col-12 col-md-9 col-lg-7">
+                                <p class="mt-30 slide-hint">A All Learn é uma plataforma educacional completa que ajuda as instituições de ensino, escolas, profissionais liberais a criar e publicar cursos em vídeo, aulas ao vivo e ganhar dinheiro, além de ajudar os alunos a aprender de maneira fácil.</p>
+
+                                <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
+                                    <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
+                                        <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="{{ trans('home.slider_search_placeholder') }}"/>
+                                        <button type="submit" class="btn btn-primary rounded-pill">{{ trans('home.find') }}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </section>
+    @endif
+      </div>
+      <div class="carousel-item">
+        @if(!empty($heroSectionData))
+
+        @if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1")
+            @push('scripts_bottom')
+                <script src="/assets/default/vendors/lottie/lottie-player.js"></script>
+            @endpush
+        @endif
+
+        <section class="slider-container  {{ ($heroSection == "2") ? 'slider-hero-section2' : '' }}" @if(empty($heroSectionData['is_video_background'])) style="background-image: url('/store/1/default_images/home3.png')" @endif>
+
+            @if($heroSection == "1")
+                @if(!empty($heroSectionData['is_video_background']))
+                    <video playsinline autoplay muted loop id="homeHeroVideoBackground" class="img-cover">
+                        <source src="{{ $heroSectionData['hero_background'] }}" type="video/mp4">
+                    </video>
+                @endif
+
+                <div class="mask"></div>
+            @endif
+
+            <div class="container user-select-none">
+
+                @if($heroSection == "2")
+                    <div class="row slider-content align-items-center hero-section2 flex-column-reverse flex-md-row">
+                        <div class="col-12 col-md-7 col-lg-6">
+                            <h1 class="text-secondary font-weight-bold">Alegria de aprender e ensinar...</h1>
+                            <p class="slide-hint text-gray mt-20">A All Learn é uma plataforma educacional completa que ajuda as instituições de ensino, escolas, profissionais liberais a criar e publicar cursos em vídeo, aulas ao vivo e ganhar dinheiro, além de ajudar os alunos a aprender de maneira fácil.</p>
+
+                            <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-30 w-100">
+                                <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
+                                    <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="{{ trans('home.slider_search_placeholder') }}"/>
+                                    <button type="submit" class="btn btn-primary rounded-pill">{{ trans('home.find') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-12 col-md-5 col-lg-6">
+                            @if(!empty($heroSectionData['has_lottie']) and $heroSectionData['has_lottie'] == "1")
+                                <lottie-player src="{{ $heroSectionData['hero_vector'] }}" background="transparent" speed="1" class="w-100" loop autoplay></lottie-player>
+                            @else
+                                <img src="{{ $heroSectionData['hero_vector'] }}" alt="{{ $heroSectionData['title'] }}" class="img-cover">
+                            @endif
+                        </div>
+                    </div>
+                @else
+                    <div class="text-center slider-content">
+                        <h1>Alegria de aprender e ensinar...</h1>
+                        <div class="row h-100 align-items-center justify-content-center text-center">
+                            <div class="col-12 col-md-9 col-lg-7">
+                                <p class="mt-30 slide-hint">A All Learn é uma plataforma educacional completa que ajuda as instituições de ensino, escolas, profissionais liberais a criar e publicar cursos em vídeo, aulas ao vivo e ganhar dinheiro, além de ajudar os alunos a aprender de maneira fácil.</p>
+
+                                <form action="/search" method="get" class="d-inline-flex mt-30 mt-lg-50 w-100">
+                                    <div class="form-group d-flex align-items-center m-0 slider-search p-10 bg-white w-100">
+                                        <input type="text" name="search" class="form-control border-0 mr-lg-50" placeholder="{{ trans('home.slider_search_placeholder') }}"/>
+                                        <button type="submit" class="btn btn-primary rounded-pill">{{ trans('home.find') }}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </section>
+    @endif
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
 
     <div class="stats-container mb-25">
         <div class="container">
@@ -80,7 +225,7 @@
                             <img src="/assets/default/img/stats/teacher.svg" alt=""/>
                         </div>                        
                         <h4 class="stat-title">Curso livre</h4>
-                        <p class="stat-desc mt-10">Cursos de curta duração com temas específicos de gestão, contabilidade, economia, direito e tecnologia da informação.</p>
+                        <p style="padding-left: 11px; padding-right: 11px" class="stat-desc mt-10">Cursos de curta duração com temas específicos de gestão, contabilidade, economia, direito e tecnologia da informação.</p>
                     </div>
                 </div>
 
@@ -90,7 +235,7 @@
                             <img src="/assets/default/img/stats/student.svg" alt=""/>
                         </div>
                         <h4 class="stat-title">Graduação</h4>
-                        <p class="stat-desc mt-10">Para pessoas que ainda não possuem cursos superiores ou que desejem cursar uma segunda graduação.</p>
+                        <p style="padding-left: 25px; padding-right: 25px" class="stat-desc mt-10">Para pessoas que ainda não possuem cursos superiores ou que desejem cursar uma segunda graduação.</p>
                     </div>
                 </div>
 
@@ -100,7 +245,7 @@
                             <img src="/assets/default/img/stats/video.svg" alt=""/>
                         </div>
                         <h4 class="stat-title">Especialização</h4>
-                        <p class="stat-desc mt-10">Cursos com visão mais focada para aqueles que querem avançar no desenvolvimento de sua carreira.</p>
+                        <p style="padding-left: 25px; padding-right: 25px" class="stat-desc mt-10">Cursos com visão mais focada para aqueles que querem avançar no desenvolvimento de sua carreira.</p>
                     </div>
                 </div>
 
@@ -119,7 +264,7 @@
                             
                         </div>                        
                         <h4 class="stat-title">MBA</h4>
-                        <p class="stat-desc mt-10">Cursos com visão estratégica e pós-graduação lato sensu de formação.</p>
+                        <p style="padding-left: 25px; padding-right: 25px" class="stat-desc mt-10">Cursos com visão estratégica e pós-graduação lato sensu de formação.</p>
                     </div>
                 </div>
 
@@ -130,7 +275,7 @@
                             
                         </div>
                         <h4 class="stat-title">Mestrado</h4>
-                        <p class="stat-desc mt-10">Pós-graduação stricto sensu acadêmica ou profissional para aqueles que desejam se aprofundar mais no conhecimento científico.</p>
+                        <p style="padding-left: 25px; padding-right: 25px" class="stat-desc mt-10">Pós-graduação stricto sensu acadêmica ou profissional para aqueles que desejam se aprofundar mais no conhecimento científico.</p>
                     </div>
                 </div>
 
@@ -140,7 +285,7 @@
                             <img src="/assets/default/img/stats/student.svg" alt=""/>
                         </div>
                         <h4 class="stat-title">Doutorado</h4>
-                        <p class="stat-desc mt-10">Pós-graduação stricto sensu acadêmica ou profissional para aqueles que desejam consolidar seu conhecimento e sua carreira.</p>
+                        <p style="padding-left: 25px; padding-right: 25px" class="stat-desc mt-10">Pós-graduação stricto sensu acadêmica ou profissional para aqueles que desejam consolidar seu conhecimento e sua carreira.</p>
                     </div>
                 </div>
 
@@ -160,31 +305,41 @@
                     </div>
                 </div>
             </section>
-
-            <div class="container">
-                <div class="row">
-                  <div class="col-sm mt-30 text-uppercase font-weight-bold">
-                    <p>vídeo de apresentação para IES</p>
-                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/mBJuu0bpqEE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                  </div>
-                  <div class="col-sm mt-30 text-uppercase font-weight-bold">
-                    <p>Vídeo de apresentação para Empresas</p>
-                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/G6c1M0-A5GU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                  </div>
+        
+            <div class="glide">
+                <div class="glide__track" data-glide-el="track">
+                  <ul class="glide__slides">
+                    <li class="glide__slide">
+                        <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                        <p>vídeo de apresentação para IES</p>
+                        <iframe width="100%" height="300" src="https://www.youtube.com/embed/mBJuu0bpqEE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                            <p>Vídeo de apresentação para Empresas</p>
+                            <iframe width="100%" height="300" src="https://www.youtube.com/embed/G6c1M0-A5GU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                          </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                            <p>Vídeo de apresentação para Alunos</p>
+                          <iframe width="100%" height="300" src="https://www.youtube.com/embed/oRElp3tpjb0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </li>
+                    <li class="glide__slide">
+                        <div class="col-sm mt-30 text-uppercase font-weight-bold">
+                            <p>Vídeo de apresentação para Professores</p>
+                            <iframe width="100%" height="300" src="https://www.youtube.com/embed/oW3jDlrFawU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </li>
+                  </ul>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm mt-30 text-uppercase font-weight-bold">
-                        <p>Vídeo de apresentação para Alunos</p>
-                      <iframe width="100%" height="300" src="https://www.youtube.com/embed/oRElp3tpjb0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    
-                    <div class="col-sm mt-30 text-uppercase font-weight-bold">
-                        <p>Vídeo de apresentação para Professores</p>
-                        <iframe width="100%" height="300" src="https://www.youtube.com/embed/oW3jDlrFawU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+                <div class="glide__arrows" data-glide-el="controls">
+                    <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><ion-icon style="font-size: 30px" name="arrow-back-outline"></ion-icon></button>
+                    <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><ion-icon style="font-size: 30px" name="arrow-forward-outline"></ion-icon></button>
                   </div>
-            </div> 
+              </div>
 
     @foreach($homeSections as $homeSection)
 
@@ -946,6 +1101,22 @@
 @endsection
 
 @push('scripts_bottom')
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+    <script>
+        const config = {
+            type: 'carousel',
+            perView: 3,
+            breakpoints: {
+                1024: {
+                    perView: 2
+                },
+                600: {
+                    perView: 1
+                }
+            }   
+        }
+        new Glide('.glide', config).mount()
+    </script>
     <script src="/assets/default/vendors/swiper/swiper-bundle.min.js"></script>
     <script src="/assets/default/vendors/owl-carousel2/owl.carousel.min.js"></script>
     <script src="/assets/default/vendors/parallax/parallax.min.js"></script>
