@@ -4,11 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('zip_code').addEventListener('blur', buscaCep);
     }
 
-
     function buscaCep(event) {
         let value = document.getElementById("zip_code").value.replace(/[^0-9]+/, '');
         const url = `https://viacep.com.br/ws/${value}/json/`;
-
 
 
         fetch(url).then(response => {
@@ -16,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(data => {
                 if (data.erro) {
+                    getError();
 
                     document.getElementById("zip_code").focus();
                     return;
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 atribuirCampos(data);
                 document.getElementById("street_number").focus();
             }).catch(function () {
-
+                getError();
             })
 
 

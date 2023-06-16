@@ -14,7 +14,7 @@ class AddAssasIdTableUsers extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-           $table->integer('assas_id');
+            $table->integer('assas_id')->nullable();
         });
     }
 

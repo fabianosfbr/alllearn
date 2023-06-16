@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers\Panel;
 
+use App\User;
+use App\Models\Role;
+use App\Models\Region;
+use App\Models\Reward;
+use App\Models\Meeting;
+use App\Models\Category;
+use App\Models\UserMeta;
+use App\Models\Accounting;
+use App\Models\Newsletter;
+use App\Models\UserZoomApi;
+use Illuminate\Http\Request;
+use App\Models\ReserveMeeting;
+use App\Models\UserOccupation;
+use App\Models\RewardAccounting;
+use Illuminate\Support\Facades\DB;
 use App\Bitwise\UserLevelOfTraining;
 use App\Http\Controllers\Controller;
-use App\Mixins\RegistrationPackage\UserPackage;
-use App\Models\Category;
 use App\Models\DeleteAccountRequest;
-use App\Models\Meeting;
-use App\Models\Newsletter;
-use App\Models\Region;
-use App\Models\ReserveMeeting;
-use App\Models\Reward;
-use App\Models\RewardAccounting;
-use App\Models\Role;
-use App\Models\UserMeta;
-use App\Models\UserOccupation;
-use App\Models\UserZoomApi;
-use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Mixins\RegistrationPackage\UserPackage;
 
 class UserController extends Controller
 {
@@ -109,6 +110,8 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $data = $request->all();
+
+
 
         $organization = null;
         if (!empty($data['organization_id']) and !empty($data['user_id'])) {
@@ -257,6 +260,39 @@ class UserController extends Controller
                         ]);
                     }
                 }
+            } elseif ($step == 10) {
+
+
+
+                if (auth()->user()->id != $user->id and isset($data['amount']) and isset($data['description'])) {
+
+                    if (auth()->user()->getAccountingBalance() > $data['amount']) {
+
+                        //Dedução da conta da empresa
+                        Accounting::create([
+                            'creator_id' => auth()->user()->id,
+                            'amount' => $data['amount'],
+                            'user_id' => auth()->user()->id,
+                            'type' => 'deduction',
+                            'description' => $data['description'],
+                            'type_account' => Accounting::$asset,
+                            'store_type' => Accounting::$storeManual,
+                            'created_at' => time(),
+                        ]);
+
+                        //Adição na conta do aluno
+                        Accounting::create([
+                            'creator_id' => auth()->user()->id,
+                            'amount' => $data['amount'],
+                            'user_id' => $user->id,
+                            'type' => 'addiction',
+                            'description' => $data['description'],
+                            'type_account' => Accounting::$asset,
+                            'store_type' => Accounting::$storeManual,
+                            'created_at' => time(),
+                        ]);
+                    }
+                }
             }
 
             if (!empty($updateData)) {
@@ -265,15 +301,23 @@ class UserController extends Controller
 
             $url = '/panel/setting';
             if (!empty($organization)) {
-                $url = '/panel/manage/instructors/' . $user->id . '/edit';
+
+                if ($user->role_id == 1) {
+                    $url = '/panel/manage/students';
+                } elseif ($user->role_id == 2) {
+                    $url = '/panel/manage/instructors';
+                }
             }
 
-            if ($step <= 9) {
+
+
+            if ($step < 10) {
+
                 if ($nextStep) {
                     $step = $step + 1;
                 }
 
-                $url .= '/step/' . (($step <= 8) ? $step : 9);
+                $url .= '/step/' . (($step <= 9) ? $step : 10);
             }
 
             $toastData = [
@@ -281,7 +325,8 @@ class UserController extends Controller
                 'msg' => trans('panel.user_setting_success'),
                 'status' => 'success'
             ];
-            return redirect($url)->with(['toast' => $toastData]);
+            // return redirect($url)->with(['toast' => $toastData]);
+            return redirect($url);
         }
         abort(404);
     }
@@ -552,7 +597,7 @@ class UserController extends Controller
             $users = $query->orderBy('created_at', 'desc')
                 ->paginate(10);
 
-               // dd($users);
+            // dd($users);
 
             $data = [
                 'pageTitle' => trans('public.' . $user_type),
@@ -615,8 +660,8 @@ class UserController extends Controller
         if ($organization->isBusiness() and in_array($user_type, $valid_type)) {
 
             $categories = Category::where('parent_id', null)
-            ->with('subCategories')
-            ->get();
+                ->with('subCategories')
+                ->get();
 
             $userLanguages = getGeneralSettings('user_languages');
             if (!empty($userLanguages) and is_array($userLanguages)) {
@@ -635,7 +680,6 @@ class UserController extends Controller
             ];
 
             return view(getTemplate() . '.panel.setting.index', $data);
-
         }
 
         abort(404);

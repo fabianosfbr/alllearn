@@ -14,7 +14,7 @@ class AlterUniqueMobileUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-           $table->dropUnique(['mobile']);
+            //  $table->dropUnique(['mobile']);
         });
     }
 
