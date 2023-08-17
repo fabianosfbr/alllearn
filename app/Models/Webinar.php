@@ -655,10 +655,11 @@ class Webinar extends Model implements TranslatableContract
             $salesCount = !empty($this->sales_count) ? $this->sales_count : $this->sales()->count();
 
             if ($this->capacity > 0) {
-                return ($this->start_date > time() and $salesCount < $this->capacity);
+                return ($salesCount < $this->capacity);
             }
 
-            return ($this->start_date > time());
+            return true;
+            // return ($this->start_date > time());
         }
 
         return true;
