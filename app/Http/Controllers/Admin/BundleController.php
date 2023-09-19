@@ -223,6 +223,7 @@ class BundleController extends Controller
             'slug' => 'max:255|unique:bundles,slug',
             'thumbnail' => 'required',
             'image_cover' => 'required',
+            'start_date' => 'required|date',
             'description' => 'required',
             'teacher_id' => 'required|exists:users,id',
             'category_id' => 'required',
@@ -254,6 +255,7 @@ class BundleController extends Controller
             'points' => $data['points'] ?? null,
             'price' => $data['price'],
             'access_days' => $data['access_days'] ?? null,
+            'start_date' => $data['start_date'],
             'category_id' => $data['category_id'],
             'message_for_reviewer' => $data['message_for_reviewer'] ?? null,
             'status' => Bundle::$pending,
@@ -370,6 +372,7 @@ class BundleController extends Controller
             'title' => 'required|max:255',
             'slug' => 'max:255|unique:bundles,slug,' . $bundle->id,
             'thumbnail' => 'required',
+            'start_date' => 'required',
             'image_cover' => 'required',
             'description' => 'required',
             'teacher_id' => 'required|exists:users,id',
@@ -448,6 +451,7 @@ class BundleController extends Controller
             $data['video_demo_source'] = 'upload';
         }
 
+        // dd($data['start_date']);
         $bundle->update([
             'slug' => $data['slug'],
             'teacher_id' => $data['teacher_id'],
@@ -458,6 +462,7 @@ class BundleController extends Controller
             'subscribe' => $data['subscribe'],
             'points' => $data['points'] ?? null,
             'price' => $data['price'],
+            'start_date' => $data['start_date'],
             'access_days' => $data['access_days'] ?? null,
             'category_id' => $data['category_id'],
             'message_for_reviewer' => $data['message_for_reviewer'] ?? null,

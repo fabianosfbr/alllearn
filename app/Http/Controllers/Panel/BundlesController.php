@@ -322,6 +322,7 @@ class BundlesController extends Controller
         if ($currentStep == 2) {
             $rules = [
                 'category_id' => 'required',
+                'start_date' => 'required',
             ];
         }
 
@@ -385,7 +386,8 @@ class BundlesController extends Controller
             $data['subscribe'] = !empty($data['subscribe']) ? true : false;
         }
 
-        unset($data['_token'],
+        unset(
+            $data['_token'],
             $data['current_step'],
             $data['draft'],
             $data['get_next'],

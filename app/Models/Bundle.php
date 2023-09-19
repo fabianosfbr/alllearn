@@ -29,6 +29,8 @@ class Bundle extends Model implements TranslatableContract
         'active', 'pending', 'is_draft', 'inactive'
     ];
 
+    protected $dates = ['start_date'];
+
     static $videoDemoSource = ['upload', 'youtube', 'vimeo', 'external_link'];
 
     public $translatedAttributes = ['title', 'description', 'seo_description'];
@@ -287,7 +289,6 @@ class Bundle extends Model implements TranslatableContract
             if (!$hasBought) {
                 $hasBought = $user->isAdmin();
             }
-
         }
 
         return $hasBought;
