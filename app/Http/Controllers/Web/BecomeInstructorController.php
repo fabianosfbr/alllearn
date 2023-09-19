@@ -32,18 +32,17 @@ class BecomeInstructorController extends Controller
             $isInstructorRole = false;
             $isBusinessRole = false;
 
-            if(!empty($lastRequest)){
+            if (!empty($lastRequest)) {
 
-                if($lastRequest->role == Role::$organization){
+                if ($lastRequest->role == Role::$organization) {
                     $isOrganizationRole = true;
                 }
-                if($lastRequest->role == Role::$teacher){
+                if ($lastRequest->role == Role::$teacher) {
                     $isInstructorRole = true;
                 }
-                if($lastRequest->role == Role::$business){
+                if ($lastRequest->role == Role::$business) {
                     $isBusinessRole = true;
                 }
-
             }
 
             $data = [
@@ -57,7 +56,7 @@ class BecomeInstructorController extends Controller
                 'isBusinessRole' => $isBusinessRole,
             ];
 
-           // dd($data);
+            // dd($data);
 
             return view('web.default.user.become_instructor.index', $data);
         }
@@ -67,20 +66,20 @@ class BecomeInstructorController extends Controller
 
     public function store(Request $request)
     {
-       // dd($request->all());
+        //dd($request->all());
         $user = auth()->user();
 
         $this->validate($request, [
-                    'role' => 'required',
-                    'occupations' => 'nullable',
-                    'certificate' => 'required',
-                    'account_type' => 'required',
-                    'cnpj_id' => 'required',
-                    //'iban' => 'required',
-                    'account_id' => 'required',
-                    'identity_scan' => 'required',
-                    'description' => 'nullable|string',
-                ]);
+            'role' => 'required',
+            'occupations' => 'nullable',
+            'certificate' => 'required',
+            'account_type' => 'required',
+            'cnpj_id' => 'required',
+            //'iban' => 'required',
+            'account_id' => 'required',
+            'identity_scan' => 'required',
+            'description' => 'nullable|string',
+        ]);
 
         $data = $request->all();
 
@@ -105,8 +104,8 @@ class BecomeInstructorController extends Controller
 
                 $user->update([
                     'account_type' => $data['account_type'],
-                   // 'iban' => $data['iban'],
-                   'cnpj_id' => $data['cnpj_id'],
+                    // 'iban' => $data['iban'],
+                    'cnpj_id' => $data['cnpj_id'],
                     'account_id' => $data['account_id'],
                     'identity_scan' => $data['identity_scan'],
                     'certificate' => $data['certificate'],
@@ -124,7 +123,7 @@ class BecomeInstructorController extends Controller
                         ]);
                     }
                 }
-            }else{
+            } else {
 
                 $lastRequest->update([
                     'user_id' => $user->id,
@@ -135,8 +134,8 @@ class BecomeInstructorController extends Controller
                 ]);
                 $user->update([
                     'account_type' => $data['account_type'],
-                   // 'iban' => $data['iban'],
-                   'cnpj_id' => $data['cnpj_id'],
+                    // 'iban' => $data['iban'],
+                    'cnpj_id' => $data['cnpj_id'],
                     'account_id' => $data['account_id'],
                     'identity_scan' => $data['identity_scan'],
                     'certificate' => $data['certificate'],
@@ -152,7 +151,6 @@ class BecomeInstructorController extends Controller
                         ]);
                     }
                 }
-
             }
 
 

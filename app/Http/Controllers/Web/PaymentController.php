@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Accounting;
 use App\Models\BecomeInstructor;
+use App\Models\Bundle;
 use App\Models\Cart;
 use App\Models\Invoice;
 use App\Models\Order;
@@ -39,6 +40,7 @@ class PaymentController extends Controller
 
     public function paymentRequestCreditCard(Request $request)
     {
+
 
         $rules = [
             'order_id' => 'required',
@@ -105,7 +107,6 @@ class PaymentController extends Controller
             'full_name' => $dataValidate['full_name'],
             'docType' => $dataValidate['identificationType'],
             'docNumber' => $dataValidate['identificationNumber'],
-            'email' => $dataValidate['cardholderEmail'],
             'mobile_code_area' => $dataValidate['code_zone'],
             'mobile' => $dataValidate['phone_number'],
             'zip_code' => $dataValidate['zip_code'],
@@ -253,16 +254,23 @@ class PaymentController extends Controller
             'full_name' => $dataValidate['full_name'],
             'docType' => $dataValidate['identificationType'],
             'docNumber' => $dataValidate['identificationNumber'],
-            'email' => $dataValidate['cardholderEmail'],
             'mobile_code_area' => $dataValidate['code_zone'],
             'mobile' => $dataValidate['phone_number'],
             'zip_code' => $dataValidate['zip_code'],
             'street_name' => $dataValidate['street_name'],
             'neigborhood' => $dataValidate['neigborhood'],
             'street_number' => $dataValidate['street_number'],
+            'complement' => $data['complement'],
             'city' => $dataValidate['city'],
             'federal_unit' => $dataValidate['federal_unit'],
         ]);
+
+
+        $headers = [
+            "Content-Type" => "application/json",
+            "access_token" => env('ASSAS_SECRET_KEY')
+
+        ];
 
 
 
@@ -272,40 +280,42 @@ class PaymentController extends Controller
         );
 
 
+
         $description = $this->getDescriptionCourse($order);
+
 
         // Cria um novo cliente no Assas caso nunca tenha comprado no All Learn
         if (empty($user->assas_id)) {
 
             $dadosCliente = [
-                "name" => $dataValidate['full_name'],
-                "email" => $dataValidate['cardholderEmail'],
-                "mobilePhone" => $dataValidate['code_zone'] . $dataValidate['phone_number'],
-                "cpfCnpj" => $dataValidate['identificationNumber'],
-                "postalCode" => $dataValidate['zip_code'],
-                "addressNumber" => $dataValidate['street_number'],
-                "complement" => $dataValidate['complement'] ?? '',
+                "name" => $data['full_name'],
+                "email" => $data['cardholderEmail'],
+                "mobilePhone" => $data['code_zone'] . $data['phone_number'],
+                "cpfCnpj" => $data['identificationNumber'],
+                "postalCode" => $data['zip_code'],
+                "addressNumber" => $data['street_number'],
+                "complement" => $data['complement'] ?? '',
                 "externalReference" => $user->id,
                 "notificationDisabled" => false,
             ];
 
-
             $cliente = $asaas->Cliente()->create($dadosCliente);
 
-            $parts = explode("_",  $cliente->id);
+            $parts = explode("_",  $cliente['id']);
 
             $user->update([
                 'assas_id' => intval($parts[1]),
             ]);
         }
 
+        $cliente = $asaas->Cliente()->getById($user->assas_id);
 
         $dadosCobranca = [
             "customer" => $user->assas_id,
-            "billingType" => "BOLETO",
+            "billingType" => $data['payment_type'] == 'pix' ? "PIX" : "BOLETO",
             "dueDate" => date("Y-m-d"),
             "installmentCount" => $data['invoiceParcelNumber'],
-            "installmentValue" => $data['total'] / $data['invoiceParcelNumber'],
+            "installmentValue" => $data['payment_type'] == 'pix' ?  $data['total'] : $data['total'] / $data['invoiceParcelNumber'],
             "description" => $description,
             "externalReference" => $order->id,
             "fine" => [
@@ -317,40 +327,58 @@ class PaymentController extends Controller
             "postalService" => false
         ];
 
+        if ($data['payment_type'] == 'pix') {
+            unset($dadosCobranca['fine']);
+            unset($dadosCobranca['interest']);
+        }
+
+
         $asaas->Cobranca()->create($dadosCobranca);
+
 
         $invoices = $asaas->Cobranca()->getByCustomer($user->assas_id);
 
-        foreach ($invoices->data as $data) {
-           $infoBoleto = $asaas->Cobranca()->getInfoBoleto($data->id);
+
+
+        foreach ($invoices['data'] as $data) {
+
+            if ($data['billingType'] == 'BOLETO') $infoBoleto = $asaas->Cobranca()->getBarCode($data['id']);
+
+            if ($data['billingType'] == 'PIX') $infoBoleto = $asaas->Cobranca()->getPixInformation($data['id']);
+
+
             $params = [
-                "date_end" => $data->dateCreated,
-                "payment_id" => $data->id,
-                "value" => $data->value,
-                "installment_number" => $data->installmentNumber,
-                "invoice_url" => $data->invoiceUrl,
-                "bank_slip_url" => $data->bankSlipUrl,
-                "code_bar" => $infoBoleto->barCode,
-                "description" => $data->description,
-                "fine" => $data->fine->value,
-                "interest" => $data->interest->value,
+                "date_end" => $data['dateCreated'],
+                "payment_id" => $data['id'],
+                "payment_type" => $data['billingType'],
+                "value" => $data['value'],
+                "installment_number" => $data['installmentNumber'],
+                "invoice_url" => $data['invoiceUrl'],
+                "bank_slip_url" => $data['bankSlipUrl'],
+                "code_bar" => json_encode($infoBoleto),
+                "description" => $data['description'],
+                "fine" => $data['fine']['value'],
+                "interest" => $data['interest']['value'],
             ];
 
             $params['user_id'] = $user->id;
-            $invoice = new Invoice($params);
+            $invoice = Invoice::firstOrCreate(['payment_id' => $data['id']], $params);
             $invoice->save();
-
-
         }
 
-        $this->setPaymentAccounting($order);
+        //  dd($invoices['data'][0]['billingType'] == 'PIX');
+
+        session()->put($this->order_session_key, $order->id);
+
         $order->update([
             'status' => Order::$pending,
-            'payment_method' => 'invoice',
+            'reference_id' => $invoices['data'][0]['id'],
+            'payment_method' => $invoices['data'][0]['billingType'] == 'PIX' ? 'pix' : 'invoice',
             'payment_data' => serialize($invoices),
         ]);
 
-        session()->put('payment_confirm', $order->id);
+
+        Cart::emptyCart($order->user_id);
 
         return redirect('/payments/status');
     }
@@ -744,8 +772,16 @@ class PaymentController extends Controller
     {
 
         $courses = $order->orderItems->pluck('webinar_id')->toArray();
+        $webinars = Webinar::whereIn('id', $courses)
+            ->get()
+            ->toArray();
 
-        $webinars = Webinar::whereIn('id', $courses)->get()->toArray();
+        if (count($webinars) == 0) {
+            $courses = $order->orderItems->pluck('bundle_id')->toArray();
+            $webinars = Bundle::whereIn('id', $courses)
+                ->get()
+                ->toArray();
+        }
 
         $description = "\n";
 
@@ -865,48 +901,60 @@ class PaymentController extends Controller
     public function paymentAsaasVerify(Request $request)
     {
 
-        $data = $request->all();
+        $data = request()->json()->all();
         $payment_id = null;
 
-        if($data['event'] == 'PAYMENT_DELETED'){
+        if ($data['event'] == 'PAYMENT_DELETED') {
             $payment = $data['payment'];
             $payment_id = $payment['id'];
-            $invoice = Invoice::where('payment_id', $payment_id  )->first();
-
+            $invoice = Invoice::where('payment_id', $payment_id)->first();
             $invoice->status = 'Cancelado';
             $invoice->deleted = 1;
             $invoice->save();
-           // dd($invoice);
 
+
+            $serializeData = json_encode($data);
+            DB::insert('insert into log_asaas_notification (payment_id, event, created_at) values (?, ?, ?)', [$payment_id, $serializeData, now()]);
         }
 
-        if($data['event'] == 'PAYMENT_UPDATED'){
+        if ($data['event'] == 'PAYMENT_UPDATED') {
             $payment = $data['payment'];
             $payment_id = $payment['id'];
-            $invoice = Invoice::where('payment_id', $payment_id  )->first();
-
-            $invoice->date_end = $data['dueDate'];
-            $invoice->value = $data['value'];
+            $invoice = Invoice::where('payment_id', $payment_id)->first();
+            $invoice->date_end = $payment['dueDate'];
+            $invoice->value = $payment['value'];
             $invoice->save();
-           // dd($invoice);
 
+
+            $serializeData = json_encode($data);
+            DB::insert('insert into log_asaas_notification (payment_id, event, created_at) values (?, ?, ?)', [$payment_id, $serializeData, now()]);
         }
 
-        if($data['event'] == 'PAYMENT_RECEIVED'){
+        if ($data['event'] == 'PAYMENT_RECEIVED') {
             $payment = $data['payment'];
             $payment_id = $payment['id'];
-            $invoice = Invoice::where('payment_id', $payment_id  )->first();
 
-            $invoice->status = 'Pago';
-            $invoice->save();
-           // dd($invoice);
+            $invoice = Invoice::where('payment_id', $payment_id)->select('id', 'payment_id', 'status')->first();
+            $order = $order = Order::where('reference_id', $payment_id)->first();
 
+            if (isset($invoice) and isset($order)) {
+
+                $this->setPaymentAccounting($order);
+                $invoice->status = 'Pago';
+                $invoice->save();
+
+                $order->update([
+                    'status' => Order::$paid,
+                    'payment_data' => serialize($data),
+                ]);
+
+                $serializeData = json_encode($data);
+                DB::insert('insert into log_asaas_notification (payment_id, event, created_at) values (?, ?, ?)', [$payment_id, $serializeData, now()]);
+            }
         }
 
-       // dd($payment_id);
 
-       $serializeData = json_encode($data);
-       DB::insert('insert into log_asaas_notification (payment_id, event) values (?, ?)', [ $payment_id , $serializeData]);
+
 
         return response()->json($data, 200);
     }
@@ -977,11 +1025,16 @@ class PaymentController extends Controller
 
     public function setPaymentAccounting($order, $type = null)
     {
+
+
         if ($order->is_charge_account) {
             Accounting::charge($order);
         } else {
             foreach ($order->orderItems as $orderItem) {
-                $sale = Sale::createSales($orderItem, $order->payment_method);
+
+                if (!empty($orderItem->product_id)) {
+                    $sale = Sale::createSales($orderItem, $order->payment_method);
+                }
 
                 if (!empty($orderItem->reserve_meeting_id)) {
                     $reserveMeeting = ReserveMeeting::where('id', $orderItem->reserve_meeting_id)->first();
@@ -1039,14 +1092,22 @@ class PaymentController extends Controller
             ->where('user_id', auth()->id())
             ->first();
 
+        $invoice = Invoice::where('payment_id', $order->reference_id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+
+
         if (!empty($order)) {
             $data = [
                 'pageTitle' => trans('public.cart_page_title'),
                 'order' => $order,
+                'invoice' => $invoice
             ];
 
             return view('web.default.cart.status_pay', $data);
         }
+
 
         return redirect('/panel');
     }

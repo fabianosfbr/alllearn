@@ -16,88 +16,113 @@ class Cobranca
     }
 
     // Retorna a listagem de cobranças
-    public function getAll(array $filtros = []){
+    public function getAll(array $filtros = [])
+    {
         $filtro = '';
-        if(is_array($filtros)){
-            if($filtros){
-                foreach($filtros as $key => $f){
-                    if(!empty($f)){
-                        if($filtro){
+        if (is_array($filtros)) {
+            if ($filtros) {
+                foreach ($filtros as $key => $f) {
+                    if (!empty($f)) {
+                        if ($filtro) {
                             $filtro .= '&';
                         }
-                        $filtro .= $key.'='.$f;
+                        $filtro .= $key . '=' . $f;
                     }
                 }
-                $filtro = '?'.$filtro;
+                $filtro = '?' . $filtro;
             }
         }
-        return $this->http->get('/payments'.$filtro);
+        return $this->http->get('/payments' . $filtro)->json();
     }
 
     // Retorna os dados da cobrança de acordo com o Id
-    public function getById($id){
-        return $this->http->get('/payments/'.$id);
+    public function getById($id)
+    {
+        return $this->http->get('/payments/' . $id);
     }
 
     // Retorna a listagem de cobranças de acordo com o Id do Cliente
-    public function getByCustomer($customer_id){
-        return $this->http->get('/payments?customer='.$customer_id);
+    public function getByCustomer($customer_id)
+    {
+        return $this->http->get('/payments?customer=' . $customer_id);
     }
 
     // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
-    public function getBySubscription($subscription_id){
-        return $this->http->get('/payments?subscription='.$subscription_id);
+    public function getBySubscription($subscription_id)
+    {
+        return $this->http->get('/payments?subscription=' . $subscription_id);
     }
 
     // Insere uma nova cobrança
-    public function create(array $dadosCobranca){
+    public function create(array $dadosCobranca)
+    {
         $dadosCobranca = $this->setCobranca($dadosCobranca);
-        if(!empty($dadosCobranca['error'])){
+        if (!empty($dadosCobranca['error'])) {
             return $dadosCobranca;
-        }else {
-            return $this->http->post('/payments', $dadosCobranca);
+        } else {
+            return $this->http->post('/payments', $dadosCobranca)->json();
         }
     }
 
     // Atualiza os dados da cobrança
-    public function update($id, array $dadosCobranca){
+    public function update($id, array $dadosCobranca)
+    {
         return $this->http->post('/payments/' . $id, $dadosCobranca);
     }
 
-    // Atualiza os dados da cobrança
-    public function getInfoBoleto($id){
-        return $this->http->post('/payments/'.$id.'/identificationField', []);
+    // Recupera os dados de uma cobrança
+    public function getInfoBoleto($id)
+    {
+        // return $this->http->post('/payments/' . $id . '/identificationField', []);
+        return $this->http->get('/payments/' . $id);
+    }
+
+    public function getBarCode($id)
+    {
+
+        return $this->http->get('/payments/' . $id . '/identificationField');
+    }
+    public function getPixInformation($id)
+    {
+
+        return $this->http->get('/payments/' . $id . '/pixQrCode');
     }
 
     // Restaura cobrança removida
-    public function restore($id){
+    public function restore($id)
+    {
         return $this->http->post("/payments/{$id}/restore", []);
     }
 
     // Estorna cobrança
-    public function estorno($id){
+    public function estorno($id)
+    {
         return $this->http->post("/payments/{$id}/refund", []);
     }
 
     // Confirmação em dinheiro
-    public function confirmacao($id, $dados){
+    public function confirmacao($id, $dados)
+    {
         return $this->http->post("/payments/{$id}/receiveInCash", $dados);
     }
     // Confirmação em dinheiro
-    public function dezconfirmacao($id, $dados){
+    public function dezconfirmacao($id, $dados)
+    {
         return $this->http->post("/payments/{$id}/undoReceivedInCash", $dados);
     }
 
     // Deleta uma cobrança
-    public function delete($id){
-        return $this->http->get('/payments/'.$id,'','DELETE');
+    public function delete($id)
+    {
+        return $this->http->get('/payments/' . $id, '', 'DELETE');
     }
 
 
 
     // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
-    public function Carner($id){
-        return $this->http->get('/installments/id'.$id);
+    public function Carner($id)
+    {
+        return $this->http->get('/installments/id' . $id);
     }
 
 
@@ -142,9 +167,6 @@ class Cobranca
 
             $this->cobranca = array_merge($this->cobranca, $dados);
             return $this->cobranca;
-
-
-
         } catch (Exception $e) {
             return 'Erro ao definir o cliente. - ' . $e->getMessage();
         }
@@ -176,10 +198,8 @@ class Cobranca
 
             $this->cobranca = array_merge($this->cobranca, $dados);
             return $this->cobranca;
-
         } catch (Exception $e) {
             return 'Erro ao definir o cliente. - ' . $e->getMessage();
         }
     }
-
 }

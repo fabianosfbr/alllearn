@@ -3,7 +3,7 @@
 @push('scripts_top')
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<script src="/assets/default/js/busca-cep.js"></script>
+<!-- <script src="/assets/default/js/busca-cep.js"></script> -->
 <script src="/assets/default/js/mercado-pago.js"></script>
 
 
@@ -22,7 +22,8 @@
 @section('content')
 <section class="cart-banner position-relative text-center">
     <h1 class="font-30 text-white font-weight-bold">{{ trans('cart.checkout') }}</h1>
-    <span class="payment-hint font-20 text-white d-block">{{ $currency . $total . ' ' . trans('cart.for_items', ['count' => $count]) }}</span>
+    <span class="payment-hint font-20 text-white d-block">{{ $currency . $total . ' ' . trans('cart.for_items', ['count'
+        => $count]) }}</span>
 </section>
 
 <section x-data="payment()" class="container mt-45">
@@ -33,7 +34,8 @@
         {{-- Botão para pagar com boleto, pix ou cartão --}}
         <div class="col-4 col-lg-4 mb-40 charge-account-radio">
             <input type="radio" name="payment_option" id="gateway" value="gateway" @click="showForm=1">
-            <label for="gateway" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+            <label for="gateway"
+                class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                 <img src="/assets/default/img/activity/invoice.svg" width="120" height="60" alt="">
                 <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
                 <div class="text-center">Pagar com</div>
@@ -45,7 +47,8 @@
         {{-- Botão para pagar com boleto, pix ou cartão --}}
         <div class="col-4 col-lg-4 mb-40 charge-account-radio">
             <input type="radio" name="payment_option" id="credicard" value="credicard" @click="showForm=2">
-            <label for="credicard" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+            <label for="credicard"
+                class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                 <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
                 <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
@@ -58,7 +61,8 @@
         {{-- Botão para pagar com saldo All Learn --}}
         <div class="col-4 col-lg-4 mb-40 charge-account-radio">
             <input type="radio" name="payment_option" id="alllearn" value="credit" @click="showForm=3">
-            <label for="alllearn" class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
+            <label for="alllearn"
+                class="rounded-sm p-20 p-lg-45 d-flex flex-column align-items-center justify-content-center">
                 <img src="/assets/default/img/activity/pay.svg" width="120" height="60" alt="">
 
                 <p class="mt-30 mt-lg-50 font-weight-500 text-dark-blue">
@@ -73,685 +77,611 @@
 
     {{-- Pagamento Cartão de Crédito --}}
     <div class="row" x-init="mpOptions" x-show="showForm == 2">
-        <form id="form-checkout" action="{{route('payment-request-creditcard')}}" method="post" style="width: 100%">
-            {{ csrf_field() }}
-            <input type="hidden" name="order_id" value="{{ $order->id }}">
+        <div class="mx-auto col-12 col-md-8">
+            <form id="form-checkout" action="{{route('payment-request-creditcard')}}" method="post">
+
+                {{ csrf_field() }}
+                <input type="hidden" name="order_id" value="{{ $order->id }}">
 
 
-            @if ($errors->any())
-            <div class="errorMessage mb-2">
-                @foreach ($errors->all() as $error)
-                <ul>
-                    <li class="divErrorMessage m-1 col-4" style="font-size: 14px">{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
+                @if ($errors->any())
+                <div class="errorMessage mb-2">
+                    @foreach ($errors->all() as $error)
+                    <ul>
+                        <li class="divErrorMessage m-1 col-4" style="font-size: 14px">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 
-            <div class="form-row">
-                <div class="col">
-                    <label class="input-label">Nome</label>
-                    <input id="full_name" type="text" name="full_name" class="form-control @error('full_name')  is-invalid @enderror" placeholder="" value="{{ !empty($user) ? $user->full_name : old('full_name') }}" />
-                    @error('full_name')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
+                @include('web.default.cart.includes.personal_information')
 
-            </div>
 
-            <div class="form-row">
-                <div class="col-lg-3">
-                    <label class="input-label" for="form-checkout__identificationType">Tipo de documento</label>
+                <h3 style="padding-bottom: 25px;">Detalhes do pagamento</h3>
 
-                    <select name="identificationType" id="form-checkout__identificationType" class="form-control"></select>
-
-                    @error('identificationType')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
+                <div class="form-group row mb-4">
+                    <div class="col-4">
+                        <label class="input-label" for="cardholderName">Titular do cartão*</label>
+                        <input class="form-control" type="text" id="form-checkout__cardholderName" />
                     </div>
-                    @enderror
-                </div>
-                <div class="col">
-                    <label class="input-label" for="form-checkout__identificationNumber">Número do documento</label>
-                    <input type="text" name="identificationNumber" id="form-checkout__identificationNumber" class="form-control" />
-                    @error('identificationNumber')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col">
-                    <label class="input-label" for="email">E-mail</label>
-                    <input type="email" class="form-control @error('cardholderEmail') value=" {{ !empty($user) ? $user->email : old('cardholderEmail') }}" is-invalid @enderror" name="cardholderEmail" id="form-checkout__cardholderEmail" />
-                    @error('cardholderEmail')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">DDD</label>
-                    <input id="ddd" class="form-control @error('code_zone')  is-invalid @enderror""
-                                type=" text" name="code_zone" value="{{ !empty($user) ? $user->code_zone : old('code_zone') }}">
-                    @error('code_zone')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-6">
-                    <label class="input-label">Celular</label>
-                    <input id="phone" type="tel" name="phone_number" class="form-control @error('phone_number')  is-invalid @enderror" value="{{ !empty($user) ? $user->mobile : old('mobile') }}" />
-                    @error('phone_number')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">CEP</label>
-                    <input id="zip_code" type="text" name="zip_code" class="form-control @error('zip_code')  is-invalid @enderror" value="{{ !empty($user) ? $user->zip_code : old('zip_code') }}" />
-                    @error('zip_code')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-4">
-                    <label class="input-label">Nome da rua</label>
-                    <input id="street_name" type="text" name="street_name" class="form-control @error('street_name')  is-invalid @enderror" value="{{ !empty($user) ? $user->street_name : old('street_name') }}" />
-                    @error('street_name')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Número</label>
-                    <input id="street_number" type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" value="{{ !empty($user) ? $user->street_number : old('street_number') }}" />
-                    @error('street_number')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">Complemento</label>
-                    <input id="complement" type="text" name="complement" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ !empty($user) ? $user->complement : old('complement') }}" />
-                    @error('complement')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Bairro</label>
-                    <input id="neigborhood" type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ !empty($user) ? $user->neigborhood : old('neigborhood') }}" />
-                    @error('neigborhood')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Cidade</label>
-                    <input id="city" type="text" name="city" class="form-control @error('city')  is-invalid @enderror" value="{{ !empty($user) ? $user->city : old('city') }}" />
-                    @error('city')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Estado</label>
-                    <select class="form-control @error('federal_unit')  is-invalid @enderror"" id=" federal_unit" name="federal_unit">
-                        <option value="" selected disabled hidden>Selecione</option>
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                        <option value="EX">Estrangeiro</option>
-                    </select>
-                    @error('federal_unit')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="pt-3">
-                <h3 class="mb-2 mt-3">Detalhes do pagamento</h3>
-                <div class="form-group pt-3">
-                    <div class="row mb-3">
-                        <div class="form-row">
-                            <div class="col-lg-3">
-                                <label class="input-label" for="cardholderName">Titular do cartão</label>
-                                <input class="form-control" type="text" id="form-checkout__cardholderName" />
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="input-label" class="input-label" for="cardNumber">Número do cartão</label>
-                                <div class="d-flex align-items-center">
-                                    <div id="form-checkout__cardNumber" class="form-control"></div>
-                                    <div class="brand mx-1"></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <label class="input-label" for="securityCode">Data de vencimento</label>
-                                <div id="form-checkout__expirationDate" class="form-control"></div>
-                            </div>
+                    <div class="col-4">
+                        <label class="input-label" class="input-label" for="cardNumber">Número do cartão*</label>
+                        <div class="d-flex align-items-center">
+                            <div id="form-checkout__cardNumber" class="form-control"></div>
+                            <div class="brand mx-1"></div>
                         </div>
-
-                        <div class="form-row">
-                            <div class="col-lg-3">
-                                <label class="input-label" for="issuer">Código de segurança</label>
-                                <div id="form-checkout__securityCode" class="form-control"></div>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="input-label" for="installments">Quantidade de parcelas</label>
-                                <select class="form-control" id="form-checkout__installments"></select>
-
-
-                            </div>
-                            <select id="form-checkout__issuer" x-show='false'></select>
-                            <input type="hidden" name="installments" id="installments" value="1">
-                        </div>
-
+                    </div>
+                    <div class="col-4">
+                        <label class="input-label" for="securityCode">Data de vencimento*</label>
+                        <div id="form-checkout__expirationDate" class="form-control"></div>
                     </div>
 
                 </div>
 
-            </div>
+                <div class="form-group row mb-4">
+
+                    <div class="col-4">
+                        <label class="input-label" for="issuer">Código de segurança*</label>
+                        <div id="form-checkout__securityCode" class="form-control"></div>
+                    </div>
+                    <div class="col-4">
+                        <label class="input-label" for="installments">Quantidade de parcelas*</label>
+                        <select class="form-control" id="form-checkout__installments"></select>
+                    </div>
+                    <select id="form-checkout__issuer" x-show='false'></select>
+                    <input type="hidden" name="installments" id="installments" value="1">
 
 
+                </div>
 
-
-
-
-
-
-            <div class=" d-flex align-items-center justify-content-between mt-45">
-                <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} R$
-                    {{ handlePriceFormat($total, 2, ',', '.') }}</span>
-                <button type="submit" id="form-checkout__submit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
-            </div>
-
-        </form>
+                <div class=" d-flex align-items-center justify-content-between mt-45">
+                    <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} R$
+                        {{ handlePriceFormat($total, 2, ',', '.') }}</span>
+                    <button type="submit" id="form-checkout__submit" class="btn btn-sm btn-primary">Finalizar
+                        pagamento</button>
+                </div>
+            </form>
+            <!-- Form end -->
+        </div>
     </div>
 
     {{-- Pagamento Boleto --}}
-    <div class="row" x-show="showForm == 1">
-        <form id="form-checkout" action="{{route('payment-request-invoice')}}" method="post" style="width: 100%">
-            {{ csrf_field() }}
-            <input type="hidden" name="order_id" value="{{ $order->id }}">
+    <div class="row" x-init="mpOptions" x-show="showForm == 1">
+        <div class="mx-auto col-12 col-md-8">
+            <form id="form-checkout" action="{{route('payment-request-invoice')}}" method="post" method="post">
+
+                {{ csrf_field() }}
+                <input type="hidden" name="order_id" value="{{ $order->id }}">
 
 
-            @if ($errors->any())
-            <div class="errorMessage mb-2">
-                @foreach ($errors->all() as $error)
-                <ul>
-                    <li class="divErrorMessage m-1 col-4" style="font-size: 14px">{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
+                @if ($errors->any())
+                <div class="errorMessage mb-2">
+                    @foreach ($errors->all() as $error)
+                    <ul>
+                        <li class="divErrorMessage m-1 col-4" style="font-size: 14px">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 
-            <div class="form-row">
-                <div class="col">
-                    <label class="input-label">Nome</label>
-                    <input type="text" name="full_name" class="form-control @error('full_name')  is-invalid @enderror" placeholder="" value="{{ !empty($user) ? $user->full_name : old('full_name') }}" />
-                    @error('full_name')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-3">
-                    <label class="input-label" for="form-checkout__identificationType">Tipo de documento</label>
-
-                    <select name="identificationType" class="form-control">
-                        <option value="CPF">CPF</option>
-                        <option value="CNPJ">CNPJ</option>
-                    </select>
-
-                    @error('identificationType')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col">
-                    <label class="input-label" for="form-checkout__identificationNumber">Número do documento</label>
-                    <input type="text" name="identificationNumber" class="form-control" placeholder="Número do documento" />
-                    @error('identificationNumber')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col">
-                    <label class="input-label" for="email">E-mail</label>
-                    <input type="email" class="form-control @error('cardholderEmail') value=" {{ !empty($user) ? $user->email : old('cardholderEmail') }}" is-invalid @enderror" name="cardholderEmail" />
-                    @error('cardholderEmail')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">DDD</label>
-                    <input class="form-control @error('code_zone')  is-invalid @enderror""
-                                type=" text" name="code_zone" value="{{ !empty($user) ? $user->code_zone : old('code_zone') }}">
-                    @error('code_zone')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-6">
-                    <label class="input-label">Celular</label>
-                    <input type="tel" name="phone_number" class="form-control @error('phone_number')  is-invalid @enderror" value="{{ !empty($user) ? $user->mobile : old('mobile') }}" />
-                    @error('phone_number')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">CEP</label>
-                    <input type="text" name="zip_code" class="form-control @error('zip_code')  is-invalid @enderror" value="{{ !empty($user) ? $user->zip_code : old('zip_code') }}" />
-                    @error('zip_code')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-4">
-                    <label class="input-label">Nome da rua</label>
-                    <input type="text" name="street_name" class="form-control @error('street_name')  is-invalid @enderror" value="{{ !empty($user) ? $user->street_name : old('street_name') }}" />
-                    @error('street_name')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Número</label>
-                    <input type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" value="{{ !empty($user) ? $user->street_number : old('street_number') }}" />
-                    @error('street_number')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">Complemento</label>
-                    <input type="text" name="complement" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ !empty($user) ? $user->complement : old('complement') }}" />
-                    @error('complement')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Bairro</label>
-                    <input type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ !empty($user) ? $user->neigborhood : old('neigborhood') }}" />
-                    @error('neigborhood')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Cidade</label>
-                    <input type="text" name="city" class="form-control @error('city')  is-invalid @enderror" value="{{ !empty($user) ? $user->city : old('city') }}" />
-                    @error('city')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Estado</label>
-                    <select class="form-control @error('federal_unit')  is-invalid @enderror"" id=" federal_unit" name="federal_unit">
-                        <option value="" selected disabled hidden>Selecione</option>
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                        <option value="EX">Estrangeiro</option>
-                    </select>
-                    @error('federal_unit')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-group pt-3">
-                <div class="mt-2 d-flex">
-                    <div class="custom-control custom-radio col-lg-3">
-                        <input id="boleto" class="custom-control-input" type="radio" name="payment_type" value="boleto" @click="invoiceForm=true">
-                        <label for="boleto" class="custom-control-label">Boleto</label>
-                    </div>
-                    <div class="custom-control custom-radio col-lg-3">
-                        <input id="pix" class="custom-control-input" type="radio" name="payment_type" value="pix" @click="creditCardForm = false, invoiceForm=false">
-                        <label for="pix" class="custom-control-label">Pix</label>
-                    </div>
-
-                </div>
-            </div>
-
-            {{-- Pagamento com boleto --}}
-            <div class="pt-3" x-show="invoiceForm">
-                <h3 class="mb-2 mt-3">Quantidade de parcelas</h3>
                 <div>
-                    <div class="row mb-2">
-                        <div class="col-lg-3">
-                            <select name="invoiceParcelNumber" class="form-control">
-                                @foreach ($invoiceInstallment as $k => $parcel)
-                                <option value="{{ $parcel }}">{{ $parcel }}
-                                    {{ $parcel > 1 ? 'parcelas' : 'parcela' }} de R$
-                                    {{ handlePriceFormat($total / $parcel, 2, ',', '.') }} - (R$
-                                    {{ handlePriceFormat($total, 2, ',', '.') }})
-                                </option>
-                                @endforeach
-                            </select>
+                    <p style="padding-bottom: 20px;">
+                        Informe seus dados pessoais para pagamento
+                    </p>
 
-                            <input type="hidden" name="total" value="{{ $total }}" />
+                    <!-- Nome -->
+                    <div class="form-group row mb-4">
+                        <label class="input-label">Nome*</label>
+                        <input id="full_name" type="text" name="full_name"
+                            class="form-control @error('full_name')  is-invalid @enderror" placeholder=""
+                            value="{{ !empty($user) ? $user->full_name : old('full_name') }}" />
+                        @error('full_name')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <!-- Documentos -->
+                    <div class="form-group row mb-4">
+                        <div class="col-4">
+                            <div class="form-outline">
+                                <label class="input-label" for="form-checkout__identificationType">Tipo de
+                                    documento*</label>
+
+                                <select name="identificationType" class="form-control">
+                                    <option value="CPF">CPF</option>
+                                    <option value="CNPJ">CNPJ</option>
+                                </select>
+                                @error('identificationType')
+                                <div class="invalid-feedback d-flex">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-outline">
+                                <label class="input-label" for="form-checkout__identificationNumber">Número do
+                                    documento*</label>
+                                <input type="text" name="identificationNumber" id="form-checkout__identificationNumber"
+                                    class="form-control" placeholder="Número do documento" />
+                                @error('identificationNumber')
+                                <div class="invalid-feedback d-flex">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
+                    <!-- Email -->
+                    <div class="form-group row mb-4">
+                        <label class="input-label" for="email">E-mail*</label>
+                        <input type="email" class="form-control @error('cardholderEmail')  is-invalid @enderror "
+                            value="{{ !empty($user) ? $user->email : old('cardholderEmail') }}" name="cardholderEmail"
+                            id="form-checkout__cardholderEmail" />
+                        @error('cardholderEmail')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
+                    </div>
+
+                    <!-- Telefone /CEP -->
+                    <div class="form-group row mb-4">
+                        <div class="col-2">
+                            <label class="input-label">DDD*</label>
+                            <input id="ddd" class="form-control @error('code_zone')  is-invalid @enderror""
+                                type=" text" name="code_zone"
+                                value="{{ !empty($user) ? $user->mobile_code_area : old('code_zone') }}">
+                            @error('code_zone')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
+                        </div>
+
+                        <div class="col-5">
+                            <label class="input-label">Celular*</label>
+                            <input id="phone" type="tel" name="phone_number"
+                                class="form-control @error('phone_number')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->mobile : old('mobile') }}" />
+                            @error('phone_number')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="col-5">
+                            <label class="input-label">CEP*</label>
+                            <input id="zip_code" type="text" name="zip_code"
+                                class="form-control @error('zip_code')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->zip_code : old('zip_code') }}" />
+                            @error('zip_code')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <!-- Endereço/Nº/Complemento -->
+                    <div class="form-group row mb-4">
+                        <div class="col-6">
+                            <label class="input-label">Nome da rua*</label>
+                            <input id="street_name" type="text" name="street_name"
+                                class="form-control @error('street_name')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->street_name : old('street_name') }}" />
+                            @error('street_name')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
+                        </div>
+
+                        <div class="col-3">
+                            <label class="input-label">Número*</label>
+                            <input id="street_number" type="text" name="street_number"
+                                class="form-control @error('street_number')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->street_number : old('street_number') }}" />
+                            @error('street_number')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
+                        </div>
+
+                        <div class="col-3">
+                            <label class="input-label">Complemento</label>
+                            <input id="complement" type="text" name="complement"
+                                class="form-control @error('neigborhood')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->complement : old('complement') }}" />
+                            @error('complement')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Bairro/Cidade/UF -->
+                    <div class="form-group row mb-4">
+                        <div class="col-4">
+                            <label class="input-label">Bairro*</label>
+                            <input id="neigborhood" type="text" name="neigborhood"
+                                class="form-control @error('neigborhood')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->neigborhood : old('neigborhood') }}" />
+                            @error('neigborhood')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-4">
+                            <label class="input-label">Cidade*</label>
+                            <input id="city" type="text" name="city"
+                                class="form-control @error('city')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->city : old('city') }}" />
+                            @error('city')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
+                        </div>
+                        <div class="col-4">
+                            <label class="input-label">Estado*</label>
+                            <select class="form-control @error('federal_unit')  is-invalid @enderror"" id="
+                                federal_unit" name="federal_unit">
+                                <option value="" selected disabled hidden>Selecione</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                                <option value="EX">Estrangeiro</option>
+                            </select>
+                            @error('federal_unit')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                    </div>
                 </div>
-            </div>
 
+                <h3 style="padding-bottom: 25px;">Detalhes do pagamento</h3>
 
+                <div class="form-group row mb-4">
+                    <div class="mt-2 d-flex" style="width: 250px;">
+                        <div class="custom-control custom-radio">
+                            <input id="boleto" class="custom-control-input" type="radio" name="payment_type"
+                                value="boleto" @click="invoiceForm=true">
+                            <label for="boleto" class="custom-control-label">Boleto</label>
+                        </div>
+                        <div class="custom-control custom-radio" style="margin-left: 30px;">
+                            <input id="pix" class="custom-control-input" type="radio" name="payment_type" value="pix"
+                                @click="creditCardForm = false, invoiceForm=false">
+                            <label for="pix" class="custom-control-label">Pix</label>
+                        </div>
 
-            <div class=" d-flex align-items-center justify-content-between mt-45">
-                <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} R$
-                    {{ handlePriceFormat($total, 2, ',', '.') }}</span>
-                <button type="submit" id="form-checkout__submit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
-            </div>
+                    </div>
 
-        </form>
+                </div>
+
+                <div class="form-group row mb-4">
+                    <div class="pt-3" x-show="invoiceForm">
+                        <h3 class="mb-2 mt-3">Quantidade de parcelas</h3>
+                        <div>
+                            <div class="row mb-2">
+                                <div class="col-lg-4">
+                                    <select class="custom-select" style="width:400px;" name="invoiceParcelNumber">
+                                        @foreach ($invoiceInstallment as $k => $parcel)
+                                        <option value="{{ $parcel }}">{{ $parcel }}
+                                            {{ $parcel > 1 ? 'parcelas' : 'parcela' }} de R$
+                                            {{ handlePriceFormat($total / $parcel, 2, ',', '.') }} - (R$
+                                            {{ handlePriceFormat($total, 2, ',', '.') }})
+                                        </option>
+                                        @endforeach
+                                    </select>
+
+                                    <input type="hidden" name="total" value="{{ $total }}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class=" d-flex align-items-center justify-content-between mt-45">
+                    <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} R$
+                        {{ handlePriceFormat($total, 2, ',', '.') }}</span>
+                    <button type="submit" id="form-checkout__submit" class="btn btn-sm btn-primary">Finalizar
+                        pagamento</button>
+                </div>
+            </form>
+            <!-- Form end -->
+        </div>
     </div>
+
+
+
+
 
     {{-- Pagamento Credito All --}}
-    <div class="row" x-show="showForm == 3">
-        <form id="form-checkout" action="{{route('payment-request-credit')}}" method="post" style="width: 100%">
-            {{ csrf_field() }}
-            <input type="hidden" name="order_id" value="{{ $order->id }}">
+
+    <div class="row" x-init="mpOptions" x-show="showForm == 3">
+        <div class="mx-auto col-12 col-md-8">
+            <form id="form-checkout" action="{{route('payment-request-credit')}}" method="post">
+
+                {{ csrf_field() }}
+                <input type="hidden" name="order_id" value="{{ $order->id }}">
 
 
-            @if ($errors->any())
-            <div class="errorMessage mb-2">
-                @foreach ($errors->all() as $error)
-                <ul>
-                    <li class="divErrorMessage m-1 col-4" style="font-size: 14px">{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
+                @if ($errors->any())
+                <div class="errorMessage mb-2">
+                    @foreach ($errors->all() as $error)
+                    <ul>
+                        <li class="divErrorMessage m-1 col-4" style="font-size: 14px">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 
-            <div class="form-row">
-                <div class="col">
-                    <label class="input-label">Nome</label>
-                    <input type="text" name="full_name" class="form-control @error('full_name')  is-invalid @enderror" placeholder="" value="{{ !empty($user) ? $user->full_name : old('full_name') }}" />
-                    @error('full_name')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
+                <div>
+                    <p style="padding-bottom: 20px;">
+                        Informe seus dados pessoais para pagamento
+                    </p>
+
+                    <!-- Nome -->
+                    <div class="form-group row mb-4">
+                        <label class="input-label">Nome*</label>
+                        <input id="full_name" type="text" name="full_name"
+                            class="form-control @error('full_name')  is-invalid @enderror" placeholder=""
+                            value="{{ !empty($user) ? $user->full_name : old('full_name') }}" />
+                        @error('full_name')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
-                    @enderror
+                    <!-- Documentos -->
+                    <div class="form-group row mb-4">
+                        <div class="col-4">
+                            <div class="form-outline">
+                                <label class="input-label" for="form-checkout__identificationType">Tipo de
+                                    documento*</label>
+
+                                <select name="identificationType" class="form-control">
+                                    <option value="CPF">CPF</option>
+                                    <option value="CNPJ">CNPJ</option>
+                                </select>
+                                @error('identificationType')
+                                <div class="invalid-feedback d-flex">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-outline">
+                                <label class="input-label" for="form-checkout__identificationNumber">Número do
+                                    documento*</label>
+                                <input type="text" name="identificationNumber" id="form-checkout__identificationNumber"
+                                    class="form-control" placeholder="Número do documento" />
+                                @error('identificationNumber')
+                                <div class="invalid-feedback d-flex">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Email -->
+                    <div class="form-group row mb-4">
+                        <label class="input-label" for="email">E-mail*</label>
+                        <input type="email" class="form-control @error('cardholderEmail')  is-invalid @enderror "
+                            value="{{ !empty($user) ? $user->email : old('cardholderEmail') }}" name="cardholderEmail"
+                            id="form-checkout__cardholderEmail" />
+                        @error('cardholderEmail')
+                        <div class="invalid-feedback d-flex">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
+                    </div>
+
+                    <!-- Telefone /CEP -->
+                    <div class="form-group row mb-4">
+                        <div class="col-2">
+                            <label class="input-label">DDD*</label>
+                            <input id="ddd" class="form-control @error('code_zone')  is-invalid @enderror""
+                                type=" text" name="code_zone"
+                                value="{{ !empty($user) ? $user->mobile_code_area : old('code_zone') }}">
+                            @error('code_zone')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
+                        </div>
+
+                        <div class="col-5">
+                            <label class="input-label">Celular*</label>
+                            <input id="phone" type="tel" name="phone_number"
+                                class="form-control @error('phone_number')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->mobile : old('mobile') }}" />
+                            @error('phone_number')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="col-5">
+                            <label class="input-label">CEP*</label>
+                            <input id="zip_code" type="text" name="zip_code"
+                                class="form-control @error('zip_code')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->zip_code : old('zip_code') }}" />
+                            @error('zip_code')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <!-- Endereço/Nº/Complemento -->
+                    <div class="form-group row mb-4">
+                        <div class="col-6">
+                            <label class="input-label">Nome da rua*</label>
+                            <input id="street_name" type="text" name="street_name"
+                                class="form-control @error('street_name')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->street_name : old('street_name') }}" />
+                            @error('street_name')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
+                        </div>
+
+                        <div class="col-3">
+                            <label class="input-label">Número*</label>
+                            <input id="street_number" type="text" name="street_number"
+                                class="form-control @error('street_number')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->street_number : old('street_number') }}" />
+                            @error('street_number')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
+                        </div>
+
+                        <div class="col-3">
+                            <label class="input-label">Complemento</label>
+                            <input id="complement" type="text" name="complement"
+                                class="form-control @error('neigborhood')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->complement : old('complement') }}" />
+                            @error('complement')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Bairro/Cidade/UF -->
+                    <div class="form-group row mb-4">
+                        <div class="col-4">
+                            <label class="input-label">Bairro*</label>
+                            <input id="neigborhood" type="text" name="neigborhood"
+                                class="form-control @error('neigborhood')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->neigborhood : old('neigborhood') }}" />
+                            @error('neigborhood')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-4">
+                            <label class="input-label">Cidade*</label>
+                            <input id="city" type="text" name="city"
+                                class="form-control @error('city')  is-invalid @enderror"
+                                value="{{ !empty($user) ? $user->city : old('city') }}" />
+                            @error('city')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
+                        </div>
+                        <div class="col-4">
+                            <label class="input-label">Estado*</label>
+                            <select class="form-control @error('federal_unit')  is-invalid @enderror"" id="
+                                federal_unit" name="federal_unit">
+                                <option value="" selected disabled hidden>Selecione</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                                <option value="EX">Estrangeiro</option>
+                            </select>
+                            @error('federal_unit')
+                            <div class="invalid-feedback d-flex">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                    </div>
                 </div>
 
-            </div>
+                <input type="hidden" name="total" value="{{ $total }}" />
 
-            <div class="form-row">
-                <div class="col-lg-3">
-                    <label class="input-label" for="form-checkout__identificationType">Tipo de documento</label>
-
-                    <select name="identificationType" class="form-control">
-                        <option value="CPF">CPF</option>
-                        <option value="CNPJ">CNPJ</option>
-                    </select>
-
-                    @error('identificationType')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
+                <div class=" d-flex align-items-center justify-content-between mt-45">
+                    <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} R$
+                        {{ handlePriceFormat($total, 2, ',', '.') }}</span>
+                    <button type="submit" id="form-checkout__submit" class="btn btn-sm btn-primary">Finalizar
+                        pagamento</button>
                 </div>
-                <div class="col">
-                    <label class="input-label" for="form-checkout__identificationNumber">Número do documento</label>
-                    <input type="text" name="identificationNumber" class="form-control" placeholder="Número do documento" />
-                    @error('identificationNumber')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col">
-                    <label class="input-label" for="email">E-mail</label>
-                    <input type="email" class="form-control @error('cardholderEmail') value=" {{ !empty($user) ? $user->email : old('cardholderEmail') }}" is-invalid @enderror" name="cardholderEmail" />
-                    @error('cardholderEmail')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">DDD</label>
-                    <input class="form-control @error('code_zone')  is-invalid @enderror""
-                                type=" text" name="code_zone" value="{{ !empty($user) ? $user->code_zone : old('code_zone') }}">
-                    @error('code_zone')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-6">
-                    <label class="input-label">Celular</label>
-                    <input type="tel" name="phone_number" class="form-control @error('phone_number')  is-invalid @enderror" value="{{ !empty($user) ? $user->mobile : old('mobile') }}" />
-                    @error('phone_number')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">CEP</label>
-                    <input type="text" name="zip_code" class="form-control @error('zip_code')  is-invalid @enderror" value="{{ !empty($user) ? $user->zip_code : old('zip_code') }}" />
-                    @error('zip_code')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-4">
-                    <label class="input-label">Nome da rua</label>
-                    <input type="text" name="street_name" class="form-control @error('street_name')  is-invalid @enderror" value="{{ !empty($user) ? $user->street_name : old('street_name') }}" />
-                    @error('street_name')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Número</label>
-                    <input type="text" name="street_number" class="form-control @error('street_number')  is-invalid @enderror" value="{{ !empty($user) ? $user->street_number : old('street_number') }}" />
-                    @error('street_number')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-lg-2">
-                    <label class="input-label">Complemento</label>
-                    <input type="text" name="complement" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ !empty($user) ? $user->complement : old('complement') }}" />
-                    @error('complement')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Bairro</label>
-                    <input type="text" name="neigborhood" class="form-control @error('neigborhood')  is-invalid @enderror" value="{{ !empty($user) ? $user->neigborhood : old('neigborhood') }}" />
-                    @error('neigborhood')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Cidade</label>
-                    <input type="text" name="city" class="form-control @error('city')  is-invalid @enderror" value="{{ !empty($user) ? $user->city : old('city') }}" />
-                    @error('city')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-lg-2">
-                    <label class="input-label">Estado</label>
-                    <select class="form-control @error('federal_unit')  is-invalid @enderror"" id=" federal_unit" name="federal_unit">
-                        <option value="" selected disabled hidden>Selecione</option>
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                        <option value="EX">Estrangeiro</option>
-                    </select>
-                    @error('federal_unit')
-                    <div class="invalid-feedback d-flex">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
-
-
-
-            <div class=" d-flex align-items-center justify-content-between mt-45">
-                <span class="font-16 font-weight-500 text-gray">{{ trans('financial.total_amount') }} R$
-                    {{ handlePriceFormat($total, 2, ',', '.') }}</span>
-                <button type="submit" id="form-checkout__submit" class="btn btn-sm btn-primary">Finalizar pagamento</button>
-            </div>
-
-        </form>
+            </form>
+            <!-- Form end -->
+        </div>
     </div>
-
 
 
 

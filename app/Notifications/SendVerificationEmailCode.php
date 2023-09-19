@@ -42,6 +42,7 @@ class SendVerificationEmailCode extends Notification
     public function toMail($notifiable)
     {
         $generalSettings = getGeneralSettings();
+        $generalSettings['site_name'] = "All Learn";
         $subject = trans('auth.email_confirmation');
 
         $confirm = [

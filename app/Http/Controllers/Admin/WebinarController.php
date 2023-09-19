@@ -494,6 +494,7 @@ class WebinarController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $this->authorize('admin_webinars_edit');
         $data = $request->all();
 
@@ -604,7 +605,8 @@ class WebinarController extends Controller
                 ]);
             }
         }
-        unset($data['_token'],
+        unset(
+            $data['_token'],
             $data['current_step'],
             $data['draft'],
             $data['get_next'],
@@ -644,6 +646,10 @@ class WebinarController extends Controller
             'price' => $data['price'],
             'category_id' => $data['category_id'],
             'points' => $data['points'] ?? null,
+            'invoice_installment' => $data['invoice_installment'] ?? 1,
+            'invoice' => true,
+            'credit_card' => true,
+            'credit_card_installment' => $data['credit_card_installment'] ?? 1,
             'message_for_reviewer' => $data['message_for_reviewer'] ?? null,
             'status' => $data['status'],
             'updated_at' => time(),
@@ -671,7 +677,6 @@ class WebinarController extends Controller
                 $webinar->id,
                 true
             );
-
         } elseif ($reject) {
             sendNotification('course_reject', ['[c.title]' => $webinar->title], $webinar->teacher_id);
         }

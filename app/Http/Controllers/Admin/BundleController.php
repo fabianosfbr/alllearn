@@ -429,7 +429,8 @@ class BundleController extends Controller
             }
         }
 
-        unset($data['_token'],
+        unset(
+            $data['_token'],
             $data['current_step'],
             $data['draft'],
             $data['get_next'],
@@ -486,7 +487,6 @@ class BundleController extends Controller
                 $bundle->id,
                 true
             );*/
-
         } elseif ($reject) {
             //sendNotification('course_reject', ['[c.title]' => $bundle->title], $bundle->teacher_id);
         }
@@ -500,9 +500,9 @@ class BundleController extends Controller
     {
         $this->authorize('admin_bundles_delete');
 
-        Webinar::find($id)->delete();
+        Bundle::find($id)->delete();
 
-        return redirect('/admin/webinars');
+        return redirect('/admin/bundles');
     }
 
     public function studentsLists(Request $request, $id)
@@ -564,7 +564,7 @@ class BundleController extends Controller
                     }
                 }
 
-                $student->learning = ($learnings > 0 and $webinarCount > 0) ? round($learnings / $webinarCount,2) : 0;
+                $student->learning = ($learnings > 0 and $webinarCount > 0) ? round($learnings / $webinarCount, 2) : 0;
             }
 
             $roles = Role::all();

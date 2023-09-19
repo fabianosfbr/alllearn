@@ -465,21 +465,23 @@ class CartController extends Controller
                     }
                 }
 
-                $webinar = Webinar::find($carts[0]->webinar_id);
-
-
                 $credit_card_installment = 1;
                 $invoice_installment = array(1 => 1);
 
-                if ($webinar->credit_card == 1) {
-                    $credit_card_installment = $webinar->credit_card_installment;
-                }
+                $webinar = Webinar::find($carts[0]->webinar_id);
 
-                if ($webinar->invoice == 1) {
-                    for ($i = 1; $i <= $webinar->invoice_installment; $i++) {
-                        $invoice_installment[$i] = $i;
+                if (isset($webinar)) {
+                    if ($webinar->credit_card == 1) {
+                        $credit_card_installment = $webinar->credit_card_installment;
+                    }
+
+                    if ($webinar->invoice == 1) {
+                        for ($i = 1; $i <= $webinar->invoice_installment; $i++) {
+                            $invoice_installment[$i] = $i;
+                        }
                     }
                 }
+
 
                 $data = [
                     'pageTitle' => trans('public.checkout_page_title'),

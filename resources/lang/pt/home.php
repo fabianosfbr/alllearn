@@ -44,8 +44,8 @@ return [
 
     'featured' => 'Destaque',
     'downloadable' => 'Pode fazer download',
-    'download' => 'Donwload',
-    'downloads' => 'Donwloads',
+    'download' => 'Download',
+    'downloads' => 'Downloads',
 
     'trending_categories' => 'Categorias populares',
     'trending_categories_hint' => '#Encontre categorias populares e em alta',

@@ -28,72 +28,83 @@ class Cliente
     }
 
     // Retorna a listagem de clientes
-    public function getAll($filtros = false){
+    public function getAll($filtros = false)
+    {
         $filtro = '';
-        if(is_array($filtros)){
-            if($filtros){
-                foreach($filtros as $key => $f){
-                    if(!empty($f)){
-                        if($filtro){
+        if (is_array($filtros)) {
+            if ($filtros) {
+                foreach ($filtros as $key => $f) {
+                    if (!empty($f)) {
+                        if ($filtro) {
                             $filtro .= '&';
                         }
-                        $filtro .= $key.'='.$f;
+                        $filtro .= $key . '=' . $f;
                     }
                 }
-                $filtro = '?'.$filtro;
+                $filtro = '?' . $filtro;
             }
         }
-        return $this->http->get('/customers'.$filtro);
+        return $this->http->get('/customers' . $filtro);
     }
 
     // Retorna os dados do cliente de acordo com o Id
-    public function getById($id){
-        return $this->http->get('/customers/'.$id);
+    public function getById($id)
+    {
+        return $this->http->get('/customers/' . $id);
     }
 
     // Retorna os dados do cliente de acordo com o Email
-    public function getByEmail($email){
+    public function getByEmail($email)
+    {
         $option = 'limit=1&email=' . $email;
         return $this->http->get('/customers', $option);
     }
 
     // Insere um novo cliente
-    public function create(array $dadosCliente){
+    public function create(array $dadosCliente)
+    {
         $dadosCliente = $this->setCliente($dadosCliente);
-        if(!empty($dadosCliente['error'])){
+
+        if (!empty($dadosCliente['error'])) {
             return $dadosCliente;
-        }else {
-            return $this->http->post('/customers', $dadosCliente);
+        } else {
+            $response = $this->http->post('/customers', $dadosCliente);
+            return $response->json();
         }
     }
 
     // Atualiza os dados do cliente
-    public function update($id, array $dadosCliente){
+    public function update($id, array $dadosCliente)
+    {
         $dadosCliente = $this->setCliente($dadosCliente);
-        if(!empty($dadosCliente['error'])){
+
+        if (!empty($dadosCliente['error'])) {
             return $dadosCliente;
-        }else {
+        } else {
             return $this->http->post('/customers/' . $id, $dadosCliente);
         }
     }
 
     // Deleta uma cliente
-    public function delete($id){
-        return $this->http->get('/customers/'.$id,'','DELETE');
+    public function delete($id)
+    {
+        return $this->http->get('/customers/' . $id, '', 'DELETE');
     }
 
     // Atualiza os dados do cliente
-    public function restore($id){
-        if(empty($id)){
+    public function restore($id)
+    {
+        if (empty($id)) {
             return false;
-        }else {
-            return $this->http->post('/customers/' . $id.'/restore', array());
+        } else {
+            return $this->http->post('/customers/' . $id . '/restore', array());
         }
     }
 
 
 
-    public function get($client_id) {
+    public function get($client_id)
+    {
         return $this->http->get('/customers/' . $client_id);
     }
 
@@ -109,7 +120,6 @@ class Cliente
 
         // Faz o post e retorna array de resposta
         return $this->http->post('/customers', ['form_params' => $cliente]);
-
     }
 
     /**
@@ -121,8 +131,9 @@ class Cliente
      */
     public function setCliente($cliente)
     {
+
         try {
-            if ( ! $this->cliente_valid($cliente) ) {
+            if (!$this->cliente_valid($cliente)) {
                 return ClienteException::invalidClient();
             }
 
@@ -143,8 +154,8 @@ class Cliente
             );
 
             $this->cliente = array_merge($this->cliente, $cliente);
-            return $this->cliente;
 
+            return $this->cliente;
         } catch (Exception $e) {
             return 'Erro ao definir o cliente. - ' . $e->getMessage();
         }
@@ -158,7 +169,6 @@ class Cliente
      */
     public function cliente_valid($cliente)
     {
-        return ! ( (empty($cliente['name']) OR empty($cliente['cpfCnpj']) OR empty($cliente['email'])) ? 1 : '' );
+        return !((empty($cliente['name']) or empty($cliente['cpfCnpj']) or empty($cliente['email'])) ? 1 : '');
     }
-
 }
